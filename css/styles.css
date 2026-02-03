@@ -73,22 +73,25 @@ body {
 }
 
 .menu-content {
-    width: 90%;
-    max-width: 600px;
-    padding: 50px;
+    width: 95%;
+    max-width: 800px;
+    /* Expanded from 600px */
+    padding: 80px 60px;
+    /* More breathing room */
     text-align: center;
     position: relative;
-    border-radius: 8px;
+    border-radius: 12px;
 }
 
 .rustic-title {
     font-family: 'Cinzel', serif;
     font-weight: 900;
-    font-size: 4.5rem;
-    letter-spacing: 8px;
+    font-size: 5.5rem;
+    /* Larger */
+    letter-spacing: 12px;
     color: #451a03;
-    text-shadow: 1px 1px 0px #fde68a, 4px 4px 10px rgba(0, 0, 0, 0.3);
-    margin: 40px 0;
+    text-shadow: 1px 1px 0px #fde68a, 4px 4px 15px rgba(0, 0, 0, 0.4);
+    margin: 20px 0 30px 0;
 }
 
 .subtitle {
@@ -114,20 +117,25 @@ body {
 
 .mode-options {
     display: flex;
-    gap: 20px;
+    gap: 30px;
+    /* Wider gap */
+    max-width: 600px;
+    margin: 0 auto;
     justify-content: center;
 }
 
 .mode-btn {
     flex: 1;
     background: rgba(0, 0, 0, 0.08);
-    border: 2px solid #78350f;
-    padding: 15px;
+    border: 3px solid #78350f;
+    padding: 25px 20px;
+    /* Taller buttons */
     cursor: pointer;
     transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
     color: var(--text-ink);
+    border-radius: 8px;
 }
 
 .mode-btn.active {
@@ -180,6 +188,20 @@ body {
     border-radius: 12px;
     border: 2px solid var(--accent);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    z-index: 100;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.header-actions {
+    display: flex;
+    gap: 8px;
+    padding-left: 15px;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .icon-btn {
@@ -445,19 +467,22 @@ body {
 
 .medieval-btn.large {
     background: #451a03;
-    /* Deep Dark Leather */
     color: var(--text-main);
-    border: 3px solid #78350f;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
-    font-size: 1.8rem;
-    padding: 25px 60px;
-    margin-top: 20px;
+    border: 4px solid #78350f;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    font-size: 2.2rem;
+    /* Larger */
+    padding: 30px 80px;
+    margin-top: 40px;
+    border-radius: 4px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .medieval-btn.large:hover {
     background: #78350f;
     border-color: var(--accent);
-    transform: translateY(-3px);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(245, 158, 11, 0.3);
 }
 
 .medieval-btn:not(:disabled) {

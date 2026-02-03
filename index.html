@@ -47,7 +47,13 @@
 
     <div id="app" class="app-container hidden">
         <header class="game-header">
-            <button id="back-to-menu-btn" class="icon-btn" title="Return to Menu">🏰</button>
+            <div class="header-left">
+                <button id="back-to-menu-btn" class="icon-btn" title="Return to Menu">🏰</button>
+                <div class="header-actions">
+                    <button class="icon-btn" id="rules-btn" title="Rules">📜</button>
+                    <button class="icon-btn" id="sound-btn" title="Toggle Sound">🔊</button>
+                </div>
+            </div>
             <div class="logo">
                 <h1>KINGDOM <span>DICE</span></h1>
             </div>
@@ -100,10 +106,6 @@
             </div>
         </aside>
 
-        <footer class="game-footer">
-            <button class="icon-btn" id="rules-btn" title="Rules">📜</button>
-            <button class="icon-btn" id="sound-btn" title="Toggle Sound">🔊</button>
-        </footer>
 
         <!-- Modals -->
         <div id="rules-modal" class="modal hidden">
