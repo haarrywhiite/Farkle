@@ -6,15 +6,28 @@
 const AI = {
     difficulty: 'medium', // 'easy', 'medium', 'hard'
 
+    isThinking: false,
+
     async playTurn(game) {
+        if (this.isThinking) return;
+        this.isThinking = true;
+
         UI.showMessage("AI is thinking...");
         await this.delay(1000);
 
         let keepGoing = true;
+        let rollCount = 0;
 
-        while (keepGoing && game.gameState !== 'GAME_OVER') {
+        while (keepGoing && game.gameState !== 'GAME_OVER' && rollCount < 20) {
+            rollCount++;
+
+            const prevState = game.gameState;
             // 1. Roll the dice
             await game.roll();
+
+            // If roll didn't happen or state didn't change as expected, break to avoid infinite loop
+            if (game.gameState === prevState && game.gameState !== 'START') break;
+
             if (game.gameState === 'START') break; // FARKLE happened
 
             await this.delay(800);
@@ -34,6 +47,8 @@ const AI = {
                 break;
             }
         }
+
+        this.isThinking = false;
     },
 
     /**

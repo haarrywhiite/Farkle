@@ -30,7 +30,7 @@ class Die {
                 </div>
             </div>`;
 
-        div.addEventListener('click', () => this.toggleSelection());
+        div.addEventListener('click', () => this.toggleSelection(true));
         return div;
     }
 
@@ -52,11 +52,16 @@ class Die {
         });
     }
 
-    toggleSelection() {
+    toggleSelection(isUserClick = false) {
         if (this.isLocked || this.isRolling) return;
 
+        // Only allow human to select during their turn via click
+        if (isUserClick) {
+            if (window.game && window.game.currentPlayer !== 'human') return;
+            if (window.game && window.game.gameState !== 'SELECTING') return;
+        }
+
         // Only allow selecting if it's currently scoring (logic handled in Game.js)
-        // But for UI feel, we let them toggle and then validate
         this.isSelected = !this.isSelected;
         this.updateDisplay();
 

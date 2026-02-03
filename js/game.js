@@ -17,6 +17,7 @@ class Game {
         this.maxScore = 10000;
         this.diceManager = new DiceManager('dice-container');
 
+        window.game = this; // Expose for global state checks (e.g. Die selection)
         this.init();
     }
 
