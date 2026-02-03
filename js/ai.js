@@ -12,43 +12,47 @@ const AI = {
         if (this.isThinking) return;
         this.isThinking = true;
 
-        UI.showMessage("AI is thinking...");
-        await this.delay(1000);
+        try {
+            UI.showMessage("AI is thinking...");
+            await this.delay(1000);
 
-        let keepGoing = true;
-        let rollCount = 0;
+            let keepGoing = true;
+            let rollCount = 0;
 
-        while (keepGoing && game.gameState !== 'GAME_OVER' && rollCount < 20) {
-            rollCount++;
+            while (keepGoing && game.gameState !== 'GAME_OVER' && rollCount < 20) {
+                rollCount++;
 
-            const prevState = game.gameState;
-            // 1. Roll the dice
-            await game.roll();
+                const prevState = game.gameState;
+                // 1. Roll the dice
+                await game.roll();
 
-            // If roll didn't happen or state didn't change as expected, break to avoid infinite loop
-            if (game.gameState === prevState && game.gameState !== 'START') break;
+                // If roll didn't happen or state didn't change as expected, break
+                if (game.gameState === prevState && game.gameState !== 'START') break;
+                if (game.gameState === 'START') break; // FARKLE happened
 
-            if (game.gameState === 'START') break; // FARKLE happened
+                await this.delay(800);
 
-            await this.delay(800);
+                // 2. Select scoring dice
+                this.selectBestDice(game);
+                await this.delay(800);
 
-            // 2. Select scoring dice
-            this.selectBestDice(game);
-            await this.delay(800);
+                // 3. Decide: Bank or Roll again?
+                keepGoing = this.shouldContinue(game);
 
-            // 3. Decide: Bank or Roll again?
-            keepGoing = this.shouldContinue(game);
-
-            if (keepGoing) {
-                UI.showMessage("AI decides to roll again!");
-                await this.delay(1000);
-            } else {
-                game.bank();
-                break;
+                if (keepGoing) {
+                    UI.showMessage("AI decides to roll again!");
+                    await this.delay(1000);
+                } else {
+                    game.bank();
+                    break;
+                }
             }
+        } catch (error) {
+            console.error("AI Error:", error);
+            UI.showMessage("The Oracle is confused...", "error");
+        } finally {
+            this.isThinking = false;
         }
-
-        this.isThinking = false;
     },
 
     /**
@@ -75,7 +79,10 @@ const AI = {
         const diceRemaining = game.diceManager.getAvailableDice().length -
             game.diceManager.getSelectedValues().length;
 
-        // Standard strategy based on turn total vs risk threshold
+        // Hot Dice! Always continue if we have 0 dice left to roll (resets to 6)
+        if (diceRemaining === 0) return true;
+
+        const threshold = this.getThreshold(diceRemaining);
         return turnTotal < threshold;
     },
 

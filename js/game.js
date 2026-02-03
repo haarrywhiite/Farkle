@@ -14,6 +14,7 @@ class Game {
         this.turnTotal = 0;
         this.currentRollScore = 0;
         this.gameState = 'START'; // START, ROLLING, SELECTING, BANKING, GAME_OVER
+        this.isRolling = false; // Guard for async roll overlap
         this.maxScore = 10000;
         this.diceManager = new DiceManager('dice-container');
 
@@ -41,6 +42,8 @@ class Game {
 
     async roll() {
         if (this.gameState !== 'START' && this.gameState !== 'SELECTING') return;
+        if (this.isRolling) return;
+        this.isRolling = true;
 
         // Before rolling again, we must have selected some scoring dice from previous roll
         if (this.gameState === 'SELECTING' && this.currentRollScore === 0) {
@@ -76,6 +79,7 @@ class Game {
             UI.showMessage("Select scoring dice to keep.");
             this.updateUI();
         }
+        this.isRolling = false;
     }
 
     handleDiceSelection() {
