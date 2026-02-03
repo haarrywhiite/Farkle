@@ -60,17 +60,6 @@ const AI = {
         const diceRemaining = game.diceManager.getAvailableDice().length -
             game.diceManager.getSelectedValues().length;
 
-        // If we hit Hot Dice (0 remaining), always continue unless we won
-        if (diceRemaining === 0) return true;
-
-        const player = game.players.ai;
-        const threshold = this.getThreshold(diceRemaining, player.onBoard);
-
-        // If not on board, AI is more aggressive until they hit 500
-        if (!player.onBoard) {
-            return turnTotal < 500;
-        }
-
         // Standard strategy based on turn total vs risk threshold
         return turnTotal < threshold;
     },
@@ -119,10 +108,6 @@ const AI = {
 
         if (availableDice === 0) {
             return "Hot Dice! The fire is with thee. Roll all six again!";
-        }
-
-        if (!game.players[game.currentPlayer].onBoard && turnTotal < 500) {
-            return `Thou must reach 500 Gold in a single turn to enter the King's Ledger. Keep rolling! (Currently ${turnTotal})`;
         }
 
         if (shouldBank) {

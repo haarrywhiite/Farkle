@@ -101,14 +101,8 @@ class Game {
         const totalThisTurn = this.turnTotal + this.currentRollScore;
         const player = this.players[this.currentPlayer];
 
-        // Check Entry Threshold (500 pts)
-        if (!player.onBoard && totalThisTurn < 500) {
-            UI.showMessage("Need 500 points to get on the board!");
-            return;
-        }
-
-        player.onBoard = true;
         player.score += totalThisTurn;
+        player.onBoard = true;
 
         UI.addHistory(this.currentPlayer, totalThisTurn);
         UI.showMessage(`${this.currentPlayer.toUpperCase()} banked ${totalThisTurn} points!`);

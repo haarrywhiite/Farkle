@@ -97,14 +97,8 @@ const UI = {
             currentPlayer === 'human' ? "var(--accent)" : "var(--primary)";
     },
 
-    updateTurnScore(score, onBoard) {
+    updateTurnScore(score) {
         this.elements.turnScore.textContent = score;
-        this.elements.threshold.style.display = onBoard ? 'none' : 'block';
-
-        if (!onBoard) {
-            this.elements.threshold.style.color = score >= 500 ? 'var(--secondary)' : 'var(--primary)';
-            this.elements.threshold.textContent = score >= 500 ? 'Thou art worthy!' : 'Minimum 500 Gold';
-        }
     },
 
     updateControls() {
@@ -118,14 +112,6 @@ const UI = {
 
         // Bank button is disabled if not human, or not selecting, or no scoring dice picked
         this.elements.bankBtn.disabled = !isHuman || !isSelecting || !hasSelectedScoring;
-
-        // If not on the ledger yet and combined score < 500, bank is disabled
-        if (isHuman && isSelecting && !this.game.players.human.onBoard) {
-            const totalPotential = this.game.turnTotal + this.game.currentRollScore;
-            if (totalPotential < 500) {
-                this.elements.bankBtn.disabled = true;
-            }
-        }
 
         this.elements.bankBtn.classList.toggle('ready-to-bank', !this.elements.bankBtn.disabled);
     },
