@@ -754,21 +754,45 @@ body {
 
 .rules-scrollable section h3 {
     font-family: 'Cinzel', serif;
-    background: #451a03 !important;
-    /* Dark Leather */
-    color: #fef3c7 !important;
-    /* Ivory */
-    padding: 12px 30px !important;
-    border-radius: 4px !important;
-    border: 3px solid #b45309 !important;
-    /* Bronze */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4) !important;
-    display: inline-block !important;
-    margin-bottom: 25px !important;
+    background: linear-gradient(135deg, #7c2d12 0%, #451a03 100%) !important;
+    /* Deep Royal Red */
+    color: #fde68a !important;
+    /* Gold-tinted Ivory */
+    padding: 15px 40px !important;
+    border-radius: 2px !important;
+    border: none !important;
+    border-top: 2px solid #b45309 !important;
+    border-bottom: 2px solid #b45309 !important;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5) !important;
+    display: block !important;
+    width: fit-content;
+    margin: 40px auto 30px auto !important;
     text-transform: uppercase !important;
-    letter-spacing: 3px !important;
-    font-size: 1.4rem !important;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8) !important;
+    letter-spacing: 5px !important;
+    font-size: 1.6rem !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8) !important;
+    position: relative;
+    overflow: visible;
+}
+
+.rules-scrollable section h3::before,
+.rules-scrollable section h3::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #b45309, transparent);
+}
+
+.rules-scrollable section h3::before {
+    right: 100%;
+    margin-right: 20px;
+}
+
+.rules-scrollable section h3::after {
+    left: 100%;
+    margin-left: 20px;
 }
 
 .score-rule-content {
@@ -786,8 +810,8 @@ body {
 }
 
 .mini-die {
-    width: 28px !important;
-    height: 28px !important;
+    width: 32px !important;
+    height: 32px !important;
     background: #fdf6e3 !important;
     color: #1a0f0a !important;
     border-radius: 4px !important;
@@ -797,7 +821,7 @@ body {
     display: inline-flex !important;
     justify-content: center !important;
     align-items: center !important;
-    font-size: 22px !important;
+    font-size: 24px !important;
     font-family: Arial, sans-serif !important;
 }
 
@@ -825,9 +849,9 @@ body {
     content: '\2685' !important;
 }
 
-.mini-die.face-x::before {
-    content: '?' !important;
-    opacity: 0.5 !important;
+.mini-die.face-x {
+    opacity: 0.8 !important;
+    background: #dfd3c3 !important;
 }
 
 .mini-die.face-y::before {
@@ -851,8 +875,22 @@ body {
     color: #1a0f0a !important;
     /* Dark ink */
     font-weight: 700 !important;
-    margin-bottom: 8px;
-    font-size: 1.15rem !important;
+    margin-bottom: 12px;
+    font-size: 1.25rem !important;
+    line-height: 1.4;
+}
+
+.rules-scrollable {
+    padding-bottom: 100px !important;
+    /* Ensure bottom text isn't cut off */
+}
+
+.engagement-list {
+    background: rgba(0, 0, 0, 0.05);
+    padding: 25px;
+    border-radius: 8px;
+    border-left: 5px solid #7c2d12;
+    margin-top: 10px;
 }
 
 .rules-scrollable li strong {
