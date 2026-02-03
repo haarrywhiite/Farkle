@@ -48,6 +48,7 @@ class Game {
         // Before rolling again, we must have selected some scoring dice from previous roll
         if (this.gameState === 'SELECTING' && this.currentRollScore === 0) {
             UI.showMessage("Select at least one scoring die!");
+            this.isRolling = false;
             return;
         }
 

@@ -81,7 +81,7 @@ const AI = {
         if (scoringIndices.length > 0) {
             UI.showMessage("Opponent is choosing dice...");
             for (const idx of scoringIndices) {
-                await this.delay(600); // Wait between each die selection
+                await this.delay(800); // Deeper delay for realism
                 availableDice[idx].toggleSelection(false);
                 game.handleDiceSelection();
             }
