@@ -1,0 +1,735 @@
+:root {
+    --primary: #78350f;
+    /* Darker Leather */
+    --primary-dark: #451a03;
+    --secondary: #064e3b;
+    /* Dark Forest Green */
+    --accent: #b45309;
+    /* Deep Bronze/Gold */
+    --bg-dark: #1a0f0a;
+    --bg-surface: #2c1810;
+    --text-main: #fef3c7;
+    --text-ink: #1a0f0a;
+    /* Darkest ink for parchment */
+    --text-muted: #92400e;
+    --parchment: #fde68a;
+    --dice-size: 85px;
+    --dice-size-mobile: 70px;
+    --border-gold: 2px solid #b45309;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+@font-face {
+    font-family: 'Medieval';
+    src: local('MedievalSharp');
+}
+
+body {
+    font-family: 'IM+Fell+DW+Pica', serif;
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    background-image: url('../img/table.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    margin: 0;
+}
+
+/* Menu Overlay */
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(8px);
+}
+
+.menu-overlay.hidden {
+    display: none;
+}
+
+.parchment {
+    background-image: url('../img/parchment.png');
+    background-size: cover;
+    color: #451a03;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 1), inset 0 0 100px rgba(0, 0, 0, 0.2);
+    border: 15px solid transparent;
+    border-image: url('../img/leather.png') 30 stretch;
+}
+
+.menu-content {
+    width: 90%;
+    max-width: 600px;
+    padding: 50px;
+    text-align: center;
+    position: relative;
+    border-radius: 8px;
+}
+
+.rustic-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 900;
+    font-size: 4.5rem;
+    letter-spacing: 8px;
+    color: #451a03;
+    text-shadow: 1px 1px 0px #fde68a, 4px 4px 10px rgba(0, 0, 0, 0.3);
+    margin: 40px 0;
+}
+
+.subtitle {
+    font-family: 'IM Fell DW Pica', serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    margin-bottom: 50px;
+    color: var(--text-ink);
+    font-weight: 600;
+    opacity: 0.9;
+}
+
+.mode-selection {
+    margin-bottom: 40px;
+}
+
+.mode-selection h3 {
+    font-family: 'Cinzel', serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+
+.mode-options {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.mode-btn {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.08);
+    border: 2px solid #78350f;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    color: var(--text-ink);
+}
+
+.mode-btn.active {
+    background: #78350f;
+    color: #fef3c7;
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    border-color: var(--accent);
+}
+
+.mode-title {
+    font-weight: 800;
+    font-size: 1.1rem;
+    font-family: 'Cinzel', serif;
+}
+
+.mode-desc {
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+/* App Layout */
+.app-container {
+    width: 100%;
+    max-width: 1000px;
+    height: 100vh;
+    display: grid;
+    grid-template-areas:
+        "header header"
+        "board side"
+        "footer footer";
+    grid-template-columns: 1fr 280px;
+    grid-template-rows: auto 1fr auto;
+    padding: 20px;
+    gap: 20px;
+}
+
+.app-container.hidden {
+    display: none;
+}
+
+/* Header & Scores */
+.game-header {
+    grid-area: header;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 15px 30px;
+    border-radius: 12px;
+    border: 2px solid var(--accent);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.icon-btn {
+    background: #7c2d12;
+    /* Wax Seal Red */
+    color: #fde68a;
+    border: 2px solid #451a03;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    font-size: 1.4rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4), inset 0 0 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s ease;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    padding: 0;
+}
+
+.icon-btn:hover {
+    transform: scale(1.1) rotate(5deg);
+    background: #991b1b;
+}
+
+.icon-btn:active {
+    transform: scale(0.95);
+}
+
+.logo h1 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 1.8rem;
+}
+
+.logo h1 span {
+    color: var(--accent);
+}
+
+.main-scores {
+    display: flex;
+    gap: 20px;
+}
+
+.score-card {
+    padding: 10px 30px;
+    border-radius: 4px;
+    background: #1a0f0a;
+    border: 2px solid #451a03;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.3s ease;
+    min-width: 140px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.score-card.active {
+    border-color: var(--accent);
+    box-shadow: 0 0 30px rgba(245, 158, 11, 0.4);
+    transform: translateY(-4px);
+    background: #2c1810;
+}
+
+.score-card .label {
+    font-size: 0.8rem;
+    font-family: 'Cinzel', serif;
+    color: var(--accent);
+}
+
+.score-card .value {
+    font-size: 2rem;
+    font-weight: 900;
+}
+
+/* Game Board */
+.game-board {
+    grid-area: board;
+    background-image: url('../img/parchment.png');
+    background-size: cover;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 50px;
+    position: relative;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), inset 0 0 100px rgba(0, 0, 0, 0.2);
+    color: #451a03;
+}
+
+.status-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.turn-indicator {
+    font-family: 'Cinzel', serif;
+    font-weight: 900;
+    font-size: 1.8rem;
+    color: #1a0f0a;
+    /* Darkest ink */
+    margin-bottom: 25px;
+    letter-spacing: 5px;
+    text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.5);
+}
+
+.parchment-small {
+    padding: 25px 60px;
+    background: rgba(0, 0, 0, 0.08);
+    /* More contrast */
+    border: 3px solid #451a03;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.turn-score-panel .label {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    color: #451a03;
+    font-weight: 800;
+}
+
+.turn-score-panel .value {
+    font-size: 4.5rem;
+    font-weight: 900;
+    color: #1a0f0a;
+}
+
+.threshold-notice {
+    font-style: italic;
+    color: #7c2d12;
+    margin-top: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+/* Dice */
+.dice-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 60px;
+    max-width: 500px;
+}
+
+.die {
+    width: var(--dice-size);
+    height: var(--dice-size);
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.die-inner {
+    width: 100%;
+    height: 100%;
+    background: #522b10;
+    /* Dark Oak Wood */
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow:
+        0 8px 0 #2c1810,
+        0 15px 25px rgba(0, 0, 0, 0.6),
+        inset 0 0 10px rgba(0, 0, 0, 0.5),
+        inset 2px 2px 3px rgba(255, 255, 255, 0.1);
+    border: 2px solid #2c1810;
+    padding: 14px;
+    transition: all 0.1s ease;
+}
+
+.die:hover .die-inner {
+    transform: translateY(-2px);
+}
+
+.pip-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    width: 100%;
+    height: 100%;
+    gap: 4px;
+}
+
+.pip {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border-radius: 50%;
+    transition: background 0.2s ease;
+}
+
+.pip.active {
+    background: #fdf6e3;
+    /* Ivory/Cream Pips for contrast */
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+}
+
+.die.selected .die-inner {
+    background: #9a3412;
+    color: #fef3c7;
+    border-color: #451a03;
+    box-shadow:
+        0 4px 0 #451a03,
+        0 0 30px rgba(154, 52, 18, 0.6);
+    transform: translateY(-12px) rotate(5deg);
+}
+
+.die.selected .pip.active {
+    background: #fef3c7;
+    box-shadow: inset 2px 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+.die.locked .die-inner {
+    background: #a1a1aa;
+    color: #3f3f46;
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Buttons */
+.medieval-btn {
+    font-family: 'Cinzel', serif;
+    padding: 18px 45px;
+    border: none;
+    font-weight: 900;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+    overflow: hidden;
+}
+
+.medieval-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('../img/leather.png');
+    background-size: 100px;
+    opacity: 0.3;
+    z-index: 0;
+}
+
+.medieval-btn span,
+.medieval-btn {
+    position: relative;
+    z-index: 1;
+}
+
+.medieval-btn.large {
+    background: #451a03;
+    /* Deep Dark Leather */
+    color: var(--text-main);
+    border: 3px solid #78350f;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    font-size: 1.8rem;
+    padding: 25px 60px;
+    margin-top: 20px;
+}
+
+.medieval-btn.large:hover {
+    background: #78350f;
+    border-color: var(--accent);
+    transform: translateY(-3px);
+}
+
+.medieval-btn:not(:disabled) {
+    box-shadow: 0 0 20px rgba(180, 83, 9, 0.4);
+}
+
+.medieval-btn.primary:not(:disabled) {
+    background: #9a3412;
+    border: 3px solid var(--accent);
+    box-shadow: 0 0 30px rgba(245, 158, 11, 0.3);
+}
+
+.medieval-btn.secondary:not(:disabled) {
+    background: #166534;
+    border: 3px solid #4ade80;
+    box-shadow: 0 0 30px rgba(74, 222, 128, 0.2);
+}
+
+.message-area {
+    margin-top: 30px;
+    font-family: 'MedievalSharp', cursive;
+    font-size: 1.4rem;
+    color: #451a03;
+    text-align: center;
+    font-weight: 700;
+    padding: 10px 30px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    min-height: 40px;
+}
+
+.medieval-btn:disabled {
+    filter: grayscale(1) brightness(0.7);
+    cursor: default;
+    opacity: 0.6;
+}
+
+#show-rules-btn {
+    background: none;
+    border: none;
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    color: var(--text-ink);
+    text-decoration: underline;
+    cursor: pointer;
+    margin-top: 30px;
+    font-weight: 700;
+    opacity: 0.8;
+}
+
+#show-rules-btn:hover {
+    opacity: 1;
+    color: var(--primary);
+}
+
+/* Chronicler (History) */
+.side-panel {
+    grid-area: side;
+}
+
+.iron-bound {
+    background: #1a0f0a;
+    /* Dark iron/wood */
+    border: 6px solid #2c1810;
+    position: relative;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.9);
+}
+
+.iron-bound::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border: 2px solid #451a03;
+    pointer-events: none;
+}
+
+.history-panel {
+    height: 100%;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5);
+}
+
+.history-panel h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    color: var(--accent);
+    margin-bottom: 25px;
+    text-align: center;
+    border-bottom: 1px solid #451a03;
+    padding-bottom: 10px;
+}
+
+.history-list {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.history-item {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 15px;
+    border-left: 4px solid var(--accent);
+    font-style: italic;
+    font-size: 1rem;
+}
+
+/* Modals */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+}
+
+.modal.hidden {
+    display: none !important;
+}
+
+.icon-btn span,
+.icon-btn {
+    font-family: 'MedievalSharp', cursive;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.farkle-flash {
+    animation: farkle-red-flash 0.5s ease;
+}
+
+@keyframes farkle-red-flash {
+    0% {
+        background-color: rgba(255, 0, 0, 0);
+    }
+
+    50% {
+        background-color: rgba(154, 52, 18, 0.4);
+    }
+
+    100% {
+        background-color: rgba(255, 0, 0, 0);
+    }
+}
+
+.modal-content.small-modal {
+    max-width: 450px;
+    text-align: center;
+    padding: 50px 30px;
+}
+
+.confirm-actions {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.confirm-actions .medieval-btn {
+    padding: 12px 25px;
+    font-size: 1rem;
+}
+
+#confirm-title {
+    font-family: 'Cinzel', serif;
+    color: #451a03;
+    margin-bottom: 20px;
+}
+
+#confirm-message {
+    font-family: 'IM Fell DW Pica', serif;
+    font-size: 1.2rem;
+    color: #1a0f0a;
+}
+
+/* Animations */
+@keyframes roll {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+
+    25% {
+        transform: rotate(90deg) scale(0.9);
+    }
+
+    50% {
+        transform: rotate(180deg) scale(1.1);
+    }
+
+    75% {
+        transform: rotate(270deg) scale(0.9);
+    }
+
+    100% {
+        transform: rotate(360deg) scale(1);
+    }
+}
+
+.die.rolling {
+    animation: roll 0.4s infinite linear;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .app-container {
+        grid-template-areas:
+            "header"
+            "board"
+            "side"
+            "footer";
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto 400px auto;
+        height: auto;
+        min-height: 100vh;
+        overflow-y: auto;
+    }
+
+    .side-panel {
+        display: block;
+        margin-top: 20px;
+    }
+
+    .game-board {
+        padding: 30px 15px;
+    }
+
+    .dice-container {
+        gap: 15px;
+    }
+
+    :root {
+        --dice-size: 75px;
+    }
+
+    .rustic-title {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .game-header {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px;
+    }
+
+    .main-scores {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .turn-score-panel .value {
+        font-size: 3rem;
+    }
+
+    .die {
+        width: 65px;
+        height: 65px;
+    }
+
+    .medieval-btn {
+        padding: 12px 25px;
+        font-size: 1rem;
+    }
+}

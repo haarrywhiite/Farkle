@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Kingdom Dice - Medieval Farkle</title>
+    <meta name="description" content="A rustic medieval Farkle experience. Risk your gold and outsmart the bot.">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2c1810">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;700;900&family=IM+Fell+DW+Pica:ital@0;1&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+
+<body>
+    <!-- Start Menu Overlay -->
+    <div id="start-menu" class="menu-overlay">
+        <div class="menu-content parchment">
+            <h1 class="rustic-title">KINGDOM DICE</h1>
+            <p class="subtitle">A High-Stakes Duel of Luck & Wit</p>
+
+            <div class="mode-selection">
+                <h3>Select Thy Challenge</h3>
+                <div class="mode-options">
+                    <button class="mode-btn active" data-max="10000">
+                        <span class="mode-title">STANDARD</span>
+                        <span class="mode-desc">First to 10,000 Gold</span>
+                    </button>
+                    <button class="mode-btn" data-max="5000">
+                        <span class="mode-title">QUICK DUEL</span>
+                        <span class="mode-desc">First to 5,000 Gold</span>
+                    </button>
+                </div>
+            </div>
+
+            <button id="start-game-btn" class="medieval-btn large">ENTER THE TAVERN</button>
+            <div class="menu-footer">
+                <button id="show-rules-btn">Scroll of Rules</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="app" class="app-container hidden">
+        <header class="game-header">
+            <button id="back-to-menu-btn" class="icon-btn" title="Return to Menu">🏰</button>
+            <div class="logo">
+                <h1>KINGDOM <span>DICE</span></h1>
+            </div>
+            <div class="main-scores">
+                <div class="score-card player-card active" id="player-score-card">
+                    <span class="label">YOU</span>
+                    <span class="value" id="player-grand-total">0</span>
+                </div>
+                <div class="score-card ai-card" id="ai-score-card">
+                    <span class="label">OPPONENT</span>
+                    <span class="value" id="ai-grand-total">0</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="game-board">
+            <div class="status-panel">
+                <div class="turn-indicator" id="turn-indicator">THY TURN</div>
+                <div class="turn-score-panel parchment-small">
+                    <span class="label">GOLD AT RISK</span>
+                    <span class="value" id="turn-total">0</span>
+                    <div class="threshold-notice" id="threshold-notice">Min 500 to Bank</div>
+                </div>
+            </div>
+
+            <div class="dice-container" id="dice-container">
+                <!-- Dice will be injected here by JS -->
+            </div>
+
+            <div class="game-controls">
+                <button id="roll-btn" class="medieval-btn primary">
+                    <span class="icon">🎲</span> ROLL
+                </button>
+                <button id="bank-btn" class="medieval-btn secondary" disabled>
+                    <span class="icon">💰</span> BANK
+                </button>
+            </div>
+
+            <div class="message-area" id="game-message">
+                Prepare thy dice...
+            </div>
+        </main>
+
+        <aside class="side-panel">
+            <div class="history-panel iron-bound">
+                <h3>CHRONICLE</h3>
+                <div id="game-history" class="history-list">
+                    <!-- History items injected here -->
+                </div>
+            </div>
+        </aside>
+
+        <footer class="game-footer">
+            <button class="icon-btn" id="rules-btn" title="Rules">📜</button>
+            <button class="icon-btn" id="sound-btn" title="Toggle Sound">🔊</button>
+        </footer>
+
+        <!-- Modals -->
+        <div id="rules-modal" class="modal hidden">
+            <div class="modal-content parchment">
+                <button id="close-rules-btn" class="close-btn">&times;</button>
+                <h2>The King's Rules</h2>
+                <div class="rules-scrollable">
+                    <section>
+                        <h3>Scoring</h3>
+                        <ul>
+                            <li><strong>Single 1:</strong> 100 Gold</li>
+                            <li><strong>Single 5:</strong> 50 Gold</li>
+                            <li><strong>Three 1s:</strong> 1,000 Gold</li>
+                            <li><strong>Three of a Kind:</strong> Face value x 100</li>
+                            <li><strong>Four of a Kind:</strong> 2x Triple value</li>
+                            <li><strong>Five of a Kind:</strong> 3x Triple value</li>
+                            <li><strong>Six of a Kind:</strong> 4x Triple value</li>
+                            <li><strong>Straight (1-6):</strong> 1,500 Gold</li>
+                            <li><strong>Three Pairs:</strong> 1,500 Gold</li>
+                            <li><strong>Two Triplets:</strong> 2,500 Gold</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h3>The Rules of Engagement</h3>
+                        <p>1. Roll all 6 dice to start. Keep scoring dice.</p>
+                        <p>2. Set aside at least one scoring die per roll to continue.</p>
+                        <p>3. Roll remaining dice or Bank thy points.</p>
+                        <p>4. <strong>Farkle!</strong> A score-less roll forfeits all points this turn.</p>
+                        <p>5. <strong>Hot Dice!</strong> Use all 6 dice to earn another full roll!</p>
+                        <p>6. <strong>Entrance:</strong> Seek 500 Gold in one turn to enter the ledger.</p>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <div id="game-over-modal" class="modal hidden">
+            <div class="modal-content leather-bg winner-content">
+                <h2 id="winner-title">VICTORY!</h2>
+                <p id="winner-message">Thou hast reached the objective!</p>
+                <div class="final-scores">
+                    <div>YOU: <span id="final-player-score">0</span></div>
+                    <div>OPPONENT: <span id="final-ai-score">0</span></div>
+                </div>
+                <button id="restart-btn" class="medieval-btn primary">REMATCH</button>
+            </div>
+        </div>
+
+        <div id="confirm-modal" class="modal hidden">
+            <div class="modal-content parchment small-modal">
+                <h2 id="confirm-title">Dost Thou Agree?</h2>
+                <p id="confirm-message">Proceed with thy chosen action?</p>
+                <div class="confirm-actions">
+                    <button id="confirm-yes" class="medieval-btn primary">YES, TO THE TAVERN</button>
+                    <button id="confirm-no" class="medieval-btn secondary">NO, REMAIN HERE</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Background Audio -->
+        <audio id="tavern-music" loop>
+            <source src="https://www.chosic.com/wp-content/uploads/2021/07/Medieval-Feast.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/scoring.js"></script>
+    <script src="js/dice.js"></script>
+    <script src="js/ai.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/ui.js"></script>
+</body>
+
+</html>
