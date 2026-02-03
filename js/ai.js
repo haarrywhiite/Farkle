@@ -49,7 +49,13 @@ const AI = {
             }
         } catch (error) {
             console.error("AI Error:", error);
-            UI.showMessage("The Oracle is confused...", "error");
+            UI.showMessage("The Oracle is confused! Opponent banks to clear the fog.", "error");
+            // Safety measure: Try to bank if possible to avoid turn deadlock
+            if (game.gameState === 'SELECTING' && game.currentRollScore > 0) {
+                game.bank();
+            } else {
+                game.switchPlayer();
+            }
         } finally {
             this.isThinking = false;
         }
@@ -76,10 +82,10 @@ const AI = {
      */
     shouldContinue(game) {
         const turnTotal = game.turnTotal + game.currentRollScore;
-        const diceRemaining = game.diceManager.getAvailableDice().length -
-            game.diceManager.getSelectedValues().length;
+        // Correct diceRemaining: it should just be the count of available (unselected/unlocked) dice
+        const diceRemaining = game.diceManager.getAvailableDice().length;
 
-        // Hot Dice! Always continue if we have 0 dice left to roll (resets to 6)
+        // Hot Dice! Always continue if 0 dice are left (they will all reset)
         if (diceRemaining === 0) return true;
 
         const threshold = this.getThreshold(diceRemaining);
