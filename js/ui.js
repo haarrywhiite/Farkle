@@ -23,7 +23,9 @@ const UI = {
         app: document.getElementById('app'),
         startGameBtn: document.getElementById('start-game-btn'),
         backToMenuBtn: document.getElementById('back-to-menu-btn'),
-        confirmModal: document.getElementById('confirm-modal')
+        confirmModal: document.getElementById('confirm-modal'),
+        adviceText: document.getElementById('ai-advice'),
+        adviceBtn: document.getElementById('get-advice-btn')
     },
 
     init(game) {
@@ -71,6 +73,14 @@ const UI = {
                 music.pause();
                 this.elements.soundBtn.textContent = '🔇';
             }
+        });
+
+        // Advice
+        this.elements.adviceBtn.addEventListener('click', () => {
+            const advice = AI.getAdvice(this.game);
+            this.elements.adviceText.textContent = advice;
+            this.elements.adviceText.classList.add('pop');
+            setTimeout(() => this.elements.adviceText.classList.remove('pop'), 300);
         });
     },
 

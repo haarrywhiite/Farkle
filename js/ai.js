@@ -97,5 +97,34 @@ const AI = {
 
     delay(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
+    },
+
+    getAdvice(game) {
+        if (game.gameState === 'ROLLING') return "Wait for the dice to settle, child.";
+        if (game.gameState === 'START') return "Cast the bones and let fate decide!";
+
+        const isSelecting = game.gameState === 'SELECTING';
+        if (!isSelecting) return "The Oracle sleeps. Play thy turn.";
+
+        const currentScore = game.currentRollScore;
+        const turnTotal = game.turnTotal + currentScore;
+        const diceValues = game.diceManager.getSelectedValues();
+        const availableDice = game.diceManager.getAvailableDice().length - diceValues.length;
+
+        if (currentScore === 0) {
+            return "Thou must select scoring dice before the Oracle can see.";
+        }
+
+        const shouldBank = !this.shouldContinue(game);
+
+        if (availableDice === 0) {
+            return "Hot Dice! The fire is with thee. Roll again!";
+        }
+
+        if (shouldBank) {
+            return `Bank thy ${turnTotal} Gold. A wise merchant knows when to fold.`;
+        } else {
+            return `The winds favor thee. Risk the ${availableDice} dice for more!`;
+        }
     }
 };
