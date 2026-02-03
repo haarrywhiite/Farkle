@@ -116,14 +116,18 @@ const UI = {
             (this.game.gameState !== 'SELECTING' && this.game.gameState !== 'START') ||
             (isSelecting && !hasSelectedScoring);
 
+        // Bank button is disabled if not human, or not selecting, or no scoring dice picked
         this.elements.bankBtn.disabled = !isHuman || !isSelecting || !hasSelectedScoring;
 
-        // If not on board and score < 500, bank is disabled
+        // If not on the ledger yet and combined score < 500, bank is disabled
         if (isHuman && isSelecting && !this.game.players.human.onBoard) {
-            if ((this.game.turnTotal + this.game.currentRollScore) < 500) {
+            const totalPotential = this.game.turnTotal + this.game.currentRollScore;
+            if (totalPotential < 500) {
                 this.elements.bankBtn.disabled = true;
             }
         }
+
+        this.elements.bankBtn.classList.toggle('ready-to-bank', !this.elements.bankBtn.disabled);
     },
 
     showMessage(msg, type = 'info') {

@@ -506,6 +506,21 @@ body {
     box-shadow: 0 0 30px rgba(74, 222, 128, 0.2);
 }
 
+.medieval-btn.ready-to-bank {
+    animation: gold-glow 1.5s infinite alternate;
+    border-color: #fbbf24 !important;
+}
+
+@keyframes gold-glow {
+    from {
+        box-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
+    }
+
+    to {
+        box-shadow: 0 0 30px rgba(251, 191, 36, 0.8), 0 0 50px rgba(251, 191, 36, 0.4);
+    }
+}
+
 .message-area {
     margin-top: 30px;
     font-family: 'MedievalSharp', cursive;

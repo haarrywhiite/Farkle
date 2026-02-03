@@ -118,13 +118,17 @@ const AI = {
         const shouldBank = !this.shouldContinue(game);
 
         if (availableDice === 0) {
-            return "Hot Dice! The fire is with thee. Roll again!";
+            return "Hot Dice! The fire is with thee. Roll all six again!";
+        }
+
+        if (!game.players[game.currentPlayer].onBoard && turnTotal < 500) {
+            return `Thou must reach 500 Gold in a single turn to enter the King's Ledger. Keep rolling! (Currently ${turnTotal})`;
         }
 
         if (shouldBank) {
-            return `Bank thy ${turnTotal} Gold. A wise merchant knows when to fold.`;
+            return `Bank thy ${turnTotal} Gold. A wise merchant knows when to fold and keep the coin.`;
         } else {
-            return `The winds favor thee. Risk the ${availableDice} dice for more!`;
+            return `The winds of the tavern favor thee. Risk the remaining ${availableDice} dice for more!`;
         }
     }
 };
