@@ -13,8 +13,9 @@ const AI = {
         this.isThinking = true;
 
         try {
-            UI.showMessage("AI is thinking...");
-            await this.delay(1000);
+            console.log("AI: Thinking started...");
+            UI.showMessage("Opponent is thinking...");
+            await this.delay(1200);
 
             let keepGoing = true;
             let rollCount = 0;
@@ -23,30 +24,39 @@ const AI = {
                 rollCount++;
 
                 // 1. Roll the dice
+                console.log("AI: Rolling...");
                 await game.roll();
 
-                if (game.gameState === 'START') break; // FARKLE happened
+                if (game.gameState === 'START') {
+                    console.log("AI: Farkled.");
+                    break; // FARKLE happened
+                }
 
-                await this.delay(800);
+                await this.delay(1000);
 
                 // 2. Select scoring dice
-                this.selectBestDice(game);
-                await this.delay(800);
+                console.log("AI: Selecting dice...");
+                await this.selectBestDice(game);
+                await this.delay(1000);
 
                 // 3. Decide: Bank or Roll again?
                 keepGoing = this.shouldContinue(game);
 
                 if (keepGoing) {
-                    UI.showMessage("AI decides to roll again!");
-                    await this.delay(1000);
+                    console.log("AI: Decided to roll again.");
+                    UI.showMessage("Opponent decides to roll again!");
+                    await this.delay(1200);
                 } else {
+                    console.log("AI: Decided to bank.");
+                    UI.showMessage("Opponent decides to bank.");
+                    await this.delay(1000);
                     game.bank();
                     break;
                 }
             }
         } catch (error) {
             console.error("AI Error:", error);
-            UI.showMessage("The Oracle is confused! Opponent banks to clear the fog.", "error");
+            UI.showMessage("The Oracle is confused! Opponent banks to safety.", "error");
             // Safety measure: Try to bank if possible to avoid turn deadlock
             if (game.gameState === 'SELECTING' && game.currentRollScore > 0) {
                 game.bank();
@@ -54,6 +64,7 @@ const AI = {
                 game.switchPlayer();
             }
         } finally {
+            console.log("AI: Thinking finished.");
             this.isThinking = false;
         }
     },
@@ -62,16 +73,19 @@ const AI = {
      * AI selects which dice to keep. 
      * Strategy: Always keep ALL scoring dice to maximize points and reach Hot Dice.
      */
-    selectBestDice(game) {
+    async selectBestDice(game) {
         const availableDice = game.diceManager.getAvailableDice();
         const diceValues = availableDice.map(d => d.value);
         const scoringIndices = Scoring.getScoringIndices(diceValues);
 
-        scoringIndices.forEach(idx => {
-            availableDice[idx].toggleSelection();
-        });
-
-        game.handleDiceSelection();
+        if (scoringIndices.length > 0) {
+            UI.showMessage("Opponent is choosing dice...");
+            for (const idx of scoringIndices) {
+                await this.delay(600); // Wait between each die selection
+                availableDice[idx].toggleSelection(false);
+                game.handleDiceSelection();
+            }
+        }
     },
 
     /**
