@@ -59,6 +59,15 @@ const UI = {
         this.elements.backToMenuBtn.addEventListener('click', () => this.returnToMenu());
         document.getElementById('restart-btn').addEventListener('click', () => window.location.reload());
 
+        // Click outside to close modals
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    this.toggleModal(modal.id, false);
+                }
+            });
+        });
+
         // Audio Toggle
         const music = document.getElementById('tavern-music');
         let soundOn = false;
