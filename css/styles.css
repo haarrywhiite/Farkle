@@ -790,48 +790,38 @@ body {
     }
 }
 
-/* Responsive */
+/* Responsive Optimization */
+@media (max-width: 1200px) {
+    .menu-content {
+        max-width: 700px;
+        padding: 50px 40px;
+    }
+
+    .rustic-title {
+        font-size: 4rem;
+        letter-spacing: 8px;
+    }
+}
+
 @media (max-width: 1024px) {
     .app-container {
         grid-template-areas:
             "header"
             "board"
-            "side"
-            "footer";
+            "side";
         grid-template-columns: 1fr;
-        grid-template-rows: auto auto 400px auto;
+        grid-template-rows: auto auto auto;
         height: auto;
         min-height: 100vh;
         overflow-y: auto;
-    }
-
-    .side-panel {
-        display: block;
-        margin-top: 20px;
-    }
-
-    .game-board {
-        padding: 30px 15px;
-    }
-
-    .dice-container {
+        padding: 10px;
         gap: 15px;
     }
 
-    :root {
-        --dice-size: 75px;
-    }
-
-    .rustic-title {
-        font-size: 3rem;
-    }
-}
-
-@media (max-width: 640px) {
     .game-header {
         flex-direction: column;
-        gap: 15px;
-        padding: 15px;
+        padding: 20px;
+        gap: 20px;
     }
 
     .main-scores {
@@ -839,17 +829,112 @@ body {
         justify-content: center;
     }
 
+    .side-panel {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        /* Side by side on tablets */
+        gap: 20px;
+        margin-top: 0;
+    }
+
+    .history-panel,
+    .advisor-panel {
+        height: 400px;
+        margin-top: 0;
+    }
+
+    .rules-large {
+        width: 95%;
+        padding: 40px 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .rustic-title {
+        font-size: 3rem;
+        letter-spacing: 4px;
+    }
+
+    .mode-options {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .medieval-btn.large {
+        font-size: 1.6rem;
+        padding: 20px 40px;
+        width: 100%;
+    }
+
+    .side-panel {
+        grid-template-columns: 1fr;
+        /* Stacked on phones */
+    }
+
+    .history-panel,
+    .advisor-panel {
+        height: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    :root {
+        --dice-size: 70px;
+    }
+
+    .game-header h1 {
+        font-size: 1.5rem;
+    }
+
     .turn-score-panel .value {
         font-size: 3rem;
     }
 
-    .die {
-        width: 65px;
-        height: 65px;
+    .dice-container {
+        gap: 10px;
     }
 
-    .medieval-btn {
-        padding: 12px 25px;
-        font-size: 1rem;
+    .die-inner {
+        padding: 10px;
+    }
+
+    .rules-large h2 {
+        font-size: 1.5rem;
+    }
+
+    .royal-seal {
+        width: 70px;
+        height: 70px;
+    }
+
+    .royal-seal::after {
+        font-size: 2rem;
+    }
+
+    .rules-scrollable {
+        font-size: 0.9rem;
+    }
+
+    .confirm-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+}
+
+/* Fix for landscape mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+    .menu-content {
+        padding: 20px;
+        overflow-y: auto;
+        max-height: 95vh;
+    }
+
+    .rustic-title {
+        font-size: 2rem;
+        margin: 10px 0;
+    }
+
+    .medieval-btn.large {
+        margin-top: 10px;
     }
 }
