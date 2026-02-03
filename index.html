@@ -107,68 +107,69 @@
         </aside>
 
 
-        <!-- Modals -->
-        <div id="rules-modal" class="modal hidden">
-            <div class="modal-content parchment">
-                <button id="close-rules-btn" class="close-btn">&times;</button>
-                <h2>The King's Rules</h2>
-                <div class="rules-scrollable">
-                    <section>
-                        <h3>Scoring</h3>
-                        <ul>
-                            <li><strong>Single 1:</strong> 100 Gold</li>
-                            <li><strong>Single 5:</strong> 50 Gold</li>
-                            <li><strong>Three 1s:</strong> 1,000 Gold</li>
-                            <li><strong>Three of a Kind:</strong> Face value x 100</li>
-                            <li><strong>Four of a Kind:</strong> 2x Triple value</li>
-                            <li><strong>Five of a Kind:</strong> 3x Triple value</li>
-                            <li><strong>Six of a Kind:</strong> 4x Triple value</li>
-                            <li><strong>Straight (1-6):</strong> 1,500 Gold</li>
-                            <li><strong>Three Pairs:</strong> 1,500 Gold</li>
-                            <li><strong>Two Triplets:</strong> 2,500 Gold</li>
-                        </ul>
-                    </section>
-                    <section>
-                        <h3>The Rules of Engagement</h3>
-                        <p>1. Roll all 6 dice to start. Keep scoring dice.</p>
-                        <p>2. Set aside at least one scoring die per roll to continue.</p>
-                        <p>3. Roll remaining dice or Bank thy points.</p>
-                        <p>4. <strong>Farkle!</strong> A score-less roll forfeits all points this turn.</p>
-                        <p>5. <strong>Hot Dice!</strong> Use all 6 dice to earn another full roll!</p>
-                        <p>6. <strong>Entrance:</strong> Seek 500 Gold in one turn to enter the ledger.</p>
-                    </section>
-                </div>
-            </div>
-        </div>
-
-        <div id="game-over-modal" class="modal hidden">
-            <div class="modal-content leather-bg winner-content">
-                <h2 id="winner-title">VICTORY!</h2>
-                <p id="winner-message">Thou hast reached the objective!</p>
-                <div class="final-scores">
-                    <div>YOU: <span id="final-player-score">0</span></div>
-                    <div>OPPONENT: <span id="final-ai-score">0</span></div>
-                </div>
-                <button id="restart-btn" class="medieval-btn primary">REMATCH</button>
-            </div>
-        </div>
-
-        <div id="confirm-modal" class="modal hidden">
-            <div class="modal-content parchment small-modal">
-                <h2 id="confirm-title">Dost Thou Agree?</h2>
-                <p id="confirm-message">Proceed with thy chosen action?</p>
-                <div class="confirm-actions">
-                    <button id="confirm-yes" class="medieval-btn primary">YES, TO THE TAVERN</button>
-                    <button id="confirm-no" class="medieval-btn secondary">NO, REMAIN HERE</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Background Audio -->
-        <audio id="tavern-music" loop>
-            <source src="https://www.chosic.com/wp-content/uploads/2021/07/Medieval-Feast.mp3" type="audio/mpeg">
-        </audio>
     </div>
+
+    <!-- Modals (Moved Outside #app to be accessible from menu) -->
+    <div id="rules-modal" class="modal hidden">
+        <div class="modal-content parchment">
+            <button id="close-rules-btn" class="close-btn">&times;</button>
+            <h2>The King's Rules</h2>
+            <div class="rules-scrollable">
+                <section>
+                    <h3>Scoring</h3>
+                    <ul>
+                        <li><strong>Single 1:</strong> 100 Gold</li>
+                        <li><strong>Single 5:</strong> 50 Gold</li>
+                        <li><strong>Three 1s:</strong> 1,000 Gold</li>
+                        <li><strong>Three of a Kind:</strong> Face value x 100</li>
+                        <li><strong>Four of a Kind:</strong> 2x Triple value</li>
+                        <li><strong>Five of a Kind:</strong> 3x Triple value</li>
+                        <li><strong>Six of a Kind:</strong> 4x Triple value</li>
+                        <li><strong>Straight (1-6):</strong> 1,500 Gold</li>
+                        <li><strong>Three Pairs:</strong> 1,500 Gold</li>
+                        <li><strong>Two Triplets:</strong> 2,500 Gold</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>The Rules of Engagement</h3>
+                    <p>1. Roll all 6 dice to start. Keep scoring dice.</p>
+                    <p>2. Set aside at least one scoring die per roll to continue.</p>
+                    <p>3. Roll remaining dice or Bank thy points.</p>
+                    <p>4. <strong>Farkle!</strong> A score-less roll forfeits all points this turn.</p>
+                    <p>5. <strong>Hot Dice!</strong> Use all 6 dice to earn another full roll!</p>
+                    <p>6. <strong>Entrance:</strong> Seek 500 Gold in one turn to enter the ledger.</p>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <div id="game-over-modal" class="modal hidden">
+        <div class="modal-content leather-bg winner-content">
+            <h2 id="winner-title">VICTORY!</h2>
+            <p id="winner-message">Thou hast reached the objective!</p>
+            <div class="final-scores">
+                <div>YOU: <span id="final-player-score">0</span></div>
+                <div>OPPONENT: <span id="final-ai-score">0</span></div>
+            </div>
+            <button id="restart-btn" class="medieval-btn primary">REMATCH</button>
+        </div>
+    </div>
+
+    <div id="confirm-modal" class="modal hidden">
+        <div class="modal-content parchment small-modal">
+            <h2 id="confirm-title">Dost Thou Agree?</h2>
+            <p id="confirm-message">Proceed with thy chosen action?</p>
+            <div class="confirm-actions">
+                <button id="confirm-yes" class="medieval-btn primary">YES, TO THE TAVERN</button>
+                <button id="confirm-no" class="medieval-btn secondary">NO, REMAIN HERE</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Background Audio -->
+    <audio id="tavern-music" loop>
+        <source src="https://www.chosic.com/wp-content/uploads/2021/07/Medieval-Feast.mp3" type="audio/mpeg">
+    </audio>
 
     <!-- Scripts -->
     <script src="js/scoring.js"></script>
