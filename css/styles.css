@@ -166,16 +166,19 @@ body {
 .app-container {
     width: 100%;
     max-width: 1400px;
-    /* Wider to accommodate 3 columns */
     height: 100vh;
     display: grid;
     grid-template-areas:
         "header header header"
         "left-side board right-side";
-    grid-template-columns: 280px 1fr 280px;
+    grid-template-columns: 320px 1fr 320px;
     grid-template-rows: auto 1fr;
-    padding: 20px;
-    gap: 20px;
+    padding: 15px;
+    /* Reduced padding */
+    gap: 15px;
+    /* Reduced gap */
+    overflow: hidden;
+    /* Prevent scrolling */
 }
 
 .app-container.hidden {
@@ -293,7 +296,8 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 50px;
+    padding: 20px;
+    /* Reduced padding for better fit */
     position: relative;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), inset 0 0 100px rgba(0, 0, 0, 0.2);
     color: #451a03;
@@ -355,8 +359,10 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 30px;
-    margin-bottom: 60px;
+    gap: 20px;
+    /* Reduced gap */
+    margin-bottom: 25px;
+    /* Reduced margin */
     max-width: 500px;
 }
 
@@ -522,15 +528,18 @@ body {
 }
 
 .message-area {
-    margin-top: 30px;
+    margin-top: 20px;
     font-family: 'MedievalSharp', cursive;
-    font-size: 1.4rem;
-    color: #451a03;
+    font-size: 1.6rem;
+    color: #fef3c7;
+    /* Bright Ivory for contrast */
     text-align: center;
     font-weight: 700;
     padding: 10px 30px;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
-    min-height: 40px;
+    min-height: 48px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    /* Shadow for readability */
 }
 
 .medieval-btn:disabled {
@@ -674,10 +683,53 @@ body {
 
 .rules-large {
     max-width: 900px;
-    /* Much bigger */
     max-height: 90vh;
     padding: 60px;
     box-shadow: 0 0 100px rgba(0, 0, 0, 0.8);
+    background-color: #f5f0e1 !important;
+    /* Brighter parchment for rules specifically */
+    background-blend-mode: normal !important;
+    /* Disable multiply for better legibility */
+}
+
+.close-btn {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    background: #991b1b !important;
+    /* Force Wax Seal Red */
+    border: 3px solid #451a03;
+    color: #fde68a !important;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    font-size: 2.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    padding: 0;
+    line-height: 1;
+}
+
+.close-btn:hover {
+    transform: scale(1.1) rotate(5deg);
+    background: #7f1d1d !important;
+}
+
+.rules-scrollable section h3 {
+    color: #451a03;
+    border-bottom: 1px solid rgba(69, 26, 3, 0.2);
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+}
+
+.rules-scrollable ul li {
+    color: #1a0f0a;
+    font-weight: 600;
+    margin-bottom: 5px;
 }
 
 .royal-header {
