@@ -22,12 +22,9 @@ const AI = {
             while (keepGoing && game.gameState !== 'GAME_OVER' && rollCount < 20) {
                 rollCount++;
 
-                const prevState = game.gameState;
                 // 1. Roll the dice
                 await game.roll();
 
-                // If roll didn't happen or state didn't change as expected, break
-                if (game.gameState === prevState && game.gameState !== 'START') break;
                 if (game.gameState === 'START') break; // FARKLE happened
 
                 await this.delay(800);
