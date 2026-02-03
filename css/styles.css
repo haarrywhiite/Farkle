@@ -701,20 +701,21 @@ body {
     overflow-y: auto;
 }
 
-.rules-large {
-    max-width: 900px;
-    max-height: 90vh;
-    padding: 60px;
-    box-shadow: 0 0 100px rgba(0, 0, 0, 0.95);
+.modal-content.parchment.rules-large {
+    max-width: 900px !important;
+    max-height: 90vh !important;
+    padding: 60px !important;
+    box-shadow: 0 0 100px rgba(0, 0, 0, 0.95) !important;
     background-color: #dfd3c3 !important;
     background-image: url('../img/parchment.png') !important;
-    background-size: 200% !important;
+    background-size: cover !important;
     background-position: center !important;
     background-blend-mode: multiply !important;
     color: #1a0f0a !important;
     border: 15px solid transparent !important;
     border-image: url('../img/leather.png') 30 stretch !important;
     border-radius: 0 !important;
+    position: relative !important;
 }
 
 #close-rules-btn {
@@ -785,57 +786,58 @@ body {
 }
 
 .mini-die {
-    width: 28px;
-    height: 28px;
-    background: #fdf6e3;
-    color: #1a0f0a;
-    border-radius: 4px;
-    position: relative;
-    border: 1px solid #451a03;
-    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 22px;
+    width: 28px !important;
+    height: 28px !important;
+    background: #fdf6e3 !important;
+    color: #1a0f0a !important;
+    border-radius: 4px !important;
+    position: relative !important;
+    border: 1px solid #451a03 !important;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3) !important;
+    display: inline-flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    font-size: 22px !important;
+    font-family: Arial, sans-serif !important;
 }
 
 .mini-die.face-1::before {
-    content: '\2680';
+    content: '\2680' !important;
 }
 
 .mini-die.face-2::before {
-    content: '\2681';
+    content: '\2681' !important;
 }
 
 .mini-die.face-3::before {
-    content: '\2682';
+    content: '\2682' !important;
 }
 
 .mini-die.face-4::before {
-    content: '\2683';
+    content: '\2683' !important;
 }
 
 .mini-die.face-5::before {
-    content: '\2684';
+    content: '\2684' !important;
 }
 
 .mini-die.face-6::before {
-    content: '\2685';
+    content: '\2685' !important;
 }
 
 .mini-die.face-x::before {
-    content: '?';
-    opacity: 0.5;
+    content: '?' !important;
+    opacity: 0.5 !important;
 }
 
 .mini-die.face-y::before {
-    content: '*';
-    opacity: 0.5;
+    content: '*' !important;
+    opacity: 0.5 !important;
 }
 
 .mini-die.face-z::before {
-    content: '#';
-    opacity: 0.5;
+    content: '#' !important;
+    opacity: 0.5 !important;
 }
 
 .mini-operator {
