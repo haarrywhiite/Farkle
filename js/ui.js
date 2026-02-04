@@ -26,8 +26,7 @@ const UI = {
         confirmModal: document.getElementById('confirm-modal'),
         adviceBtn: document.getElementById('get-advice-btn'),
         globalTarget: document.getElementById('global-target-display'),
-        farkleModal: document.getElementById('farkle-modal'),
-        farkleOkBtn: document.getElementById('farkle-ok-btn')
+        farkleModal: null // Removed
     },
 
     init(game) {
@@ -98,11 +97,8 @@ const UI = {
             setTimeout(() => this.elements.adviceText.classList.remove('pop'), 300);
         });
 
-        // Farkle Confirm
-        this.elements.farkleOkBtn.addEventListener('click', () => {
-            this.toggleModal('farkle-modal', false);
-            if (this.onFarkleClosed) this.onFarkleClosed();
-        });
+        // Set initial random favicon
+        this.setRandomFavicon();
     },
 
     updateScores(players, currentPlayer) {
@@ -169,22 +165,19 @@ const UI = {
     },
 
     showFarkle(playerName, onClosed) {
-        // Clear message area to prevent confusion
-        this.elements.message.textContent = "FARKLE!";
+        // Clear message area and show FARKLE
+        this.elements.message.textContent = "!!! FARKLE !!!";
+        this.elements.message.classList.add('error');
 
-        const nameDisplay = playerName === 'human' ? "Thou" : "The Opponent";
-        document.getElementById('farkle-message').textContent =
-            `Alas! ${nameDisplay} rolled no scoring dice. This turn's gold is lost!`;
+        // Visual flash (handled by CSS class on body)
+        document.body.classList.add('farkle-flash');
 
-        this.onFarkleClosed = onClosed;
-
-        // Brief delay for dice animation to finish before popup
+        // Brief delay before switching player
         setTimeout(() => {
-            this.toggleModal('farkle-modal', true);
-            // Flash screen red
-            document.body.classList.add('farkle-flash');
-            setTimeout(() => document.body.classList.remove('farkle-flash'), 1000);
-        }, 600);
+            document.body.classList.remove('farkle-flash');
+            this.elements.message.classList.remove('error');
+            if (onClosed) onClosed();
+        }, 1200);
     },
 
     toggleModal(id, show) {
@@ -250,6 +243,59 @@ const UI = {
             "Dost thou wish to abandon this duel and return to the tavern?",
             () => window.location.reload()
         );
+    },
+
+    /**
+     * Draws a random dice face and sets it as the browser favicon
+     */
+    setRandomFavicon() {
+        const val = Math.floor(Math.random() * 6) + 1;
+        const canvas = document.createElement('canvas');
+        canvas.width = 64;
+        canvas.height = 64;
+        const ctx = canvas.getContext('2d');
+
+        // Draw Die Base
+        const radius = 12;
+        ctx.fillStyle = '#f5f5dc'; // Beige/Parchment
+        ctx.strokeStyle = '#2c1810'; // Dark Brown
+        ctx.lineWidth = 4;
+
+        // Rounded Rect
+        ctx.beginPath();
+        ctx.moveTo(radius, 0);
+        ctx.lineTo(64 - radius, 0);
+        ctx.quadraticCurveTo(64, 0, 64, radius);
+        ctx.lineTo(64, 64 - radius);
+        ctx.quadraticCurveTo(64, 64, 64 - radius, 64);
+        ctx.lineTo(radius, 64);
+        ctx.quadraticCurveTo(0, 64, 0, 64 - radius);
+        ctx.lineTo(0, radius);
+        ctx.quadraticCurveTo(0, 0, radius, 0);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        // Draw Pips
+        ctx.fillStyle = '#2c1810';
+        const pipSize = 7;
+        const patterns = {
+            1: [[32, 32]],
+            2: [[16, 16], [48, 48]],
+            3: [[16, 16], [32, 32], [48, 48]],
+            4: [[16, 16], [48, 16], [16, 48], [48, 48]],
+            5: [[16, 16], [48, 16], [32, 32], [16, 48], [48, 48]],
+            6: [[16, 16], [48, 16], [16, 32], [48, 32], [16, 48], [48, 48]]
+        };
+
+        (patterns[val] || []).forEach(p => {
+            ctx.beginPath();
+            ctx.arc(p[0], p[1], pipSize, 0, Math.PI * 2);
+            ctx.fill();
+        });
+
+        const favicon = document.getElementById('favicon');
+        favicon.href = canvas.toDataURL('image/x-icon');
     }
 };
 

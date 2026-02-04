@@ -1012,32 +1012,6 @@ body {
     }
 }
 
-/* Farkle Content Styles */
-.farkle-content {
-    border: 10px solid #7c2d12 !important;
-    box-shadow: 0 0 50px rgba(124, 45, 18, 0.5) !important;
-}
-
-.farkle-title {
-    color: #991b1b !important;
-    font-size: 3rem !important;
-    font-family: 'Cinzel', serif;
-    margin-bottom: 20px;
-    letter-spacing: 5px;
-    animation: text-surge 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-@keyframes text-surge {
-    0% {
-        transform: scale(0.5);
-        opacity: 0;
-    }
-
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
-}
 
 /* Win Screen Redesign */
 .winner-content {
