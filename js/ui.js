@@ -169,16 +169,22 @@ const UI = {
     },
 
     showFarkle(playerName, onClosed) {
+        // Clear message area to prevent confusion
+        this.elements.message.textContent = "FARKLE!";
+
         const nameDisplay = playerName === 'human' ? "Thou" : "The Opponent";
         document.getElementById('farkle-message').textContent =
             `Alas! ${nameDisplay} rolled no scoring dice. This turn's gold is lost!`;
 
         this.onFarkleClosed = onClosed;
-        this.toggleModal('farkle-modal', true);
 
-        // Flash screen red
-        document.body.classList.add('farkle-flash');
-        setTimeout(() => document.body.classList.remove('farkle-flash'), 1000);
+        // Brief delay for dice animation to finish before popup
+        setTimeout(() => {
+            this.toggleModal('farkle-modal', true);
+            // Flash screen red
+            document.body.classList.add('farkle-flash');
+            setTimeout(() => document.body.classList.remove('farkle-flash'), 1000);
+        }, 600);
     },
 
     toggleModal(id, show) {

@@ -718,12 +718,13 @@ body {
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 9999;
+    z-index: 2147483647;
+    /* Maximum possible z-index */
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(10px);
 }
 
 .modal.hidden {
