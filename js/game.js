@@ -179,25 +179,40 @@ class Game {
         UI.updateControls();
     }
 
-    /* Tournament Logic */
-    initTournament(playerNames) {
+    /* Tournament Logic with AI Auto-Sim */
+    initTournamentWithPlayer(playerNames) {
         this.tournament.active = true;
+        this.tournament.playerName = "Thou"; // The human player
         this.tournament.round = 1;
         this.tournament.bracket = [
-            { p1: playerNames[0], p2: playerNames[1], winner: null },
-            { p1: playerNames[2], p2: playerNames[3], winner: null },
-            { p1: null, p2: null, winner: null }
+            { p1: playerNames[0], p2: playerNames[1], winner: null }, // Match 1: Thou vs AI
+            { p1: playerNames[2], p2: playerNames[3], winner: null }, // Match 2: AI vs AI (auto-sim)
+            { p1: null, p2: null, winner: null } // Finals
         ];
-        this.startMatch(0);
+
+        // Auto-simulate Match 2 (AI vs AI)
+        const match2 = this.tournament.bracket[1];
+        const aiWinner = Math.random() < 0.5 ? match2.p1 : match2.p2;
+        match2.winner = aiWinner;
+        this.tournament.bracket[2].p2 = aiWinner;
+
+        UI.showMessage(`${aiWinner} wins the other Semi-Final!`);
+
+        // Start player's match after a delay
+        setTimeout(() => {
+            this.startMatch(0);
+        }, 2500);
     }
 
     startMatch(matchIndex) {
         const match = this.tournament.bracket[matchIndex];
         this.tournament.currentMatchIndex = matchIndex;
 
+        const playerInMatch = match.p1 === "Thou" || match.p2 === "Thou";
+
         this.players = [
-            { name: match.p1, score: 0, isAI: false },
-            { name: match.p2, score: 0, isAI: false }
+            { name: match.p1, score: 0, isAI: match.p1 !== "Thou" },
+            { name: match.p2, score: 0, isAI: match.p2 !== "Thou" }
         ];
 
         this.currentPlayerIndex = 0;
@@ -211,22 +226,32 @@ class Game {
         match.winner = winner.name;
 
         if (this.tournament.currentMatchIndex === 2) {
+            // Tournament complete
             this.tournament.winner = winner.name;
+            if (winner.name === "Thou") {
+                UI.showMessage(`THOU ART THE KINGDOM CHAMPION!`);
+            } else {
+                UI.showMessage(`${winner.name} HAS DEFEATED THEE!`);
+            }
             UI.showWinner(this.players);
-            UI.showMessage(`KINGDOM CHAMPION: ${winner.name}!`);
         } else {
+            // Semi-final complete - advance to finals
             const finalMatch = this.tournament.bracket[2];
-            if (this.tournament.currentMatchIndex === 0) finalMatch.p1 = winner.name;
-            if (this.tournament.currentMatchIndex === 1) finalMatch.p2 = winner.name;
+            if (this.tournament.currentMatchIndex === 0) {
+                finalMatch.p1 = winner.name;
+            }
 
-            UI.showMessage(`${winner.name} ADVANCES!`);
+            if (winner.name === "Thou") {
+                UI.showMessage(`THOU ADVANCES TO THE FINAL!`);
+            } else {
+                UI.showMessage(`${winner.name} ADVANCES! Thou hast been eliminated!`);
+                setTimeout(() => UI.showWinner(this.players), 3000);
+                return;
+            }
 
+            // Start finals
             setTimeout(() => {
-                if (this.tournament.currentMatchIndex === 0) {
-                    this.startMatch(1);
-                } else {
-                    this.startMatch(2);
-                }
+                this.startMatch(2);
             }, 3000);
         }
     }

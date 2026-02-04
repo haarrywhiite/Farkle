@@ -32,16 +32,14 @@ const UI = {
     init(game) {
         this.game = game;
 
-        // Mode and Score Selection Listeners
+        // Mode Selection - Show goal section after selection
         document.querySelectorAll('.select-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 document.querySelectorAll('.select-btn').forEach(b => b.classList.remove('active'));
-                const target = e.currentTarget;
-                target.classList.add('active');
+                e.currentTarget.classList.add('active');
 
-                // Show/Hide Tournament setup
-                const isTournament = target.dataset.type === 'tournament';
-                document.getElementById('tournament-setup').classList.toggle('hidden', !isTournament);
+                // Show goal section
+                document.getElementById('goal-section').style.display = 'block';
             });
         });
 
@@ -85,7 +83,8 @@ const UI = {
                 const shuffled = medievalNames.sort(() => Math.random() - 0.5);
                 const selected = shuffled.slice(0, 4);
 
-                this.game.initTournament(selected);
+                this.showBracket(selected, activeScore);
+                return; // Don't start game yet - wait for bracket button
             }
 
             // Update Target Display
@@ -93,10 +92,7 @@ const UI = {
 
             this.elements.startMenu.classList.add('hidden');
             this.elements.app.classList.remove('hidden');
-
-            if (activeType !== 'tournament') {
-                this.game.startTurn();
-            }
+            this.game.startTurn();
         });
 
         // Event Listeners
@@ -347,6 +343,32 @@ const UI = {
 
         const favicon = document.getElementById('favicon');
         favicon.href = canvas.toDataURL('image/x-icon');
+    },
+
+    showBracket(playerNames, goalScore) {
+        // Put "Thou" (the player) as p1, others are AI opponents
+        const opponents = playerNames;
+        document.getElementById('bracket-p1').textContent = "Thou";
+        document.getElementById('bracket-p2').textContent = opponents[0];
+        document.getElementById('bracket-p3').textContent = opponents[1];
+        document.getElementById('bracket-p4').textContent = opponents[2];
+
+        // Show bracket overlay
+        document.getElementById('start-menu').classList.add('hidden');
+        document.getElementById('bracket-overlay').classList.remove('hidden');
+
+        // Handle "Begin Tournament" button
+        document.getElementById('start-tournament-btn').onclick = () => {
+            this.game.maxScore = goalScore;
+            this.elements.globalTarget.textContent = `Goal: ${goalScore.toLocaleString()}`;
+
+            // Hide bracket, show game
+            document.getElementById('bracket-overlay').classList.add('hidden');
+            this.elements.app.classList.remove('hidden');
+
+            // Start tournament with player as participant
+            this.game.initTournamentWithPlayer(["Thou", opponents[0], opponents[1], opponents[2]]);
+        };
     }
 };
 

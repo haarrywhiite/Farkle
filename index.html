@@ -15,6 +15,7 @@
         rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css?v=2">
     <link rel="stylesheet" href="css/menu-buttons.css?v=3">
+    <link rel="stylesheet" href="css/bracket.css?v=3">
     <link id="favicon" rel="icon" type="image/x-icon" href="favicon.ico">
     <!-- Preload LCP Background -->
     <link rel="preload" as="image" href="img/table.png">
@@ -59,6 +60,38 @@
             <div class="menu-footer">
                 <button id="show-rules-btn">Scroll of Rules</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Tournament Bracket Overlay -->
+    <div id="bracket-overlay" class="menu-overlay hidden">
+        <div class="menu-content parchment bracket-view">
+            <h1 class="rustic-title">TOURNAMENT BRACKET</h1>
+            <div class="bracket-container">
+                <div class="bracket-round">
+                    <h3>Semi-Finals</h3>
+                    <div class="bracket-match">
+                        <div class="bracket-player" id="bracket-p1">Player 1</div>
+                        <div class="vs-text">VS</div>
+                        <div class="bracket-player" id="bracket-p2">Player 2</div>
+                    </div>
+                    <div class="bracket-match">
+                        <div class="bracket-player" id="bracket-p3">Player 3</div>
+                        <div class="vs-text">VS</div>
+                        <div class="bracket-player" id="bracket-p4">Player 4</div>
+                    </div>
+                </div>
+                <div class="bracket-arrow">→</div>
+                <div class="bracket-round">
+                    <h3>Grand Final</h3>
+                    <div class="bracket-match final">
+                        <div class="bracket-player placeholder">Winner 1</div>
+                        <div class="vs-text">VS</div>
+                        <div class="bracket-player placeholder">Winner 2</div>
+                    </div>
+                </div>
+            </div>
+            <button id="start-tournament-btn" class="medieval-btn large">BEGIN TOURNAMENT</button>
         </div>
     </div>
 
