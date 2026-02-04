@@ -5,20 +5,26 @@
 
 class Game {
     constructor() {
-        this.players = {
-            human: { score: 0, onBoard: false },
-            ai: { score: 0, onBoard: false }
+        this.players = []; // Array of objects: { name, score, onBoard, isAI }
+        this.currentPlayerIndex = 0;
+        this.gameType = 'pv-ai';
+        this.maxScore = 10000;
+
+        // Tournament State
+        this.tournament = {
+            active: false,
+            bracket: [], // Array of match objects
+            round: 0,
+            winner: null
         };
 
-        this.currentPlayer = 'human';
         this.turnTotal = 0;
         this.currentRollScore = 0;
-        this.gameState = 'START'; // START, ROLLING, SELECTING, BANKING, GAME_OVER
-        this.isRolling = false; // Guard for async roll overlap
-        this.maxScore = 10000;
+        this.gameState = 'START';
+        this.isRolling = false;
         this.diceManager = new DiceManager('dice-container');
 
-        window.game = this; // Expose for global state checks (e.g. Die selection)
+        window.game = this;
         this.init();
     }
 
@@ -27,16 +33,18 @@ class Game {
     }
 
     async startTurn() {
-        console.log(`Starting turn for ${this.currentPlayer}`);
+        const player = this.players[this.currentPlayerIndex];
+        console.log(`Starting turn for ${player.name}`);
         this.turnTotal = 0;
         this.diceManager.resetAll();
         this.gameState = 'START';
         this.updateUI();
 
-        if (this.currentPlayer === 'human') {
-            setTimeout(() => this.roll(), 1000);
-        } else {
+        if (player.isAI) {
             AI.playTurn(this);
+        } else {
+            // Give visual hint it's their turn
+            UI.showMessage(`${player.name.toUpperCase()}'S TURN`);
         }
     }
 
@@ -125,31 +133,44 @@ class Game {
         this.turnTotal = 0;
         this.currentRollScore = 0;
 
-        UI.addHistory(this.currentPlayer, 0, true);
+        const player = this.players[this.currentPlayerIndex];
+        UI.addHistory(player.name, 0, true);
 
-        UI.showFarkle(this.currentPlayer, () => {
+        UI.showFarkle(player.name, () => {
             this.switchPlayer();
         });
     }
 
+    bank() {
+        if (this.gameState !== 'SELECTING') return;
+
+        // Add current selection to total if valid
+        this.turnTotal += this.currentRollScore;
+
+        const player = this.players[this.currentPlayerIndex];
+        player.score += this.turnTotal;
+        UI.addHistory(player.name, this.turnTotal);
+
+        if (player.score >= this.maxScore) {
+            if (this.tournament.active) {
+                this.handleMatchWin();
+            } else {
+                this.gameState = 'GAME_OVER';
+                UI.showWinner(this.players);
+            }
+        } else {
+            this.switchPlayer();
+        }
+    }
+
     switchPlayer() {
-        this.currentPlayer = (this.currentPlayer === 'human') ? 'ai' : 'human';
+        this.currentPlayerIndex = (this.currentPlayerIndex + 1) % this.players.length;
         this.turnTotal = 0;
         this.currentRollScore = 0;
         this.gameState = 'START';
         this.diceManager.resetAll();
         this.updateUI();
-
-        if (this.currentPlayer === 'ai') {
-            AI.playTurn(this);
-        } else {
-            // Automatic roll for player
-            setTimeout(() => {
-                if (this.currentPlayer === 'human' && this.gameState === 'START') {
-                    this.roll();
-                }
-            }, 1000);
-        }
+        this.startTurn();
     }
 
     endGame() {

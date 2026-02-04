@@ -32,26 +32,66 @@ const UI = {
     init(game) {
         this.game = game;
 
+        // Mode and Score Selection Listeners
+        document.querySelectorAll('.select-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.select-btn').forEach(b => b.classList.remove('active'));
+                const target = e.currentTarget;
+                target.classList.add('active');
+
+                // Show/Hide Tournament setup
+                const isTournament = target.dataset.type === 'tournament';
+                document.getElementById('tournament-setup').classList.toggle('hidden', !isTournament);
+            });
+        });
+
+        document.querySelectorAll('.score-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.score-btn').forEach(b => b.classList.remove('active'));
+                e.currentTarget.classList.add('active');
+            });
+        });
+
         // Start Game
         this.elements.startGameBtn.addEventListener('click', () => {
-            const activeMode = document.querySelector('.mode-btn.active');
-            this.game.maxScore = parseInt(activeMode.dataset.max);
+            const activeType = document.querySelector('.select-btn.active').dataset.type;
+            const activeScore = parseInt(document.querySelector('.score-btn.active').dataset.score);
+
+            this.game.gameType = activeType;
+            this.game.maxScore = activeScore;
+
+            // Setup Players based on mode
+            if (activeType === 'pv-ai') {
+                this.game.players = [
+                    { name: "Thou", score: 0, onBoard: false, isAI: false },
+                    { name: "The King", score: 0, onBoard: false, isAI: true }
+                ];
+            } else if (activeType === 'pvp') {
+                this.game.players = [
+                    { name: "Player 1", score: 0, onBoard: false, isAI: false },
+                    { name: "Player 2", score: 0, onBoard: false, isAI: false }
+                ];
+            } else if (activeType === 'tournament') {
+                const names = [
+                    document.getElementById('p1-name').value || "Sir Lancelot",
+                    document.getElementById('p2-name').value || "Lady Guinevere",
+                    document.getElementById('p3-name').value || "Sir Galahad",
+                    document.getElementById('p4-name').value || "King Arthur"
+                ];
+                // Shuffle names for random seeding
+                const sorted = names.sort(() => Math.random() - 0.5);
+                this.game.initTournament(sorted);
+            }
 
             // Update Target Display
-            const targetText = `Goal: ${this.game.maxScore.toLocaleString()}`;
-            this.elements.globalTarget.textContent = targetText;
+            this.elements.globalTarget.textContent = `Goal: ${this.game.maxScore.toLocaleString()}`;
 
             this.elements.startMenu.classList.add('hidden');
             this.elements.app.classList.remove('hidden');
-            this.game.startTurn();
-        });
 
-        // Mode selection
-        document.querySelectorAll('.mode-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-                e.currentTarget.classList.add('active');
-            });
+            if (activeType !== 'tournament') {
+                this.game.startTurn();
+            }
         });
 
         // Event Listeners
@@ -101,17 +141,23 @@ const UI = {
         this.setRandomFavicon();
     },
 
-    updateScores(players, currentPlayer) {
-        this.elements.playerScore.textContent = players.human.score;
-        this.elements.aiScore.textContent = players.ai.score;
+    updateScores(players, currentPlayerIndex) {
+        const p1 = players[0];
+        const p2 = players[1];
 
-        this.elements.playerCard.classList.toggle('active', currentPlayer === 'human');
-        this.elements.aiCard.classList.toggle('active', currentPlayer === 'ai');
+        this.elements.playerScore.textContent = p1.score;
+        this.elements.aiScore.textContent = p2.score;
 
-        this.elements.turnIndicator.textContent =
-            currentPlayer === 'human' ? "THY TURN" : "OPPONENT PLAYS";
-        this.elements.turnIndicator.style.color =
-            currentPlayer === 'human' ? "var(--accent)" : "var(--primary)";
+        // Update Labels
+        this.elements.playerCard.querySelector('.label').textContent = p1.name.toUpperCase();
+        this.elements.aiCard.querySelector('.label').textContent = p2.name.toUpperCase();
+
+        this.elements.playerCard.classList.toggle('active', currentPlayerIndex === 0);
+        this.elements.aiCard.classList.toggle('active', currentPlayerIndex === 1);
+
+        const currentPlayer = players[currentPlayerIndex];
+        this.elements.turnIndicator.textContent = `${currentPlayer.name.toUpperCase()}'S TURN`;
+        this.elements.turnIndicator.style.color = currentPlayer.isAI ? "var(--primary)" : "var(--accent)";
     },
 
     updateTurnScore(score) {
@@ -119,7 +165,8 @@ const UI = {
     },
 
     updateControls() {
-        const isHuman = this.game.currentPlayer === 'human';
+        const player = this.game.players[this.game.currentPlayerIndex];
+        const isHuman = !player.isAI;
         const isSelecting = this.game.gameState === 'SELECTING';
         const hasSelectedScoring = (this.game.currentRollScore > 0);
 
@@ -149,16 +196,14 @@ const UI = {
         }, 200);
     },
 
-    addHistory(player, score, isFarkle = false) {
+    addHistory(playerName, score, isFarkle = false) {
         const item = document.createElement('div');
         item.className = 'history-item';
-        const playerClass = player === 'human' ? 'player' : 'ai';
-        const playerName = player === 'human' ? 'Thou' : 'Opponent';
 
         if (isFarkle) {
-            item.innerHTML = `<span class="${playerClass}">${playerName}</span>: <span style="color:var(--primary)">FARKLE!</span>`;
+            item.innerHTML = `<span>${playerName}</span>: <span style="color:var(--primary)">FARKLE!</span>`;
         } else {
-            item.innerHTML = `<span class="${playerClass}">${playerName}</span>: +${score} Gold`;
+            item.innerHTML = `<span>${playerName}</span>: +${score} Gold`;
         }
 
         this.elements.history.prepend(item);
@@ -189,19 +234,20 @@ const UI = {
         }
     },
 
-    showWinner(winner, players) {
-        const titleLabel = winner === 'human' ? "VICTORY!" : "DEFEAT";
-        const msg = winner === 'human' ?
-            "Thou hast bested thy opponent and claimed the gold!" :
-            "The opponent has outwitted thee. Thy purse is empty.";
+    showWinner(players) {
+        const winner = players.find(p => p.score >= this.game.maxScore);
+        const titleLabel = "VICTORY!";
+        const msg = winner.isAI ?
+            `${winner.name} has outwitted thee. Thy purse is empty.` :
+            `${winner.name} hast bested the opponent and claimed the gold!`;
 
         document.getElementById('winner-title').textContent = titleLabel;
         document.getElementById('winner-message').textContent = msg;
-        document.getElementById('final-player-score').textContent = players.human.score.toLocaleString();
-        document.getElementById('final-ai-score').textContent = players.ai.score.toLocaleString();
+        document.getElementById('final-player-score').textContent = players[0].score.toLocaleString();
+        document.getElementById('final-ai-score').textContent = players[1].score.toLocaleString();
 
         const trophy = document.querySelector('.winner-trophy');
-        if (winner === 'human') {
+        if (!winner.isAI) {
             trophy.textContent = '🏆';
             trophy.style.filter = 'drop-shadow(0 0 20px rgba(245, 158, 11, 0.6))';
         } else {

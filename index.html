@@ -26,17 +26,54 @@
             <h1 class="rustic-title">KINGDOM DICE</h1>
             <p class="subtitle">A High-Stakes Duel of Luck & Wit</p>
 
-            <div class="mode-selection">
-                <h3>Select Thy Challenge</h3>
-                <div class="mode-options">
-                    <button class="mode-btn active" data-max="10000">
-                        <span class="mode-title">STANDARD</span>
-                        <span class="mode-desc">First to 10,000 Gold</span>
-                    </button>
-                    <button class="mode-btn" data-max="5000">
-                        <span class="mode-title">QUICK DUEL</span>
-                        <span class="mode-desc">First to 5,000 Gold</span>
-                    </button>
+            <div class="menu-sections">
+                <div class="menu-section">
+                    <h3>Select Mode</h3>
+                    <div class="selection-grid mode-grid">
+                        <button class="select-btn active" data-type="pv-ai">
+                            <span class="btn-label">VERSUS KING</span>
+                        </button>
+                        <button class="select-btn" data-type="pvp">
+                            <span class="btn-label">LOCAL DUEL</span>
+                        </button>
+                        <button class="select-btn" data-type="tournament">
+                            <span class="btn-label">TOURNAMENT</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="menu-section">
+                    <h3>Winning Goal</h3>
+                    <div class="selection-grid score-grid">
+                        <button class="score-btn" data-score="2500">2,500</button>
+                        <button class="score-btn" data-score="5000">5,000</button>
+                        <button class="score-btn" data-score="7500">7,500</button>
+                        <button class="score-btn active" data-score="10000">10,000</button>
+                        <button class="score-btn" data-score="15000">15,000</button>
+                    </div>
+                </div>
+
+                <!-- Tournament Configuration (Initially Hidden) -->
+                <div id="tournament-setup" class="menu-section hidden">
+                    <h3>Tournament Contenders</h3>
+                    <div class="player-inputs">
+                        <div class="input-group">
+                            <label>Player 1</label>
+                            <input type="text" id="p1-name" placeholder="Sir Lancelot" class="parchment-input">
+                        </div>
+                        <div class="input-group">
+                            <label>Player 2</label>
+                            <input type="text" id="p2-name" placeholder="Lady Guinevere" class="parchment-input">
+                        </div>
+                        <div class="input-group">
+                            <label>Player 3</label>
+                            <input type="text" id="p3-name" placeholder="Sir Galahad" class="parchment-input">
+                        </div>
+                        <div class="input-group">
+                            <label>Player 4</label>
+                            <input type="text" id="p4-name" placeholder="King Arthur" class="parchment-input">
+                        </div>
+                    </div>
                 </div>
             </div>
 
