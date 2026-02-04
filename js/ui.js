@@ -25,7 +25,9 @@ const UI = {
         backToMenuBtn: document.getElementById('back-to-menu-btn'),
         confirmModal: document.getElementById('confirm-modal'),
         adviceText: document.getElementById('ai-advice'),
-        adviceBtn: document.getElementById('get-advice-btn')
+        adviceBtn: document.getElementById('get-advice-btn'),
+        playerTarget: document.getElementById('player-target-display'),
+        aiTarget: document.getElementById('ai-target-display')
     },
 
     init(game) {
@@ -35,6 +37,11 @@ const UI = {
         this.elements.startGameBtn.addEventListener('click', () => {
             const activeMode = document.querySelector('.mode-btn.active');
             this.game.maxScore = parseInt(activeMode.dataset.max);
+
+            // Update Target Displays
+            const targetText = `Goal: ${this.game.maxScore.toLocaleString()}`;
+            this.elements.playerTarget.textContent = targetText;
+            this.elements.aiTarget.textContent = targetText;
 
             this.elements.startMenu.classList.add('hidden');
             this.elements.app.classList.remove('hidden');
