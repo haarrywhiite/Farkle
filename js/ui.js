@@ -72,15 +72,20 @@ const UI = {
                     { name: "Player 2", score: 0, onBoard: false, isAI: false }
                 ];
             } else if (activeType === 'tournament') {
-                const names = [
-                    document.getElementById('p1-name').value || "Sir Lancelot",
-                    document.getElementById('p2-name').value || "Lady Guinevere",
-                    document.getElementById('p3-name').value || "Sir Galahad",
-                    document.getElementById('p4-name').value || "King Arthur"
+                // Random selection from famous medieval names
+                const medievalNames = [
+                    "King Arthur", "Sir Lancelot", "Sir Galahad", "Sir Gawain",
+                    "Lady Guinevere", "Merlin", "Sir Percival", "Sir Bedivere",
+                    "Lady Morgan", "Sir Tristan", "Lady Isolde", "Sir Kay",
+                    "Robin Hood", "Maid Marian", "Little John", "Friar Tuck",
+                    "William Wallace", "Richard Lionheart", "Joan of Arc", "Charlemagne"
                 ];
-                // Shuffle names for random seeding
-                const sorted = names.sort(() => Math.random() - 0.5);
-                this.game.initTournament(sorted);
+
+                // Shuffle and pick 4
+                const shuffled = medievalNames.sort(() => Math.random() - 0.5);
+                const selected = shuffled.slice(0, 4);
+
+                this.game.initTournament(selected);
             }
 
             // Update Target Display
