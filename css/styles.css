@@ -28,6 +28,7 @@
 @font-face {
     font-family: 'Medieval';
     src: local('MedievalSharp');
+    font-display: swap;
 }
 
 body {
