@@ -251,15 +251,32 @@
         </div>
     </div>
 
+    <div id="farkle-modal" class="modal hidden">
+        <div class="modal-content parchment small-modal farkle-content">
+            <h2 class="farkle-title">!!! FARKLE !!!</h2>
+            <p id="farkle-message">Alas! No scoring dice remain. Thy gold for this turn is lost to the wind.</p>
+            <button id="farkle-ok-btn" class="medieval-btn primary">NEXT TURN</button>
+        </div>
+    </div>
+
     <div id="game-over-modal" class="modal hidden">
         <div class="modal-content leather-bg winner-content">
+            <div class="royal-seal"></div>
             <h2 id="winner-title">VICTORY!</h2>
+            <div class="winner-trophy">🏆</div>
             <p id="winner-message">Thou hast reached the objective!</p>
-            <div class="final-scores">
-                <div>YOU: <span id="final-player-score">0</span></div>
-                <div>OPPONENT: <span id="final-ai-score">0</span></div>
+            <div class="final-scores-banner">
+                <div class="final-score-item">
+                    <span class="final-label">THY GOLD</span>
+                    <span id="final-player-score" class="final-value">0</span>
+                </div>
+                <div class="final-score-divider"></div>
+                <div class="final-score-item">
+                    <span class="final-label">OPPONENT</span>
+                    <span id="final-ai-score" class="final-value">0</span>
+                </div>
             </div>
-            <button id="restart-btn" class="medieval-btn primary">REMATCH</button>
+            <button id="restart-btn" class="medieval-btn primary">CLAIM THY REWARD & REMATCH</button>
         </div>
     </div>
 

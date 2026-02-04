@@ -24,9 +24,10 @@ const UI = {
         startGameBtn: document.getElementById('start-game-btn'),
         backToMenuBtn: document.getElementById('back-to-menu-btn'),
         confirmModal: document.getElementById('confirm-modal'),
-        adviceText: document.getElementById('ai-advice'),
         adviceBtn: document.getElementById('get-advice-btn'),
-        globalTarget: document.getElementById('global-target-display')
+        globalTarget: document.getElementById('global-target-display'),
+        farkleModal: document.getElementById('farkle-modal'),
+        farkleOkBtn: document.getElementById('farkle-ok-btn')
     },
 
     init(game) {
@@ -96,6 +97,12 @@ const UI = {
             this.elements.adviceText.classList.add('pop');
             setTimeout(() => this.elements.adviceText.classList.remove('pop'), 300);
         });
+
+        // Farkle Confirm
+        this.elements.farkleOkBtn.addEventListener('click', () => {
+            this.toggleModal('farkle-modal', false);
+            if (this.onFarkleClosed) this.onFarkleClosed();
+        });
     },
 
     updateScores(players, currentPlayer) {
@@ -161,6 +168,19 @@ const UI = {
         this.elements.history.prepend(item);
     },
 
+    showFarkle(playerName, onClosed) {
+        const nameDisplay = playerName === 'human' ? "Thou" : "The Opponent";
+        document.getElementById('farkle-message').textContent =
+            `Alas! ${nameDisplay} rolled no scoring dice. This turn's gold is lost!`;
+
+        this.onFarkleClosed = onClosed;
+        this.toggleModal('farkle-modal', true);
+
+        // Flash screen red
+        document.body.classList.add('farkle-flash');
+        setTimeout(() => document.body.classList.remove('farkle-flash'), 1000);
+    },
+
     toggleModal(id, show) {
         const modal = document.getElementById(id);
         if (show) {
@@ -171,15 +191,24 @@ const UI = {
     },
 
     showWinner(winner, players) {
-        const title = winner === 'human' ? "VICTORY!" : "DEFEAT";
+        const titleLabel = winner === 'human' ? "VICTORY!" : "DEFEAT";
         const msg = winner === 'human' ?
             "Thou hast bested thy opponent and claimed the gold!" :
             "The opponent has outwitted thee. Thy purse is empty.";
 
-        document.getElementById('winner-title').textContent = title;
+        document.getElementById('winner-title').textContent = titleLabel;
         document.getElementById('winner-message').textContent = msg;
-        document.getElementById('final-player-score').textContent = players.human.score;
-        document.getElementById('final-ai-score').textContent = players.ai.score;
+        document.getElementById('final-player-score').textContent = players.human.score.toLocaleString();
+        document.getElementById('final-ai-score').textContent = players.ai.score.toLocaleString();
+
+        const trophy = document.querySelector('.winner-trophy');
+        if (winner === 'human') {
+            trophy.textContent = '🏆';
+            trophy.style.filter = 'drop-shadow(0 0 20px rgba(245, 158, 11, 0.6))';
+        } else {
+            trophy.textContent = '💀';
+            trophy.style.filter = 'drop-shadow(0 0 20px rgba(153, 27, 27, 0.6))';
+        }
 
         this.toggleModal('game-over-modal', true);
     },

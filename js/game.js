@@ -124,10 +124,12 @@ class Game {
         this.gameState = 'START';
         this.turnTotal = 0;
         this.currentRollScore = 0;
-        UI.showMessage("!!! FARKLE !!! Zero gold earned.", "error");
+
         UI.addHistory(this.currentPlayer, 0, true);
 
-        setTimeout(() => this.switchPlayer(), 1500);
+        UI.showFarkle(this.currentPlayer, () => {
+            this.switchPlayer();
+        });
     }
 
     switchPlayer() {

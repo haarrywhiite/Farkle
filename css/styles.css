@@ -1011,6 +1011,105 @@ body {
     }
 }
 
+/* Farkle Content Styles */
+.farkle-content {
+    border: 10px solid #7c2d12 !important;
+    box-shadow: 0 0 50px rgba(124, 45, 18, 0.5) !important;
+}
+
+.farkle-title {
+    color: #991b1b !important;
+    font-size: 3rem !important;
+    font-family: 'Cinzel', serif;
+    margin-bottom: 20px;
+    letter-spacing: 5px;
+    animation: text-surge 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes text-surge {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Win Screen Redesign */
+.winner-content {
+    text-align: center;
+    border: 5px solid var(--accent) !important;
+    background: radial-gradient(circle at center, #2c1810 0%, #1a0f0a 100%) !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.winner-trophy {
+    font-size: 5rem;
+    margin: 20px 0;
+    filter: drop-shadow(0 0 20px rgba(245, 158, 11, 0.6));
+    animation: trophy-bounce 2s infinite alternate ease-in-out;
+}
+
+@keyframes trophy-bounce {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-20px);
+    }
+}
+
+.final-scores-banner {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 20px;
+    border-radius: 8px;
+    margin: 30px 0;
+    border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.final-score-item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.final-label {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    color: var(--accent);
+}
+
+.final-value {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: #fef3c7;
+}
+
+.final-score-divider {
+    width: 2px;
+    height: 60px;
+    background: rgba(245, 158, 11, 0.3);
+}
+
+#winner-title {
+    font-family: 'Cinzel', serif;
+    font-size: 3.5rem;
+    color: #fca311;
+    text-shadow: 0 0 20px rgba(250, 163, 17, 0.4);
+    margin-bottom: 10px;
+}
+
 .modal-content.small-modal {
     max-width: 450px;
     text-align: center;
