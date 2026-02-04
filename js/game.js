@@ -36,6 +36,7 @@ class Game {
         const player = this.players[this.currentPlayerIndex];
         console.log(`Starting turn for ${player.name}`);
         this.turnTotal = 0;
+        this.currentRollScore = 0;
         this.diceManager.resetAll();
         this.gameState = 'START';
         this.updateUI();
@@ -43,8 +44,9 @@ class Game {
         if (player.isAI) {
             AI.playTurn(this);
         } else {
-            // Give visual hint it's their turn
+            // Auto-roll for human player
             UI.showMessage(`${player.name.toUpperCase()}'S TURN`);
+            setTimeout(() => this.roll(), 1000);
         }
     }
 

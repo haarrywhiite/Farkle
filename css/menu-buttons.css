@@ -81,7 +81,7 @@
     font-weight: 700;
 }
 
-/* Sequential UX - Hide goal initially */
+/* Goal section visible by default */
 #goal-section {
-    display: none;
+    display: block;
 }
