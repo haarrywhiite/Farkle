@@ -26,8 +26,7 @@ const UI = {
         confirmModal: document.getElementById('confirm-modal'),
         adviceText: document.getElementById('ai-advice'),
         adviceBtn: document.getElementById('get-advice-btn'),
-        playerTarget: document.getElementById('player-target-display'),
-        aiTarget: document.getElementById('ai-target-display')
+        globalTarget: document.getElementById('global-target-display')
     },
 
     init(game) {
@@ -38,10 +37,9 @@ const UI = {
             const activeMode = document.querySelector('.mode-btn.active');
             this.game.maxScore = parseInt(activeMode.dataset.max);
 
-            // Update Target Displays
+            // Update Target Display
             const targetText = `Goal: ${this.game.maxScore.toLocaleString()}`;
-            this.elements.playerTarget.textContent = targetText;
-            this.elements.aiTarget.textContent = targetText;
+            this.elements.globalTarget.textContent = targetText;
 
             this.elements.startMenu.classList.add('hidden');
             this.elements.app.classList.remove('hidden');
