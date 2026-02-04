@@ -49,8 +49,15 @@ class Game {
     }
 
     async roll() {
-        if (this.gameState !== 'START' && this.gameState !== 'SELECTING') return;
-        if (this.isRolling) return;
+        console.log("Roll called. State:", this.gameState, "isRolling:", this.isRolling);
+        if (this.gameState !== 'START' && this.gameState !== 'SELECTING') {
+            console.log("Blocked by gameState:", this.gameState);
+            return;
+        }
+        if (this.isRolling) {
+            console.log("Blocked by isRolling");
+            return;
+        }
         this.isRolling = true;
 
         // Before rolling again, we must have selected some scoring dice from previous roll

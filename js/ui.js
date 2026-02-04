@@ -52,8 +52,21 @@ const UI = {
 
         // Start Game
         this.elements.startGameBtn.addEventListener('click', () => {
-            const activeType = document.querySelector('.select-btn.active').dataset.type;
-            const activeScore = parseInt(document.querySelector('.score-btn.active').dataset.score);
+            const activeTypeBtn = document.querySelector('.select-btn.active');
+            const activeScoreBtn = document.querySelector('.score-btn.active');
+
+            // Validate selections
+            if (!activeTypeBtn) {
+                UI.showMessage("Select a game mode first!");
+                return;
+            }
+            if (!activeScoreBtn) {
+                UI.showMessage("Select a winning goal first!");
+                return;
+            }
+
+            const activeType = activeTypeBtn.dataset.type;
+            const activeScore = parseInt(activeScoreBtn.dataset.score);
 
             this.game.gameType = activeType;
             this.game.maxScore = activeScore;
