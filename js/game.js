@@ -173,14 +173,61 @@ class Game {
         this.startTurn();
     }
 
-    endGame() {
-        this.gameState = 'GAME_OVER';
-        UI.showWinner(this.currentPlayer, this.players);
+    updateUI() {
+        UI.updateScores(this.players, this.currentPlayerIndex);
+        UI.updateTurnScore(this.turnTotal + this.currentRollScore);
+        UI.updateControls();
     }
 
-    updateUI() {
-        UI.updateScores(this.players, this.currentPlayer);
-        UI.updateTurnScore(this.turnTotal + this.currentRollScore, this.players[this.currentPlayer].onBoard);
-        UI.updateControls();
+    /* Tournament Logic */
+    initTournament(playerNames) {
+        this.tournament.active = true;
+        this.tournament.round = 1;
+        this.tournament.bracket = [
+            { p1: playerNames[0], p2: playerNames[1], winner: null },
+            { p1: playerNames[2], p2: playerNames[3], winner: null },
+            { p1: null, p2: null, winner: null }
+        ];
+        this.startMatch(0);
+    }
+
+    startMatch(matchIndex) {
+        const match = this.tournament.bracket[matchIndex];
+        this.tournament.currentMatchIndex = matchIndex;
+
+        this.players = [
+            { name: match.p1, score: 0, isAI: false },
+            { name: match.p2, score: 0, isAI: false }
+        ];
+
+        this.currentPlayerIndex = 0;
+        UI.showMessage(`MATCH: ${match.p1} VS ${match.p2}`);
+        setTimeout(() => this.startTurn(), 2000);
+    }
+
+    handleMatchWin() {
+        const winner = this.players[this.currentPlayerIndex];
+        const match = this.tournament.bracket[this.tournament.currentMatchIndex];
+        match.winner = winner.name;
+
+        if (this.tournament.currentMatchIndex === 2) {
+            this.tournament.winner = winner.name;
+            UI.showWinner(this.players);
+            UI.showMessage(`KINGDOM CHAMPION: ${winner.name}!`);
+        } else {
+            const finalMatch = this.tournament.bracket[2];
+            if (this.tournament.currentMatchIndex === 0) finalMatch.p1 = winner.name;
+            if (this.tournament.currentMatchIndex === 1) finalMatch.p2 = winner.name;
+
+            UI.showMessage(`${winner.name} ADVANCES!`);
+
+            setTimeout(() => {
+                if (this.tournament.currentMatchIndex === 0) {
+                    this.startMatch(1);
+                } else {
+                    this.startMatch(2);
+                }
+            }, 3000);
+        }
     }
 }
