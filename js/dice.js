@@ -57,8 +57,9 @@ class Die {
 
         // Only allow human to select during their turn via click
         if (isUserClick) {
-            if (window.game && window.game.currentPlayer !== 'human') return;
-            if (window.game && window.game.gameState !== 'SELECTING') return;
+            const game = window.game;
+            if (game && game.players && game.players[game.currentPlayerIndex]?.isAI) return;
+            if (game && game.gameState !== 'SELECTING') return;
         }
 
         // Only allow selecting if it's currently scoring (logic handled in Game.js)

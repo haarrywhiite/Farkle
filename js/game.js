@@ -109,25 +109,6 @@ class Game {
         this.updateUI();
     }
 
-    bank() {
-        if (this.gameState !== 'SELECTING' || this.currentRollScore === 0) return;
-
-        const totalThisTurn = this.turnTotal + this.currentRollScore;
-        const player = this.players[this.currentPlayer];
-
-        player.score += totalThisTurn;
-        player.onBoard = true;
-
-        UI.addHistory(this.currentPlayer, totalThisTurn);
-        UI.showMessage(`${this.currentPlayer.toUpperCase()} banked ${totalThisTurn} points!`);
-
-        if (player.score >= this.maxScore) {
-            this.endGame();
-        } else {
-            this.switchPlayer();
-        }
-    }
-
     handleFarkle() {
         this.gameState = 'START';
         this.turnTotal = 0;
