@@ -79,12 +79,38 @@
 }
 
 @media (max-width: 768px) {
+    .bracket-view {
+        padding: 20px 10px;
+    }
+
     .bracket-container {
         flex-direction: column;
-        gap: 20px;
+        gap: 15px;
+        margin: 20px 0;
+    }
+
+    .bracket-match {
+        min-width: 200px;
+        padding: 10px;
+    }
+
+    .bracket-match.final {
+        min-width: 220px;
+    }
+
+    .bracket-player {
+        font-size: 0.9rem;
+        padding: 6px;
     }
 
     .bracket-arrow {
+        font-size: 2rem;
         transform: rotate(90deg);
+        margin: 5px 0;
+    }
+
+    .bracket-round h3 {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
     }
 }

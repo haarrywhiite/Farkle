@@ -25,6 +25,7 @@ const UI = {
         backToMenuBtn: document.getElementById('back-to-menu-btn'),
         confirmModal: document.getElementById('confirm-modal'),
         globalTarget: document.getElementById('global-target-display'),
+        bracketOverlay: document.getElementById('bracket-overlay'),
         farkleModal: null // Removed
     },
 
@@ -115,7 +116,15 @@ const UI = {
         document.getElementById('show-rules-btn').addEventListener('click', () => this.toggleModal('rules-modal', true));
         document.getElementById('close-rules-btn').addEventListener('click', () => this.toggleModal('rules-modal', false));
         this.elements.backToMenuBtn.addEventListener('click', () => this.returnToMenu());
-        document.getElementById('restart-btn').addEventListener('click', () => window.location.reload());
+
+        document.getElementById('restart-btn').addEventListener('click', () => {
+            this.toggleModal('game-over-modal', false);
+            // Reset players and start over
+            this.game.players.forEach(p => p.score = 0);
+            this.game.currentPlayerIndex = 0;
+            this.game.gameState = 'START';
+            this.game.startTurn();
+        });
 
         // Click outside to close modals
         document.querySelectorAll('.modal').forEach(modal => {
@@ -368,6 +377,15 @@ const UI = {
     },
 
     showBracket(playerNames, goalScore) {
+        // Handle back button
+        const backBtn = document.getElementById('bracket-back-btn');
+        if (backBtn) {
+            backBtn.onclick = () => {
+                this.elements.bracketOverlay.classList.add('hidden');
+                this.elements.startMenu.classList.remove('hidden');
+            };
+        }
+
         // Put "Thou" (the player) as p1, others are AI opponents
         const opponents = playerNames;
         document.getElementById('bracket-p1').textContent = "Thou";
@@ -377,7 +395,7 @@ const UI = {
 
         // Show bracket overlay
         document.getElementById('start-menu').classList.add('hidden');
-        document.getElementById('bracket-overlay').classList.remove('hidden');
+        this.elements.bracketOverlay.classList.remove('hidden');
 
         // Handle "Begin Tournament" button
         document.getElementById('start-tournament-btn').onclick = () => {
