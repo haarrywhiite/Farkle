@@ -13,7 +13,8 @@ const ASSETS = [
     'manifest.json',
     'img/leather.png',
     'img/parchment.png',
-    'img/table.png'
+    'img/table.png',
+    'img/icon.svg'
 ];
 
 self.addEventListener('install', (event) => {
