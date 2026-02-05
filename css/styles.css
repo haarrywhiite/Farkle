@@ -361,7 +361,7 @@ body {
     /* Darkest ink */
     margin-bottom: 25px;
     letter-spacing: 5px;
-    text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.5);
+    text-shadow: 0 0 15px #fca311, 0 0 8px #fca311, 1px 1px 0px rgba(255, 255, 255, 0.5);
 }
 
 .parchment-small {
@@ -380,6 +380,7 @@ body {
     font-size: 1rem;
     color: #451a03;
     font-weight: 800;
+    text-shadow: 0 0 12px #fca311, 0 0 6px #fca311;
 }
 
 .turn-score-panel .value {
@@ -574,15 +575,13 @@ body {
     margin-top: 20px;
     font-family: 'MedievalSharp', cursive;
     font-size: 1.6rem;
-    color: #fef3c7;
-    /* Bright Ivory for contrast */
+    color: #1a0f0a;
     text-align: center;
     font-weight: 700;
     padding: 10px 30px;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
     min-height: 48px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    /* Shadow for readability */
+    text-shadow: 0 0 15px #fca311, 0 0 8px #fca311, 1px 1px 2px rgba(255, 255, 255, 0.3);
 }
 
 .medieval-btn:disabled {
