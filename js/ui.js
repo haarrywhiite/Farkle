@@ -135,6 +135,11 @@ const UI = {
             this.game.startTurn();
         });
 
+        document.getElementById('final-menu-btn')?.addEventListener('click', () => {
+            this.toggleModal('game-over-modal', false);
+            this.returnToMenu();
+        });
+
         // Click outside to close modals
         document.querySelectorAll('.modal').forEach(modal => {
             modal.addEventListener('click', (e) => {
