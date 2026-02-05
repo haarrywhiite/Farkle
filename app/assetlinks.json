@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "io.github.haarrywhiite.twa",
+        "sha256_cert_fingerprints": ["C1:4F:3F:C7:C3:3F:9F:1B:07:80:76:62:68:5A:E7:D7:A6:38:8E:0D:B1:4D:98:22:23:AD:7A:00:AD:A8:E0:05"]
+      }
+    }]
