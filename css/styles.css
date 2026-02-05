@@ -614,6 +614,7 @@ body {
     text-shadow: 0 0 15px #fca311, 0 0 8px #fca311;
     font-weight: 700;
     font-family: 'Cinzel', serif;
+    letter-spacing: 1px;
 }
 
 .menu-footer {
@@ -633,14 +634,15 @@ body {
 
 #show-rules-btn,
 #download-app-btn {
-    min-width: 180px;
-    height: 60px;
+    min-width: 200px;
+    height: 64px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    padding: 0 25px;
+    padding: 0 30px;
     margin: 0;
+    font-size: 1.1rem;
 }
 
 .made-by {
