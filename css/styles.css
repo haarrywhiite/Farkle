@@ -1265,14 +1265,14 @@ body {
 }
 
 @media (max-width: 600px) {
-    /* PHASE 6: PC CLONE SCALING */
-    /* Instead of reformatting, we render at 1400px width and scale down */
+    /* PHASE 7: NO-SCROLL PC CLONE */
 
     html,
     body {
         overflow: hidden !important;
         width: 100vw !important;
         height: 100vh !important;
+        position: fixed !important;
     }
 
     #start-menu,
@@ -1281,17 +1281,46 @@ body {
         position: fixed !important;
         top: 0 !important;
         left: 0 !important;
-        width: 1400px !important;
-        height: calc(100vh / (100vw / 1400)) !important;
-        transform: scale(calc(100vw / 1400)) !important;
+        width: 1250px !important;
+        height: calc(100vh / (100vw / 1250)) !important;
+        transform: scale(calc(100vw / 1250)) !important;
         transform-origin: top left !important;
         display: flex !important;
+        overflow: hidden !important;
     }
 
     #app {
         display: grid !important;
-        /* Keep the PC grid */
-        grid-template-columns: 320px 1fr 320px !important;
+        /* Remove the left column since Oracle is gone, center the board */
+        grid-template-columns: 1fr 320px !important;
+        grid-template-areas:
+            "header header"
+            "board right-side" !important;
+        gap: 10px !important;
+        padding: 10px !important;
+    }
+
+    /* Tighten vertical spacing in virtual layout */
+    .game-header {
+        padding: 10px 20px !important;
+        margin-bottom: 5px !important;
+        flex-direction: row !important;
+    }
+
+    .game-board {
+        padding: 5px !important;
+    }
+
+    .status-panel {
+        margin-bottom: 10px !important;
+    }
+
+    .dice-container {
+        margin-bottom: 10px !important;
+    }
+
+    .history-panel {
+        height: 100% !important;
     }
 
     /* Reset font sizes to PC defaults */
@@ -1299,44 +1328,9 @@ body {
         font-size: 16px !important;
     }
 
-    /* Ensure modals are also scaled or handled */
     .modal-content {
-        transform: scale(0.8);
-        /* Slight adjustment for modals if needed */
+        transform: scale(0.9);
         transform-origin: center;
-    }
-
-    /* Remove previous mobile-specific height/padding hacks */
-    .history-panel,
-    .advisor-panel {
-        height: 100% !important;
-        /* Back to PC filling the column */
-    }
-
-    .game-header {
-        flex-direction: row !important;
-        /* Back to PC horizontal */
-        padding: 15px 30px !important;
-    }
-
-    .logo h1 {
-        font-size: 2.5rem !important;
-        /* Back to PC size */
-    }
-
-    /* The grid areas must be preserved */
-    .left-panel {
-        grid-area: left-side !important;
-        display: block !important;
-    }
-
-    .right-panel {
-        grid-area: right-side !important;
-        display: block !important;
-    }
-
-    .game-board {
-        grid-area: board !important;
     }
 }
 
