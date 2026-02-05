@@ -14,7 +14,9 @@ const ASSETS = [
     'img/leather.png',
     'img/parchment.png',
     'img/table.png',
-    'img/icon.svg'
+    'img/icon.svg',
+    'img/icon-192.png',
+    'img/icon-512.png'
 ];
 
 self.addEventListener('install', (event) => {
