@@ -153,7 +153,7 @@ const UI = {
 
     handleScaling() {
         if (window.innerWidth <= 600) {
-            const scale = window.innerWidth / 700;
+            const scale = window.innerWidth / 500;
             document.documentElement.style.setProperty('--mobile-scale', scale);
 
             // Fix for iOS Safari height issues and centering

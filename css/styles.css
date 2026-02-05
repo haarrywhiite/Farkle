@@ -1281,7 +1281,7 @@ body {
         position: fixed !important;
         top: 0 !important;
         left: 50% !important;
-        width: 700px !important;
+        width: 500px !important;
         height: calc((var(--vh, 1vh) * 100) / var(--mobile-scale, 1)) !important;
         transform: translateX(-50%) scale(var(--mobile-scale, 1)) !important;
         transform-origin: top center !important;
@@ -1290,25 +1290,29 @@ body {
 
     #app:not(.hidden) {
         display: grid !important;
-        grid-template-columns: 1fr 320px !important;
+        grid-template-columns: 1fr 180px !important;
         grid-template-areas:
             "header header"
             "board right-side" !important;
-        gap: 5px !important;
-        padding: 5px !important;
+        gap: 0 !important;
+        padding: 0 !important;
     }
 
     .menu-content {
-        margin: 10px auto !important;
-        padding: 20px 15px !important;
-        width: 95% !important;
-        border-width: 8px !important;
+        margin: 0 auto !important;
+        padding: 15px 10px !important;
+        width: 100% !important;
+        border-width: 5px !important;
+        min-height: 100% !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 
     .rustic-title {
-        font-size: 3.5rem !important;
-        margin: 10px 0 !important;
-        letter-spacing: 4px !important;
+        font-size: 3rem !important;
+        margin: 5px 0 !important;
+        letter-spacing: 2px !important;
     }
 
     /* Reset font sizes to PC defaults */
