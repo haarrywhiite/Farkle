@@ -145,6 +145,23 @@ const UI = {
 
         // Set initial random favicon
         this.setRandomFavicon();
+
+        // Handle scaling for mobile
+        this.handleScaling();
+        window.addEventListener('resize', () => this.handleScaling());
+    },
+
+    handleScaling() {
+        if (window.innerWidth <= 600) {
+            const scale = window.innerWidth / 700;
+            document.documentElement.style.setProperty('--mobile-scale', scale);
+
+            // Fix for iOS Safari height issues and centering
+            const vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        } else {
+            document.documentElement.style.removeProperty('--mobile-scale');
+        }
     },
 
     updateScores(players, currentPlayerIndex) {

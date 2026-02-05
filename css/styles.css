@@ -1265,35 +1265,32 @@ body {
 }
 
 @media (max-width: 600px) {
-    /* PHASE 8: HYPER-TIGHTENING NO-SCROLL PC CLONE */
+    /* PHASE 6: PC CLONE SCALING */
+    /* Instead of reformatting, we render at 1400px width and scale down */
 
     html,
     body {
         overflow: hidden !important;
         width: 100vw !important;
         height: 100vh !important;
-        position: fixed !important;
     }
 
-    #start-menu,
-    #bracket-overlay,
-    #app {
+    #start-menu:not(.hidden),
+    #bracket-overlay:not(.hidden),
+    #app:not(.hidden) {
         position: fixed !important;
         top: 0 !important;
         left: 50% !important;
-        width: 1100px !important;
-        /* Narrower width forcing everything to shrink more vertically */
-        height: calc(100vh / (100vw / 1100)) !important;
-        transform: translateX(-50%) scale(calc(100vw / 1100)) !important;
+        width: 700px !important;
+        height: calc((var(--vh, 1vh) * 100) / var(--mobile-scale, 1)) !important;
+        transform: translateX(-50%) scale(var(--mobile-scale, 1)) !important;
         transform-origin: top center !important;
         display: flex !important;
-        overflow: hidden !important;
-        margin: 0 !important;
     }
 
-    #app {
+    #app:not(.hidden) {
         display: grid !important;
-        grid-template-columns: 1fr 300px !important;
+        grid-template-columns: 1fr 320px !important;
         grid-template-areas:
             "header header"
             "board right-side" !important;
@@ -1301,97 +1298,62 @@ body {
         padding: 5px !important;
     }
 
-    /* HYPER-SHRINK VERTICAL SPACE */
+    .menu-content {
+        margin: 10px auto !important;
+        padding: 20px 15px !important;
+        width: 95% !important;
+        border-width: 8px !important;
+    }
+
+    .rustic-title {
+        font-size: 3.5rem !important;
+        margin: 10px 0 !important;
+        letter-spacing: 4px !important;
+    }
+
+    /* Reset font sizes to PC defaults */
+    html {
+        font-size: 16px !important;
+    }
+
+    /* Ensure modals are also scaled or handled */
+    .modal-content {
+        transform: scale(0.8);
+        /* Slight adjustment for modals if needed */
+        transform-origin: center;
+    }
+
+    /* Remove previous mobile-specific height/padding hacks */
+    .history-panel,
+    .advisor-panel {
+        height: 100% !important;
+        /* Back to PC filling the column */
+    }
+
     .game-header {
-        padding: 5px 15px !important;
-        margin-bottom: 0 !important;
-        height: 80px !important;
-        /* Force thin header */
+        flex-direction: row !important;
+        /* Back to PC horizontal */
+        padding: 15px 30px !important;
     }
 
     .logo h1 {
-        font-size: 1.8rem !important;
+        font-size: 2.5rem !important;
+        /* Back to PC size */
     }
 
-    .main-scores {
-        gap: 10px !important;
+    /* The grid areas must be preserved */
+    .left-panel {
+        grid-area: left-side !important;
+        display: block !important;
     }
 
-    .score-card {
-        padding: 5px 15px !important;
-        min-width: 100px !important;
-    }
-
-    .score-card .value {
-        font-size: 1.5rem !important;
+    .right-panel {
+        grid-area: right-side !important;
+        display: block !important;
     }
 
     .game-board {
-        padding: 5px !important;
-        margin: 0 !important;
-        height: 100% !important;
-    }
-
-    .status-panel {
-        margin-bottom: 5px !important;
-    }
-
-    .turn-indicator {
-        font-size: 1.4rem !important;
-        margin-bottom: 5px !important;
-    }
-
-    .parchment-small {
-        padding: 10px 30px !important;
-    }
-
-    .turn-score-panel .value {
-        font-size: 3rem !important;
-    }
-
-    .dice-container {
-        gap: 10px !important;
-        margin-bottom: 5px !important;
-    }
-
-    /* Shrink dice for mobile to save vertical space */
-    .app-container {
-        --dice-size: 65px !important;
-    }
-
-    .game-controls {
-        margin: 5px 0 !important;
-    }
-
-    .medieval-btn {
-        padding: 12px 30px !important;
-        font-size: 1.1rem !important;
-    }
-
-    .message-area {
-        margin-top: 5px !important;
-        font-size: 1.2rem !important;
-        min-height: 30px !important;
-    }
-
-    .history-panel {
-        height: 100% !important;
-        padding: 10px !important;
-    }
-
-    .history-panel h3 {
-        font-size: 1.1rem !important;
-        margin-bottom: 5px !important;
-    }
-
-    /* Reset font sizes */
-    html {
-        font-size: 15px !important;
-    }
-
-    .modal-content {
-        transform: scale(0.85);
-        transform-origin: center;
+        grid-area: board !important;
     }
 }
 
