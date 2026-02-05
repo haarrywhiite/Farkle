@@ -85,31 +85,3 @@
 #goal-section {
     display: block;
 }
-
-@media (max-width: 600px) {
-    .menu-sections {
-        gap: 15px !important;
-        margin: 15px 0 !important;
-    }
-
-    .selection-grid {
-        gap: 8px !important;
-    }
-
-    .select-btn,
-    .score-btn {
-        padding: 12px 15px !important;
-        min-width: 100px !important;
-        font-size: 0.95rem !important;
-        border-width: 3px !important;
-    }
-
-    .menu-section h3 {
-        font-size: 1.1rem !important;
-        margin-bottom: 10px !important;
-    }
-
-    .btn-label {
-        font-size: 0.9rem !important;
-    }
-}

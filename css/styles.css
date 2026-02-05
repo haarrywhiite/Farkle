@@ -1265,138 +1265,78 @@ body {
 }
 
 @media (max-width: 600px) {
-    html {
-        font-size: 14px !important;
+    /* PHASE 6: PC CLONE SCALING */
+    /* Instead of reformatting, we render at 1400px width and scale down */
+
+    html,
+    body {
+        overflow: hidden !important;
+        width: 100vw !important;
+        height: 100vh !important;
     }
 
-    .app-container {
-        padding: 5px !important;
-        gap: 10px !important;
-        height: auto !important;
-        min-height: 100vh !important;
-        overflow-y: auto !important;
+    #start-menu,
+    #bracket-overlay,
+    #app {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 1400px !important;
+        height: calc(100vh / (100vw / 1400)) !important;
+        transform: scale(calc(100vw / 1400)) !important;
+        transform-origin: top left !important;
+        display: flex !important;
+    }
+
+    #app {
+        display: grid !important;
+        /* Keep the PC grid */
+        grid-template-columns: 320px 1fr 320px !important;
+    }
+
+    /* Reset font sizes to PC defaults */
+    html {
+        font-size: 16px !important;
+    }
+
+    /* Ensure modals are also scaled or handled */
+    .modal-content {
+        transform: scale(0.8);
+        /* Slight adjustment for modals if needed */
+        transform-origin: center;
+    }
+
+    /* Remove previous mobile-specific height/padding hacks */
+    .history-panel,
+    .advisor-panel {
+        height: 100% !important;
+        /* Back to PC filling the column */
     }
 
     .game-header {
-        padding: 8px 12px !important;
-        gap: 8px !important;
-        border-radius: 6px !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        height: auto !important;
-    }
-
-    .header-left {
-        width: 100% !important;
-        justify-content: space-between !important;
-        margin-bottom: 5px !important;
-    }
-
-    .logo {
-        margin: 5px 0 !important;
+        flex-direction: row !important;
+        /* Back to PC horizontal */
+        padding: 15px 30px !important;
     }
 
     .logo h1 {
-        font-size: 1.3rem !important;
+        font-size: 2.5rem !important;
+        /* Back to PC size */
     }
 
-    .main-scores {
-        width: 100% !important;
-        justify-content: center !important;
-        gap: 10px !important;
-        flex-wrap: wrap !important;
-    }
-
-    .score-card {
-        padding: 5px 12px !important;
-        min-width: 80px !important;
-    }
-
-    .game-board {
-        padding: 15px !important;
-        border-radius: 8px !important;
-        margin: 0 auto !important;
-        width: 95% !important;
-    }
-
-    .turn-indicator {
-        font-size: 1.4rem !important;
-        margin-bottom: 10px !important;
-    }
-
-    .turn-score-panel .value {
-        font-size: 3rem !important;
-    }
-
-    .dice-container {
-        gap: 8px !important;
-        justify-content: center !important;
-        padding: 10px 0 !important;
-    }
-
-    .app-container {
-        --dice-size: 55px !important;
-    }
-
-    .die-inner {
-        padding: 5px !important;
-        border-radius: 8px !important;
-        box-shadow: 0 3px 0 #2c1810 !important;
-    }
-
-    .game-controls {
-        gap: 12px !important;
-        margin: 15px 0 !important;
-    }
-
-    .medieval-btn {
-        padding: 10px 20px !important;
-        font-size: 1.1rem !important;
+    /* The grid areas must be preserved */
+    .left-panel {
+        grid-area: left-side !important;
+        display: block !important;
     }
 
     .right-panel {
-        width: 100% !important;
-        margin-top: 10px !important;
-        padding: 0 10px !important;
+        grid-area: right-side !important;
+        display: block !important;
     }
 
-    .history-panel {
-        height: 180px !important;
-        padding: 15px !important;
-        border-width: 4px !important;
-    }
-
-    .history-panel h3 {
-        font-size: 1.1rem !important;
-    }
-
-    /* Menu specific Legibility fix */
-    .menu-overlay {
-        padding: 15px !important;
-        overflow-y: auto !important;
-    }
-
-    .menu-content {
-        padding: 20px 15px !important;
-        border-width: 8px !important;
-        width: 100% !important;
-        max-width: 450px !important;
-    }
-
-    .rustic-title {
-        font-size: 2.2rem !important;
-        margin: 10px 0 !important;
-    }
-
-    .subtitle {
-        font-size: 1rem !important;
-        margin-bottom: 20px !important;
-    }
-
-    .medieval-btn.large {
-        font-size: 1.2rem !important;
-        padding: 12px 25px !important;
-        margin-top: 20px !important;
+    .game-board {
+        grid-area: board !important;
     }
 }
 
