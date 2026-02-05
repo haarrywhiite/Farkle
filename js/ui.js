@@ -27,6 +27,8 @@ const UI = {
         startGameBtn: document.getElementById('start-game-btn'),
         backToMenuBtn: document.getElementById('back-to-menu-btn'),
         installPwaBtn: document.getElementById('install-pwa-btn'),
+        downloadMenuBtn: document.getElementById('download-menu-btn'),
+        downloadOptions: document.getElementById('download-options'),
         farkleModal: null // Removed
     },
 
@@ -174,6 +176,9 @@ const UI = {
 
         // PWA Setup
         this.handlePWA();
+
+        // Download Menu
+        this.handleDownloadMenu();
     },
 
     handleScaling() {
@@ -465,6 +470,33 @@ const UI = {
             console.log('PWA installed successfully');
             deferredPrompt = null;
             installBtn.style.display = 'none';
+        });
+    },
+
+    /**
+     * Handles download dropdown menu
+     */
+    handleDownloadMenu() {
+        const menuBtn = this.elements.downloadMenuBtn;
+        const dropdown = this.elements.downloadOptions;
+
+        if (!menuBtn || !dropdown) return;
+
+        menuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdown.classList.toggle('show');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!menuBtn.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.classList.remove('show');
+            }
+        });
+
+        // Close dropdown after selecting an option
+        dropdown.addEventListener('click', () => {
+            dropdown.classList.remove('show');
         });
     }
 };

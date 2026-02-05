@@ -654,6 +654,77 @@ body {
     margin-top: 10px;
 }
 
+/* Download Dropdown */
+.download-dropdown {
+    position: relative;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 10px;
+    background: linear-gradient(180deg, #2c1810 0%, #1a0f0a 100%);
+    border: 3px solid var(--accent);
+    border-radius: 8px;
+    min-width: 280px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    padding: 8px 0;
+}
+
+.dropdown-content.show {
+    display: block;
+    animation: dropdownSlide 0.2s ease-out;
+}
+
+@keyframes dropdownSlide {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+.dropdown-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    padding: 12px 20px;
+    background: transparent;
+    border: none;
+    color: var(--text-main);
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'MedievalSharp', cursive;
+}
+
+.dropdown-item:hover {
+    background: rgba(252, 163, 17, 0.1);
+    color: var(--gold);
+}
+
+.option-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 4px;
+}
+
+.option-desc {
+    font-size: 0.85rem;
+    opacity: 0.7;
+    font-family: 'IM Fell DW Pica', serif;
+}
+
 /* Panels */
 .left-panel {
     grid-area: left-side;
