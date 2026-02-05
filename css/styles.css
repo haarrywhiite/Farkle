@@ -1298,6 +1298,21 @@ body {
         padding: 0 !important;
     }
 
+    .game-controls {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 10px !important;
+        width: 100% !important;
+        margin-top: 15px !important;
+    }
+
+    .game-controls .medieval-btn {
+        width: 85% !important;
+        padding: 15px !important;
+        font-size: 1.2rem !important;
+    }
+
     .menu-content {
         margin: 0 auto !important;
         padding: 15px 10px !important;
