@@ -633,7 +633,7 @@ body {
 }
 
 #show-rules-btn,
-#download-app-btn {
+#download-menu-btn {
     min-width: 200px;
     height: 64px;
     display: flex;
