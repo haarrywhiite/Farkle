@@ -1280,14 +1280,15 @@ body {
     #app {
         position: fixed !important;
         top: 0 !important;
-        left: 0 !important;
+        left: 50% !important;
         width: 1100px !important;
         /* Narrower width forcing everything to shrink more vertically */
         height: calc(100vh / (100vw / 1100)) !important;
-        transform: scale(calc(100vw / 1100)) !important;
-        transform-origin: top left !important;
+        transform: translateX(-50%) scale(calc(100vw / 1100)) !important;
+        transform-origin: top center !important;
         display: flex !important;
         overflow: hidden !important;
+        margin: 0 !important;
     }
 
     #app {
