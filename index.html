@@ -60,10 +60,19 @@
             <div class="menu-footer">
                 <div class="footer-buttons">
                     <button id="show-rules-btn" class="medieval-btn small gold-highlight">Scroll of Rules</button>
-                    <button id="install-pwa-btn" class="medieval-btn small gold-highlight"
-                        style="display: none;">INSTALL APP</button>
-                    <a href="app/Kingdom Dice.apk" download id="download-app-btn"
-                        class="medieval-btn small gold-highlight">DOWNLOAD APK</a>
+                    <div class="download-dropdown">
+                        <button id="download-menu-btn" class="medieval-btn small gold-highlight">DOWNLOAD ▼</button>
+                        <div id="download-options" class="dropdown-content">
+                            <button id="install-pwa-btn" class="dropdown-item" style="display: none;">
+                                <span class="option-title">Install App (PWA)</span>
+                                <span class="option-desc">Auto-updates, works offline</span>
+                            </button>
+                            <a href="app/Kingdom Dice.apk" download class="dropdown-item">
+                                <span class="option-title">Download APK</span>
+                                <span class="option-desc">Traditional Android install</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
                 <div class="made-by">Made by Harry White 2026</div>
             </div>
