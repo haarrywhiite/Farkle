@@ -24,7 +24,6 @@ const UI = {
         startGameBtn: document.getElementById('start-game-btn'),
         backToMenuBtn: document.getElementById('back-to-menu-btn'),
         confirmModal: document.getElementById('confirm-modal'),
-        adviceBtn: document.getElementById('get-advice-btn'),
         globalTarget: document.getElementById('global-target-display'),
         farkleModal: null // Removed
     },
@@ -143,13 +142,6 @@ const UI = {
             }
         });
 
-        // Advice
-        this.elements.adviceBtn.addEventListener('click', () => {
-            const advice = AI.getAdvice(this.game);
-            this.elements.adviceText.textContent = advice;
-            this.elements.adviceText.classList.add('pop');
-            setTimeout(() => this.elements.adviceText.classList.remove('pop'), 300);
-        });
 
         // Set initial random favicon
         this.setRandomFavicon();

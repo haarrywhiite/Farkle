@@ -1266,186 +1266,137 @@ body {
 
 @media (max-width: 600px) {
     html {
-        font-size: 8px !important;
+        font-size: 14px !important;
     }
 
     .app-container {
-        padding: 1px !important;
-        gap: 2px !important;
-        height: 100vh !important;
-        overflow: hidden !important;
+        padding: 5px !important;
+        gap: 10px !important;
+        height: auto !important;
+        min-height: 100vh !important;
+        overflow-y: auto !important;
     }
 
     .game-header {
-        padding: 2px 5px !important;
-        gap: 3px !important;
-        border-radius: 2px !important;
+        padding: 8px 12px !important;
+        gap: 8px !important;
+        border-radius: 6px !important;
+        flex-direction: column !important;
+        align-items: center !important;
         height: auto !important;
     }
 
+    .header-left {
+        width: 100% !important;
+        justify-content: space-between !important;
+        margin-bottom: 5px !important;
+    }
+
     .logo {
-        margin: 0 !important;
+        margin: 5px 0 !important;
     }
 
     .logo h1 {
-        font-size: 1rem !important;
-        margin: 0 !important;
-    }
-
-    .header-left {
-        gap: 3px !important;
-    }
-
-    .header-actions {
-        padding-left: 3px !important;
-        gap: 1px !important;
-    }
-
-    .icon-btn {
-        width: 22px !important;
-        height: 22px !important;
-        font-size: 0.8rem !important;
+        font-size: 1.3rem !important;
     }
 
     .main-scores {
-        gap: 2px !important;
+        width: 100% !important;
+        justify-content: center !important;
+        gap: 10px !important;
+        flex-wrap: wrap !important;
     }
 
     .score-card {
-        padding: 1px 4px !important;
-        min-width: 50px !important;
-        border-radius: 2px !important;
-    }
-
-    .score-card .label {
-        font-size: 0.5rem !important;
-    }
-
-    .score-card .value {
-        font-size: 1rem !important;
-    }
-
-    .global-target {
-        font-size: 0.5rem !important;
-        padding: 1px 4px !important;
-        margin-right: 2px !important;
+        padding: 5px 12px !important;
+        min-width: 80px !important;
     }
 
     .game-board {
-        padding: 2px !important;
-        border-radius: 2px !important;
-        flex: 1 !important;
-    }
-
-    .status-panel {
-        margin-bottom: 2px !important;
+        padding: 15px !important;
+        border-radius: 8px !important;
+        margin: 0 auto !important;
+        width: 95% !important;
     }
 
     .turn-indicator {
-        font-size: 1rem !important;
-        margin-bottom: 1px !important;
-        letter-spacing: 1px !important;
-    }
-
-    .parchment-small {
-        padding: 2px 10px !important;
-        border-width: 1px !important;
-    }
-
-    .turn-score-panel .label {
-        font-size: 0.6rem !important;
+        font-size: 1.4rem !important;
+        margin-bottom: 10px !important;
     }
 
     .turn-score-panel .value {
-        font-size: 2.5rem !important;
+        font-size: 3rem !important;
     }
 
     .dice-container {
-        gap: 2px !important;
-        margin-bottom: 2px !important;
+        gap: 8px !important;
+        justify-content: center !important;
+        padding: 10px 0 !important;
     }
 
-    /* Override variables locally for mobile */
     .app-container {
-        --dice-size: 35px !important;
+        --dice-size: 55px !important;
     }
 
     .die-inner {
-        padding: 1px !important;
-        border-radius: 3px !important;
-        box-shadow: 0 1px 0 #2c1810 !important;
+        padding: 5px !important;
+        border-radius: 8px !important;
+        box-shadow: 0 3px 0 #2c1810 !important;
     }
 
     .game-controls {
-        gap: 4px !important;
-        margin-bottom: 2px !important;
+        gap: 12px !important;
+        margin: 15px 0 !important;
     }
 
     .medieval-btn {
-        padding: 4px 10px !important;
-        font-size: 0.8rem !important;
+        padding: 10px 20px !important;
+        font-size: 1.1rem !important;
     }
 
-    .left-panel,
     .right-panel {
-        gap: 2px !important;
-        margin: 0 !important;
+        width: 100% !important;
+        margin-top: 10px !important;
+        padding: 0 10px !important;
     }
 
-    .history-panel,
-    .advisor-panel {
-        height: 80px !important;
-        padding: 3px !important;
-        border-width: 1px !important;
+    .history-panel {
+        height: 180px !important;
+        padding: 15px !important;
+        border-width: 4px !important;
     }
 
-    .history-panel h3,
-    .advisor-panel h3 {
-        font-size: 0.8rem !important;
-        margin-bottom: 2px !important;
-        padding-bottom: 1px !important;
+    .history-panel h3 {
+        font-size: 1.1rem !important;
     }
 
-    .advice-content {
-        padding: 2px !important;
-        font-size: 0.8rem !important;
-    }
-
-    .history-item {
-        padding: 3px !important;
-        font-size: 0.8rem !important;
-    }
-
-    /* Rules Modal Shrink */
-    .rules-large {
-        padding: 5px !important;
-        border-width: 2px !important;
-    }
-
-    /* Menu specific zoom fix */
+    /* Menu specific Legibility fix */
     .menu-overlay {
-        padding: 5px !important;
+        padding: 15px !important;
+        overflow-y: auto !important;
     }
 
     .menu-content {
-        padding: 5px !important;
-        border-width: 3px !important;
+        padding: 20px 15px !important;
+        border-width: 8px !important;
+        width: 100% !important;
+        max-width: 450px !important;
     }
 
     .rustic-title {
-        font-size: 1.2rem !important;
-        margin: 2px 0 !important;
+        font-size: 2.2rem !important;
+        margin: 10px 0 !important;
     }
 
     .subtitle {
-        font-size: 0.8rem !important;
-        margin-bottom: 2px !important;
+        font-size: 1rem !important;
+        margin-bottom: 20px !important;
     }
 
     .medieval-btn.large {
-        font-size: 1rem !important;
-        padding: 5px 15px !important;
-        margin-top: 5px !important;
+        font-size: 1.2rem !important;
+        padding: 12px 25px !important;
+        margin-top: 20px !important;
     }
 }
 
