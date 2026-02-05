@@ -26,6 +26,7 @@ const UI = {
         app: document.getElementById('app'),
         startGameBtn: document.getElementById('start-game-btn'),
         backToMenuBtn: document.getElementById('back-to-menu-btn'),
+        installAppBtn: document.getElementById('install-app-btn'),
         farkleModal: null // Removed
     },
 
@@ -171,6 +172,9 @@ const UI = {
         // Handle scaling for mobile
         this.handleScaling();
         window.addEventListener('resize', () => this.handleScaling());
+
+        // PWA Setup
+        this.handlePWA();
     },
 
     handleScaling() {
@@ -431,6 +435,46 @@ const UI = {
             // Start tournament with player as participant
             this.game.initTournamentWithPlayer(["Thou", opponents[0], opponents[1], opponents[2]]);
         };
+    },
+
+    /**
+     * Handles Progressive Web App (PWA) installation
+     */
+    handlePWA() {
+        let deferredPrompt;
+        const installBtn = this.elements.installAppBtn;
+
+        if (!installBtn) return;
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Prevent the mini-infobar from appearing on mobile
+            e.preventDefault();
+            // Stash the event so it can be triggered later.
+            deferredPrompt = e;
+            // Update UI notify the user they can install the PWA
+            installBtn.style.display = 'block';
+
+            installBtn.addEventListener('click', async () => {
+                // Show the install prompt
+                deferredPrompt.prompt();
+                // Wait for the user to respond to the prompt
+                const { outcome } = await deferredPrompt.userChoice;
+                // Optionally, send analytics event with outcome of user choice
+                console.log(`User response to the install prompt: ${outcome}`);
+                // We've used the prompt, and can't use it again, throw it away
+                deferredPrompt = null;
+                // Hide the install button
+                installBtn.style.display = 'none';
+            });
+        });
+
+        window.addEventListener('appinstalled', (event) => {
+            console.log('👍', 'appinstalled', event);
+            // Clear the deferredPrompt so it can be garbage collected
+            deferredPrompt = null;
+            // Hide the install button
+            installBtn.style.display = 'none';
+        });
     }
 };
 

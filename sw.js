@@ -1,13 +1,19 @@
 const CACHE_NAME = 'farkle-v2';
 const ASSETS = [
+    '/',
     'index.html',
     'css/styles.css',
+    'css/menu-buttons.css',
+    'css/bracket.css',
     'js/scoring.js',
     'js/dice.js',
     'js/game.js',
     'js/ai.js',
     'js/ui.js',
-    'manifest.json'
+    'manifest.json',
+    'img/leather.png',
+    'img/parchment.png',
+    'img/table.png'
 ];
 
 self.addEventListener('install', (event) => {

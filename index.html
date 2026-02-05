@@ -26,7 +26,7 @@
     <div id="start-menu" class="menu-overlay">
         <div class="menu-content parchment">
             <h1 class="rustic-title">KINGDOM DICE</h1>
-            <p class="subtitle">A High-Stakes Duel of Luck & Wit</p>
+            <p class="subtitle gold-highlight">A High-Stakes Duel of Luck & Wit</p>
 
             <div class="menu-sections">
                 <div class="menu-section">
@@ -45,7 +45,7 @@
                 </div>
 
                 <div id="goal-section" class="menu-section">
-                    <h3>Winning Goal</h3>
+                    <h3 class="gold-highlight">Winning Goal</h3>
                     <div class="selection-grid score-grid">
                         <button class="score-btn" data-score="2500">2,500</button>
                         <button class="score-btn" data-score="5000">5,000</button>
@@ -58,7 +58,10 @@
 
             <button id="start-game-btn" class="medieval-btn large">ENTER THE TAVERN</button>
             <div class="menu-footer">
-                <button id="show-rules-btn">Scroll of Rules</button>
+                <button id="show-rules-btn" class="gold-highlight">Scroll of Rules</button>
+                <button id="install-app-btn" class="medieval-btn small gold-highlight" style="display: none;">INSTALL
+                    APP</button>
+                <div class="made-by">Made by Harry White 2026</div>
             </div>
         </div>
     </div>
@@ -332,6 +335,15 @@
     <script src="js/ai.js?v=2" defer></script>
     <script src="js/game.js?v=2" defer></script>
     <script src="js/ui.js?v=2" defer></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('Service Worker registered'))
+                    .catch(err => console.log('Service Worker failed', err));
+            });
+        }
+    </script>
 </body>
 
 </html>

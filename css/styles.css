@@ -13,6 +13,7 @@
     /* Darkest ink for parchment */
     --text-muted: #92400e;
     --parchment: #fde68a;
+    --gold: #fca311;
     --dice-size: 85px;
     --dice-size-mobile: 70px;
     --border-gold: 2px solid #b45309;
@@ -606,6 +607,35 @@ body {
 #show-rules-btn:hover {
     opacity: 1;
     color: var(--primary);
+}
+
+.gold-highlight {
+    color: var(--gold) !important;
+    text-shadow: 0 0 10px rgba(252, 163, 17, 0.4);
+    font-weight: 700;
+}
+
+.menu-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+#download-app-btn {
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 12px 24px;
+}
+
+.made-by {
+    font-family: 'IM Fell DW Pica', serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--text-ink);
+    opacity: 0.6;
+    margin-top: 10px;
 }
 
 /* Panels */

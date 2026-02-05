@@ -1,20 +1,20 @@
 {
-  "name": "Farkle Elite - Pro Dice Game",
-  "short_name": "Farkle",
-  "description": "Premium Farkle dice game with AI opponents.",
+  "name": "Kingdom Dice - Medieval Farkle",
+  "short_name": "Kingdom Dice",
+  "description": "A rustic medieval Farkle experience. Risk your gold and outsmart the bot.",
   "start_url": "index.html",
   "display": "standalone",
-  "background_color": "#0f172a",
-  "theme_color": "#6366f1",
-  "orientation": "portrait",
+  "background_color": "#2c1810",
+  "theme_color": "#2c1810",
+  "orientation": "any",
   "icons": [
     {
-      "src": "assets/icons/icon-192.png",
+      "src": "img/icon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "assets/icons/icon-512.png",
+      "src": "img/icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
