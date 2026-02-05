@@ -1266,183 +1266,189 @@ body {
 
 @media (max-width: 480px) {
     html {
-        font-size: 14px;
+        font-size: 10px;
     }
 
     .app-container {
-        padding: 5px;
-        gap: 8px;
+        padding: 1px;
+        gap: 2px;
     }
 
     .game-header {
-        padding: 8px 10px;
-        gap: 8px;
-        border-radius: 8px;
+        padding: 3px 6px;
+        gap: 3px;
+        border-radius: 3px;
     }
 
     .logo h1 {
-        font-size: 1.1rem;
+        font-size: 0.8rem;
     }
 
     .header-left {
-        gap: 8px;
+        gap: 3px;
     }
 
     .header-actions {
-        padding-left: 8px;
-        gap: 4px;
+        padding-left: 3px;
+        gap: 1px;
     }
 
     .icon-btn {
-        width: 34px;
-        height: 34px;
-        font-size: 1rem;
+        width: 24px;
+        height: 24px;
+        font-size: 0.7rem;
     }
 
     .main-scores {
-        gap: 6px;
+        gap: 2px;
     }
 
     .score-card {
-        padding: 4px 8px;
-        min-width: 65px;
-        border-radius: 4px;
+        padding: 1px 4px;
+        min-width: 45px;
+        border-radius: 2px;
     }
 
     .score-card .label {
-        font-size: 0.6rem;
+        font-size: 0.4rem;
     }
 
     .score-card .value {
-        font-size: 1.1rem;
+        font-size: 0.8rem;
     }
 
     .global-target {
-        font-size: 0.65rem;
-        padding: 4px 6px;
-        margin-right: 4px;
+        font-size: 0.45rem;
+        padding: 1px 3px;
+        margin-right: 1px;
     }
 
     .game-board {
-        padding: 8px;
-        border-radius: 4px;
+        padding: 3px;
+        border-radius: 2px;
     }
 
     .status-panel {
-        margin-bottom: 8px;
+        margin-bottom: 3px;
     }
 
     .turn-indicator {
-        font-size: 1.1rem;
-        margin-bottom: 4px;
-        letter-spacing: 2px;
+        font-size: 0.85rem;
+        margin-bottom: 2px;
+        letter-spacing: 1px;
     }
 
     .parchment-small {
-        padding: 8px 15px;
-        border-width: 2px;
+        padding: 3px 8px;
+        border-width: 1px;
     }
 
     .turn-score-panel .label {
-        font-size: 0.75rem;
+        font-size: 0.55rem;
     }
 
     .turn-score-panel .value {
-        font-size: 2rem;
+        font-size: 1.5rem;
     }
 
     .dice-container {
-        gap: 6px;
-        margin-bottom: 8px;
+        gap: 2px;
+        margin-bottom: 3px;
+    }
+
+    :root {
+        --dice-size: 40px;
     }
 
     .die-inner {
-        padding: 8px;
-        border-radius: 8px;
-        box-shadow: 0 4px 0 #2c1810;
+        padding: 2px;
+        border-radius: 4px;
+        box-shadow: 0 1.5px 0 #2c1810;
+        border-width: 1px;
     }
 
     .game-controls {
-        gap: 8px;
+        gap: 3px;
     }
 
     .medieval-btn {
-        padding: 8px 16px;
-        font-size: 0.85rem;
+        padding: 4px 8px;
+        font-size: 0.65rem;
     }
 
     .left-panel,
     .right-panel {
-        gap: 8px;
-        margin-top: 5px;
+        gap: 3px;
+        margin-top: 1px;
     }
 
     .history-panel,
     .advisor-panel {
-        height: 160px;
-        padding: 10px;
-        border-width: 3px;
+        height: 100px;
+        padding: 5px;
+        border-width: 1.5px;
     }
 
     .history-panel h3,
     .advisor-panel h3 {
-        font-size: 0.85rem;
-        margin-bottom: 5px;
-        padding-bottom: 5px;
+        font-size: 0.65rem;
+        margin-bottom: 2px;
+        padding-bottom: 2px;
     }
 
     .advice-content {
-        padding: 8px;
-        font-size: 0.85rem;
+        padding: 3px;
+        font-size: 0.65rem;
     }
 
     .history-item {
-        padding: 10px;
-        font-size: 0.85rem;
+        padding: 5px;
+        font-size: 0.65rem;
     }
 
     /* Rules Modal Shrink */
     .rules-large {
-        padding: 15px !important;
-        border-width: 8px !important;
+        padding: 8px !important;
+        border-width: 3px !important;
     }
 
     .rules-large h2 {
-        font-size: 1.4rem !important;
+        font-size: 1rem !important;
     }
 
     /* Menu specific shrink */
     .medieval-btn.large {
-        font-size: 1.1rem;
-        padding: 8px 16px;
-        margin-top: 10px;
+        font-size: 0.9rem;
+        padding: 4px 10px;
+        margin-top: 5px;
         width: 100%;
     }
 
     .rustic-title {
-        font-size: 1.3rem;
-        letter-spacing: 1px;
-        margin: 2px 0;
+        font-size: 0.9rem;
+        letter-spacing: 0.5px;
+        margin: 1px 0;
     }
 
     .subtitle {
-        font-size: 0.85rem;
-        margin-bottom: 5px;
-        line-height: 1.1;
+        font-size: 0.65rem;
+        margin-bottom: 2px;
+        line-height: 0.9;
     }
 
     .menu-content {
-        padding: 15px 10px;
-        margin: 5px auto;
+        padding: 5px 3px;
+        margin: 2px auto;
         width: 98%;
-        border-width: 8px;
+        border-width: 3px;
     }
 
     .select-btn,
     .score-btn {
-        min-width: 60px;
-        padding: 6px 2px;
-        font-size: 0.7rem;
+        min-width: 50px;
+        padding: 3px 0.5px;
+        font-size: 0.6rem;
+        border-width: 1px;
     }
 }
 
