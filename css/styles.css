@@ -108,7 +108,7 @@ body {
     font-family: 'IM Fell DW Pica', serif;
     font-style: italic;
     font-size: 1.4rem;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     color: var(--text-ink);
     font-weight: 600;
     opacity: 0.9;
@@ -1265,41 +1265,184 @@ body {
 }
 
 @media (max-width: 480px) {
+    html {
+        font-size: 14px;
+    }
+
+    .app-container {
+        padding: 5px;
+        gap: 8px;
+    }
+
+    .game-header {
+        padding: 8px 10px;
+        gap: 8px;
+        border-radius: 8px;
+    }
+
+    .logo h1 {
+        font-size: 1.1rem;
+    }
+
+    .header-left {
+        gap: 8px;
+    }
+
+    .header-actions {
+        padding-left: 8px;
+        gap: 4px;
+    }
+
+    .icon-btn {
+        width: 34px;
+        height: 34px;
+        font-size: 1rem;
+    }
+
+    .main-scores {
+        gap: 6px;
+    }
+
+    .score-card {
+        padding: 4px 8px;
+        min-width: 65px;
+        border-radius: 4px;
+    }
+
+    .score-card .label {
+        font-size: 0.6rem;
+    }
+
+    .score-card .value {
+        font-size: 1.1rem;
+    }
+
+    .global-target {
+        font-size: 0.65rem;
+        padding: 4px 6px;
+        margin-right: 4px;
+    }
+
+    .game-board {
+        padding: 8px;
+        border-radius: 4px;
+    }
+
+    .status-panel {
+        margin-bottom: 8px;
+    }
+
+    .turn-indicator {
+        font-size: 1.1rem;
+        margin-bottom: 4px;
+        letter-spacing: 2px;
+    }
+
+    .parchment-small {
+        padding: 8px 15px;
+        border-width: 2px;
+    }
+
+    .turn-score-panel .label {
+        font-size: 0.75rem;
+    }
+
+    .turn-score-panel .value {
+        font-size: 2rem;
+    }
+
+    .dice-container {
+        gap: 6px;
+        margin-bottom: 8px;
+    }
+
+    .die-inner {
+        padding: 8px;
+        border-radius: 8px;
+        box-shadow: 0 4px 0 #2c1810;
+    }
+
+    .game-controls {
+        gap: 8px;
+    }
+
+    .medieval-btn {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+    }
+
+    .left-panel,
+    .right-panel {
+        gap: 8px;
+        margin-top: 5px;
+    }
+
+    .history-panel,
+    .advisor-panel {
+        height: 160px;
+        padding: 10px;
+        border-width: 3px;
+    }
+
+    .history-panel h3,
+    .advisor-panel h3 {
+        font-size: 0.85rem;
+        margin-bottom: 5px;
+        padding-bottom: 5px;
+    }
+
+    .advice-content {
+        padding: 8px;
+        font-size: 0.85rem;
+    }
+
+    .history-item {
+        padding: 10px;
+        font-size: 0.85rem;
+    }
+
+    /* Rules Modal Shrink */
+    .rules-large {
+        padding: 15px !important;
+        border-width: 8px !important;
+    }
+
+    .rules-large h2 {
+        font-size: 1.4rem !important;
+    }
+
+    /* Menu specific shrink */
     .medieval-btn.large {
-        font-size: 1.2rem;
-        padding: 10px 20px;
-        margin-top: 15px;
+        font-size: 1.1rem;
+        padding: 8px 16px;
+        margin-top: 10px;
         width: 100%;
     }
 
     .rustic-title {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
         letter-spacing: 1px;
-        margin: 5px 0;
+        margin: 2px 0;
     }
 
     .subtitle {
-        font-size: 0.9rem;
-        margin-bottom: 10px;
-        line-height: 1.2;
+        font-size: 0.85rem;
+        margin-bottom: 5px;
+        line-height: 1.1;
     }
 
     .menu-content {
-        padding: 20px 10px;
-        margin: 10px auto;
-        width: 95%;
+        padding: 15px 10px;
+        margin: 5px auto;
+        width: 98%;
+        border-width: 8px;
     }
 
     .select-btn,
     .score-btn {
-        min-width: 70px;
-        padding: 8px 4px;
-        font-size: 0.75rem;
-    }
-
-    .menu-section h3 {
-        font-size: 0.9rem;
-        margin-bottom: 5px;
+        min-width: 60px;
+        padding: 6px 2px;
+        font-size: 0.7rem;
     }
 }
 

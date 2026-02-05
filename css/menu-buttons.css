@@ -88,27 +88,28 @@
 
 @media (max-width: 480px) {
     .menu-sections {
-        gap: 10px;
-        margin: 10px 0;
+        gap: 6px !important;
+        margin: 6px 0 !important;
     }
 
     .selection-grid {
-        gap: 6px;
+        gap: 4px !important;
     }
 
     .select-btn,
     .score-btn {
-        padding: 8px 4px;
-        min-width: 80px;
-        font-size: 0.75rem;
+        padding: 6px 2px !important;
+        min-width: 75px !important;
+        font-size: 0.7rem !important;
+        border-width: 2px !important;
     }
 
     .menu-section h3 {
-        font-size: 0.9rem;
-        margin-bottom: 5px;
+        font-size: 0.8rem !important;
+        margin-bottom: 2px !important;
     }
 
     .btn-label {
-        font-size: 0.75rem;
+        font-size: 0.7rem !important;
     }
 }
