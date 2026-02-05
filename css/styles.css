@@ -1336,13 +1336,50 @@ body {
 
     .game-header {
         flex-direction: row !important;
-        /* Back to PC horizontal */
-        padding: 15px 30px !important;
+        padding: 5px 10px !important;
+        gap: 5px !important;
     }
 
     .logo h1 {
-        font-size: 2.5rem !important;
-        /* Back to PC size */
+        font-size: 1.2rem !important;
+        letter-spacing: 1px !important;
+    }
+
+    .main-scores {
+        gap: 5px !important;
+    }
+
+    .score-card {
+        min-width: 70px !important;
+        padding: 5px !important;
+    }
+
+    .score-card .value {
+        font-size: 1.2rem !important;
+    }
+
+    .score-card .label {
+        font-size: 0.6rem !important;
+    }
+
+    .global-target {
+        font-size: 0.7rem !important;
+        padding: 4px 8px !important;
+        margin-right: 5px !important;
+    }
+
+    .icon-btn {
+        width: 32px !important;
+        height: 32px !important;
+        font-size: 1rem !important;
+    }
+
+    .header-left {
+        gap: 5px !important;
+    }
+
+    .header-actions {
+        padding-left: 5px !important;
     }
 
     /* The grid areas must be preserved */
