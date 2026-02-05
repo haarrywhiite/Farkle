@@ -85,3 +85,21 @@
 #goal-section {
     display: block;
 }
+
+@media (max-width: 480px) {
+    .menu-sections {
+        gap: 15px;
+    }
+
+    .select-btn,
+    .score-btn {
+        padding: 12px 10px;
+        min-width: 100px;
+        font-size: 0.85rem;
+    }
+
+    .menu-section h3 {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+    }
+}
