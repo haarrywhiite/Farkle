@@ -895,9 +895,9 @@ body {
     text-transform: uppercase;
     letter-spacing: 2px;
     font-weight: 900;
-    margin-bottom: 20px;
-    text-shadow: 0 0 12px #fca311, 0 0 6px #fca311;
-    font-size: 1.5rem;
+    margin-bottom: 25px;
+    text-shadow: 0 0 18px #fca311, 0 0 10px #fca311;
+    font-size: 1.6rem;
 }
 
 .mini-operator {
@@ -939,7 +939,7 @@ body {
 }
 
 .rule-row:hover {
-    background: rgba(245, 158, 11, 0.15);
+    background: rgba(245, 158, 11, 0.08);
 }
 
 .rule-name {
@@ -948,7 +948,7 @@ body {
     font-size: 1.1rem;
     position: relative;
     padding-left: 22px;
-    text-shadow: 0 0 10px #fca311, 0 0 5px #fca311;
+    text-shadow: 0 0 15px #fca311, 0 0 8px #fca311;
 }
 
 .rule-name::before {
@@ -963,7 +963,7 @@ body {
     font-weight: 800;
     font-size: 1.1rem;
     text-align: center;
-    text-shadow: 0 0 10px #fca311, 0 0 5px #fca311;
+    text-shadow: 0 0 15px #fca311, 0 0 8px #fca311;
 }
 
 .rules-scrollable p,
@@ -973,7 +973,7 @@ body {
     margin-bottom: 12px;
     font-size: 1.25rem !important;
     line-height: 1.4;
-    text-shadow: 0 0 10px #fca311, 0 0 5px #fca311;
+    text-shadow: 0 0 15px #fca311, 0 0 8px #fca311;
 }
 
 .rules-scrollable {
@@ -984,21 +984,17 @@ body {
 }
 
 .engagement-list {
-    background: rgba(245, 158, 11, 0.1);
-    padding: 15px 20px;
-    border-radius: 8px;
-    border-left: 4px solid #451a03;
+    padding: 10px 0;
     margin: 15px auto;
     max-width: 95%;
-    border: 1px dashed rgba(69, 26, 3, 0.2);
 }
 
 .engagement-list p {
-    margin-bottom: 8px !important;
-    font-size: 1.1rem !important;
-    line-height: 1.3 !important;
+    margin-bottom: 12px !important;
+    font-size: 1.15rem !important;
+    line-height: 1.4 !important;
     color: #1a0f0a !important;
-    text-shadow: 0 0 8px #fca311, 0 0 4px #fca311;
+    text-shadow: 0 0 15px #fca311, 0 0 8px #fca311;
 }
 
 .rules-scrollable li strong {
