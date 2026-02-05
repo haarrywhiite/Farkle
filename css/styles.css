@@ -610,8 +610,8 @@ body {
 }
 
 .gold-highlight {
-    color: var(--gold) !important;
-    text-shadow: 0 0 10px rgba(252, 163, 17, 0.4);
+    color: #451a03 !important;
+    text-shadow: 0 0 15px #fca311, 0 0 8px #fca311;
     font-weight: 700;
 }
 
@@ -627,12 +627,19 @@ body {
     display: flex;
     gap: 20px;
     align-items: center;
+    justify-content: center;
 }
 
+#show-rules-btn,
 #download-app-btn {
+    min-width: 180px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-decoration: none;
-    font-size: 1rem;
-    padding: 12px 24px;
+    padding: 0 25px;
+    margin: 0;
 }
 
 .made-by {

@@ -26,7 +26,6 @@ const UI = {
         app: document.getElementById('app'),
         startGameBtn: document.getElementById('start-game-btn'),
         backToMenuBtn: document.getElementById('back-to-menu-btn'),
-        installAppBtn: document.getElementById('install-app-btn'),
         farkleModal: null // Removed
     },
 
@@ -169,12 +168,8 @@ const UI = {
         // Set initial random favicon
         this.setRandomFavicon();
 
-        // Handle scaling for mobile
         this.handleScaling();
         window.addEventListener('resize', () => this.handleScaling());
-
-        // PWA Setup
-        this.handlePWA();
     },
 
     handleScaling() {
@@ -435,58 +430,6 @@ const UI = {
             // Start tournament with player as participant
             this.game.initTournamentWithPlayer(["Thou", opponents[0], opponents[1], opponents[2]]);
         };
-    },
-
-    /**
-     * Handles Progressive Web App (PWA) installation
-     */
-    handlePWA() {
-        let deferredPrompt;
-        const installBtn = this.elements.installAppBtn;
-
-        if (!installBtn) return;
-
-        // Show button by default (already done in HTML), 
-        // but handle clicks even if the prompt hasn't arrived.
-        installBtn.addEventListener('click', async () => {
-            if (deferredPrompt) {
-                // Show the browser install prompt
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                console.log(`User response to the install prompt: ${outcome}`);
-                deferredPrompt = null;
-                installBtn.style.display = 'none';
-            } else {
-                // Fallback: Show manual installation instructions
-                const platform = navigator.userAgent.toLowerCase();
-                let message = "To install Kingdom Dice as an App:\n\n";
-
-                if (platform.includes('iphone') || platform.includes('ipad')) {
-                    message += "1. Tap the 'Share' icon (square with arrow) at the bottom.\n2. Tap 'Add to Home Screen'.";
-                } else if (platform.includes('android')) {
-                    message += "1. Tap the three dots (menu) in the corner.\n2. Tap 'Install app' or 'Add to Home Screen'.";
-                } else {
-                    message += "1. Look for the 'Install' icon in your address bar (top right).\n2. Or check your browser's menu for 'Install Kingdom Dice'.";
-                }
-
-                alert(message);
-            }
-        });
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            // Prevent the mini-infobar from appearing on mobile
-            e.preventDefault();
-            // Stash the event so it can be triggered later.
-            deferredPrompt = e;
-            // Ensure button is visible (it already is, but this confirms it)
-            installBtn.style.display = 'block';
-        });
-
-        window.addEventListener('appinstalled', (event) => {
-            console.log('👍', 'appinstalled', event);
-            deferredPrompt = null;
-            installBtn.style.display = 'none';
-        });
     }
 };
 
