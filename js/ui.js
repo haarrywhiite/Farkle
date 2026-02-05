@@ -6,10 +6,13 @@
 const UI = {
     // DOM Elements
     elements: {
-        playerScore: document.getElementById('player-grand-total'),
-        aiScore: document.getElementById('ai-grand-total'),
-        playerCard: document.getElementById('player-score-card'),
-        aiCard: document.getElementById('ai-score-card'),
+        confirmModal: document.getElementById('confirm-modal'),
+        globalTarget: document.querySelectorAll('.global-target'),
+        bracketOverlay: document.getElementById('bracket-overlay'),
+        playerScores: document.querySelectorAll('.player-card .value'),
+        aiScores: document.querySelectorAll('.ai-card .value'),
+        playerCards: document.querySelectorAll('.player-card'),
+        aiCards: document.querySelectorAll('.ai-card'),
         turnScore: document.getElementById('turn-total'),
         turnIndicator: document.getElementById('turn-indicator'),
         message: document.getElementById('game-message'),
@@ -23,9 +26,6 @@ const UI = {
         app: document.getElementById('app'),
         startGameBtn: document.getElementById('start-game-btn'),
         backToMenuBtn: document.getElementById('back-to-menu-btn'),
-        confirmModal: document.getElementById('confirm-modal'),
-        globalTarget: document.getElementById('global-target-display'),
-        bracketOverlay: document.getElementById('bracket-overlay'),
         farkleModal: null // Removed
     },
 
@@ -100,8 +100,10 @@ const UI = {
                 return; // Don't start game yet - wait for bracket button
             }
 
-            // Update Target Display
-            this.elements.globalTarget.textContent = `Goal: ${this.game.maxScore.toLocaleString()}`;
+            // Update Target Display across all headers
+            this.elements.globalTarget.forEach(el => {
+                el.textContent = `Goal: ${this.game.maxScore.toLocaleString()}`;
+            });
 
             this.elements.startMenu.classList.add('hidden');
             this.elements.app.classList.remove('hidden');
@@ -112,10 +114,17 @@ const UI = {
         this.elements.rollBtn.addEventListener('click', () => game.roll());
         this.elements.bankBtn.addEventListener('click', () => game.bank());
 
-        document.getElementById('rules-btn').addEventListener('click', () => this.toggleModal('rules-modal', true));
-        document.getElementById('show-rules-btn').addEventListener('click', () => this.toggleModal('rules-modal', true));
-        document.getElementById('close-rules-btn').addEventListener('click', () => this.toggleModal('rules-modal', false));
-        this.elements.backToMenuBtn.addEventListener('click', () => this.returnToMenu());
+        // Universal Listeners (Class-based)
+        document.querySelectorAll('.toggle-rules-btn').forEach(btn => {
+            btn.addEventListener('click', () => this.toggleModal('rules-modal', true));
+        });
+
+        document.querySelectorAll('.back-to-menu-btn').forEach(btn => {
+            btn.addEventListener('click', () => this.returnToMenu());
+        });
+
+        document.getElementById('show-rules-btn')?.addEventListener('click', () => this.toggleModal('rules-modal', true));
+        document.getElementById('close-rules-btn')?.addEventListener('click', () => this.toggleModal('rules-modal', false));
 
         document.getElementById('restart-btn').addEventListener('click', () => {
             this.toggleModal('game-over-modal', false);
@@ -135,20 +144,19 @@ const UI = {
             });
         });
 
-        // Audio Toggle
-        const music = document.getElementById('tavern-music');
-        let soundOn = false;
-        this.elements.soundBtn = document.getElementById('sound-btn');
-
-        this.elements.soundBtn.addEventListener('click', () => {
-            soundOn = !soundOn;
-            if (soundOn) {
-                music.play();
-                this.elements.soundBtn.textContent = '🔊';
-            } else {
-                music.pause();
-                this.elements.soundBtn.textContent = '🔇';
-            }
+        // Sound Listeners
+        document.querySelectorAll('.toggle-sound-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                soundOn = !soundOn;
+                const allSoundBtns = document.querySelectorAll('.toggle-sound-btn');
+                if (soundOn) {
+                    music.play();
+                    allSoundBtns.forEach(b => b.textContent = '🔊');
+                } else {
+                    music.pause();
+                    allSoundBtns.forEach(b => b.textContent = '🔇');
+                }
+            });
         });
 
 
@@ -177,19 +185,26 @@ const UI = {
         const p1 = players[0];
         const p2 = players[1];
 
-        this.elements.playerScore.textContent = p1.score;
-        this.elements.aiScore.textContent = p2.score;
+        this.elements.playerScores.forEach(el => el.textContent = p1.score);
+        this.elements.aiScores.forEach(el => el.textContent = p2.score);
 
         // Update Labels
-        this.elements.playerCard.querySelector('.label').textContent = p1.name.toUpperCase();
-        this.elements.aiCard.querySelector('.label').textContent = p2.name.toUpperCase();
+        this.elements.playerCards.forEach(card => {
+            card.querySelector('.label').textContent = p1.name.toUpperCase();
+            card.classList.toggle('active', currentPlayerIndex === 0);
+        });
 
-        this.elements.playerCard.classList.toggle('active', currentPlayerIndex === 0);
-        this.elements.aiCard.classList.toggle('active', currentPlayerIndex === 1);
+        this.elements.aiCards.forEach(card => {
+            card.querySelector('.label').textContent = p2.name.toUpperCase();
+            card.classList.toggle('active', currentPlayerIndex === 1);
+        });
 
-        const currentPlayer = players[currentPlayerIndex];
-        this.elements.turnIndicator.textContent = `${currentPlayer.name.toUpperCase()}'S TURN`;
-        this.elements.turnIndicator.style.color = currentPlayer.isAI ? "var(--primary)" : "var(--accent)";
+        const turnInd = document.getElementById('turn-indicator');
+        if (turnInd) {
+            const currentPlayer = players[currentPlayerIndex];
+            turnInd.textContent = `${currentPlayer.name.toUpperCase()}'S TURN`;
+            turnInd.style.color = currentPlayer.isAI ? "var(--primary)" : "var(--accent)";
+        }
     },
 
     updateTurnScore(score) {
@@ -400,7 +415,9 @@ const UI = {
         // Handle "Begin Tournament" button
         document.getElementById('start-tournament-btn').onclick = () => {
             this.game.maxScore = goalScore;
-            this.elements.globalTarget.textContent = `Goal: ${goalScore.toLocaleString()}`;
+            this.elements.globalTarget.forEach(el => {
+                el.textContent = `Goal: ${goalScore.toLocaleString()}`;
+            });
 
             // Hide bracket, show game
             document.getElementById('bracket-overlay').classList.add('hidden');

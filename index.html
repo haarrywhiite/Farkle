@@ -63,11 +63,33 @@
         </div>
     </div>
 
-    <!-- Tournament Bracket Overlay -->
     <div id="bracket-overlay" class="menu-overlay hidden">
         <div class="menu-content parchment bracket-view">
-            <button id="bracket-back-btn" class="close-btn" title="Back to Menu"
-                style="left: 20px; right: auto;">🏰</button>
+            <!-- Game Header inside Bracket -->
+            <header class="game-header overlay-header">
+                <div class="header-left">
+                    <button class="icon-btn back-to-menu-btn" title="Back to Menu">🏰</button>
+                    <div class="header-actions">
+                        <button class="icon-btn toggle-rules-btn" title="Rules">📜</button>
+                        <button class="icon-btn toggle-sound-btn" title="Toggle Sound">🔊</button>
+                    </div>
+                </div>
+                <div class="logo">
+                    <h1>KINGDOM <span>DICE</span></h1>
+                </div>
+                <div class="main-scores">
+                    <div class="global-target header-goal-display">Goal: 2,500</div>
+                    <div class="score-card player-card active">
+                        <span class="label">YOU</span>
+                        <span class="value">0</span>
+                    </div>
+                    <div class="score-card ai-card">
+                        <span class="label">OPPONENT</span>
+                        <span class="value">0</span>
+                    </div>
+                </div>
+            </header>
+
             <h1 class="rustic-title">TOURNAMENT BRACKET</h1>
             <div class="bracket-container">
                 <div class="bracket-round">
@@ -100,10 +122,10 @@
     <div id="app" class="app-container hidden">
         <header class="game-header">
             <div class="header-left">
-                <button id="back-to-menu-btn" class="icon-btn" title="Return to Menu">🏰</button>
+                <button id="back-to-menu-btn" class="icon-btn back-to-menu-btn" title="Return to Menu">🏰</button>
                 <div class="header-actions">
-                    <button class="icon-btn" id="rules-btn" title="Rules">📜</button>
-                    <button class="icon-btn" id="sound-btn" title="Toggle Sound">🔊</button>
+                    <button class="icon-btn toggle-rules-btn" id="rules-btn" title="Rules">📜</button>
+                    <button class="icon-btn toggle-sound-btn" id="sound-btn" title="Toggle Sound">🔊</button>
                 </div>
             </div>
             <div class="logo">
@@ -162,53 +184,48 @@
 
     </div>
 
-    <!-- Modals (Moved Outside #app to be accessible from menu) -->
+    <!-- Information Modal (Rules) -->
     <div id="rules-modal" class="modal hidden">
-        <div class="modal-content parchment rules-large">
-            <button id="close-rules-btn" class="close-btn">&times;</button>
-            <div class="royal-header">
-                <div class="royal-seal"></div>
-                <h2>The King's Sacred Rules</h2>
+        <div class="modal-content parchment rules-compact">
+            <button id="close-rules-btn" class="close-btn" title="Close Scroll">📜</button>
+            <div class="royal-header-compact">
+                <h2>THE KING'S SACRED RULES</h2>
             </div>
-            <div class="rules-scrollable">
-                <section class="scoring-section">
+
+            <div class="rules-flex-container">
+                <section class="scoring-section-compact">
                     <h3>SCORING</h3>
                     <div class="rules-grid">
-                        <div class="rule-row">
-                            <span class="rule-name">Single 1:</span>
-                            <span class="rule-value">100 Gold</span>
+                        <div class="rule-row"><span class="rule-name">Single 1:</span> <span class="rule-value">100
+                                Gold</span>
                             <div class="mini-dice-row">
                                 <div class="mini-die">⚀</div>
                             </div>
                         </div>
-                        <div class="rule-row">
-                            <span class="rule-name">Single 5:</span>
-                            <span class="rule-value">50 Gold</span>
+                        <div class="rule-row"><span class="rule-name">Single 5:</span> <span class="rule-value">50
+                                Gold</span>
                             <div class="mini-dice-row">
                                 <div class="mini-die">⚄</div>
                             </div>
                         </div>
-                        <div class="rule-row">
-                            <span class="rule-name">Three 1s:</span>
-                            <span class="rule-value">1,000 Gold</span>
+                        <div class="rule-row"><span class="rule-name">Three 1s:</span> <span class="rule-value">1,000
+                                Gold</span>
                             <div class="mini-dice-row">
                                 <div class="mini-die">⚀</div>
                                 <div class="mini-die">⚀</div>
                                 <div class="mini-die">⚀</div>
                             </div>
                         </div>
-                        <div class="rule-row">
-                            <span class="rule-name">Three of a Kind:</span>
-                            <span class="rule-value">Face value x 100</span>
+                        <div class="rule-row"><span class="rule-name">Three of a Kind:</span> <span
+                                class="rule-value">Face x 100</span>
                             <div class="mini-dice-row">
                                 <div class="mini-die face-x">?</div>
                                 <div class="mini-die face-x">?</div>
                                 <div class="mini-die face-x">?</div>
                             </div>
                         </div>
-                        <div class="rule-row">
-                            <span class="rule-name">Four of a Kind:</span>
-                            <span class="rule-value">2x Triple value</span>
+                        <div class="rule-row"><span class="rule-name">Four of a Kind:</span> <span class="rule-value">2x
+                                Triple</span>
                             <div class="mini-dice-row">
                                 <div class="mini-die face-x">?</div>
                                 <div class="mini-die face-x">?</div>
@@ -216,9 +233,8 @@
                                 <div class="mini-die face-x">?</div>
                             </div>
                         </div>
-                        <div class="rule-row">
-                            <span class="rule-name">Five of a Kind:</span>
-                            <span class="rule-value">3x Triple value</span>
+                        <div class="rule-row"><span class="rule-name">Five of a Kind:</span> <span class="rule-value">3x
+                                Triple</span>
                             <div class="mini-dice-row">
                                 <div class="mini-die face-x">?</div>
                                 <div class="mini-die face-x">?</div>
@@ -227,21 +243,19 @@
                                 <div class="mini-die face-x">?</div>
                             </div>
                         </div>
-                        <div class="rule-row">
-                            <span class="rule-name">Six of a Kind:</span>
-                            <span class="rule-value">4x Triple value</span>
+                        <div class="rule-row"><span class="rule-name">Six of a Kind:</span> <span class="rule-value">4x
+                                Triple</span>
                             <div class="mini-dice-row">
                                 <div class="mini-die face-x">?</div>
                                 <div class="mini-die face-x">?</div>
                                 <div class="mini-die face-x">?</div>
                                 <div class="mini-die face-x">?</div>
-                                <div class="mini-die face-x">?</div>
+                                <div class="mini-die_x">?</div>
                                 <div class="mini-die face-x">?</div>
                             </div>
                         </div>
-                        <div class="rule-row">
-                            <span class="rule-name">Straight (1-6):</span>
-                            <span class="rule-value">1,500 Gold</span>
+                        <div class="rule-row"><span class="rule-name">Straight (1-6):</span> <span
+                                class="rule-value">1,500 Gold</span>
                             <div class="mini-dice-row">
                                 <div class="mini-die">⚀</div>
                                 <div class="mini-die">⚁</div>
@@ -251,41 +265,18 @@
                                 <div class="mini-die">⚅</div>
                             </div>
                         </div>
-                        <div class="rule-row">
-                            <span class="rule-name">Three Pairs:</span>
-                            <span class="rule-value">1,500 Gold</span>
-                            <div class="mini-dice-row">
-                                <div class="mini-die face-x">?</div>
-                                <div class="mini-die face-x">?</div>
-                                <span class="mini-operator">+</span>
-                                <div class="mini-die face-y">*</div>
-                                <div class="mini-die face-y">*</div>
-                                <span class="mini-operator">+</span>
-                                <div class="mini-die face-z">#</div>
-                                <div class="mini-die face-z">#</div>
-                            </div>
-                        </div>
-                        <div class="rule-row">
-                            <span class="rule-name">Two Triplets:</span>
-                            <span class="rule-value">2,500 Gold</span>
-                            <div class="mini-dice-row">
-                                <div class="mini-die face-x">?</div>
-                                <div class="mini-die face-x">?</div>
-                                <div class="mini-die face-x">?</div>
-                                <span class="mini-operator">+</span>
-                                <div class="mini-die face-y">*</div>
-                                <div class="mini-die face-y">*</div>
-                                <div class="mini-die face-y">*</div>
-                            </div>
-                        </div>
+                        <div class="rule-row"><span class="rule-name">Three Pairs:</span> <span class="rule-value">1,500
+                                Gold</span></div>
+                        <div class="rule-row"><span class="rule-name">Two Triplets:</span> <span
+                                class="rule-value">2,500 Gold</span></div>
                     </div>
                 </section>
-                <section class="engagement-section">
-                    <h3>The Rules of Engagement</h3>
+                <section class="engagement-section-compact">
+                    <h3>RULES OF ENGAGEMENT</h3>
                     <div class="engagement-list">
                         <p>1. Roll all 6 dice to start. Keep scoring dice.</p>
                         <p>2. Set aside at least one scoring die per roll to continue.</p>
-                        <p>3. Roll remaining dice or Bank thy points.</p>
+                        <p>3. Roll remaining dice or <strong>Bank thy points</strong>.</p>
                         <p>4. <strong>Farkle!</strong> A score-less roll forfeits all points this turn.</p>
                         <p>5. <strong>Hot Dice!</strong> Use all 6 dice to earn another full roll!</p>
                     </div>

@@ -1,7 +1,8 @@
 /* Tournament Bracket Visualization */
 .bracket-view {
-    max-width: 900px;
-    padding: 40px;
+    max-width: 1000px;
+    width: 95vw;
+    padding: 20px;
 }
 
 .bracket-container {
@@ -9,7 +10,7 @@
     align-items: center;
     justify-content: center;
     gap: 40px;
-    margin: 40px 0;
+    margin: 20px 0;
 }
 
 .bracket-round {

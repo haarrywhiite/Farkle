@@ -1009,11 +1009,77 @@ body {
     padding-bottom: 20px;
 }
 
-.royal-header h2 {
+.rules-compact {
+    max-width: 950px;
+    width: 95vw;
+    max-height: 98vh;
+    padding: 15px 30px !important;
+    display: flex;
+    flex-direction: column;
+}
+
+.royal-header-compact {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.royal-header-compact h2 {
     color: #451a03;
     font-family: 'Cinzel', serif;
-    font-size: 2.2rem;
+    font-size: 1.6rem;
     text-shadow: 0 0 15px #fca311, 0 0 8px #fca311;
+    margin: 0;
+}
+
+.rules-flex-container {
+    display: flex;
+    gap: 30px;
+    justify-content: space-between;
+}
+
+.scoring-section-compact,
+.engagement-section-compact {
+    flex: 1;
+}
+
+.scoring-section-compact h3,
+.engagement-section-compact h3 {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    color: #451a03;
+    text-align: center;
+    text-shadow: 0 0 5px #fca311;
+}
+
+.rules-compact .rule-row {
+    padding: 3px 5px;
+}
+
+.rules-compact .rule-name,
+.rules-compact .rule-value {
+    font-size: 0.95rem;
+}
+
+.rules-compact .engagement-list p {
+    font-size: 0.95rem !important;
+    margin-bottom: 6px !important;
+}
+
+/* Bracket Header adjustments */
+.overlay-header {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 10px 20px !important;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+@media (max-width: 900px) {
+    .rules-flex-container {
+        flex-direction: column;
+        gap: 10px;
+        overflow-y: auto;
+    }
 }
 
 .royal-seal {
