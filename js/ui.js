@@ -26,6 +26,7 @@ const UI = {
         app: document.getElementById('app'),
         startGameBtn: document.getElementById('start-game-btn'),
         backToMenuBtn: document.getElementById('back-to-menu-btn'),
+        installPwaBtn: document.getElementById('install-pwa-btn'),
         farkleModal: null // Removed
     },
 
@@ -170,6 +171,9 @@ const UI = {
 
         this.handleScaling();
         window.addEventListener('resize', () => this.handleScaling());
+
+        // PWA Setup
+        this.handlePWA();
     },
 
     handleScaling() {
@@ -430,6 +434,38 @@ const UI = {
             // Start tournament with player as participant
             this.game.initTournamentWithPlayer(["Thou", opponents[0], opponents[1], opponents[2]]);
         };
+    },
+
+    /**
+     * Handles Progressive Web App (PWA) installation
+     */
+    handlePWA() {
+        let deferredPrompt;
+        const installBtn = this.elements.installPwaBtn;
+
+        if (!installBtn) return;
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installBtn.style.display = 'block';
+        });
+
+        installBtn.addEventListener('click', async () => {
+            if (!deferredPrompt) return;
+
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            console.log(`PWA install: ${outcome}`);
+            deferredPrompt = null;
+            installBtn.style.display = 'none';
+        });
+
+        window.addEventListener('appinstalled', () => {
+            console.log('PWA installed successfully');
+            deferredPrompt = null;
+            installBtn.style.display = 'none';
+        });
     }
 };
 
