@@ -446,33 +446,45 @@ const UI = {
 
         if (!installBtn) return;
 
+        // Show button by default (already done in HTML), 
+        // but handle clicks even if the prompt hasn't arrived.
+        installBtn.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                // Show the browser install prompt
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                console.log(`User response to the install prompt: ${outcome}`);
+                deferredPrompt = null;
+                installBtn.style.display = 'none';
+            } else {
+                // Fallback: Show manual installation instructions
+                const platform = navigator.userAgent.toLowerCase();
+                let message = "To install Kingdom Dice as an App:\n\n";
+
+                if (platform.includes('iphone') || platform.includes('ipad')) {
+                    message += "1. Tap the 'Share' icon (square with arrow) at the bottom.\n2. Tap 'Add to Home Screen'.";
+                } else if (platform.includes('android')) {
+                    message += "1. Tap the three dots (menu) in the corner.\n2. Tap 'Install app' or 'Add to Home Screen'.";
+                } else {
+                    message += "1. Look for the 'Install' icon in your address bar (top right).\n2. Or check your browser's menu for 'Install Kingdom Dice'.";
+                }
+
+                alert(message);
+            }
+        });
+
         window.addEventListener('beforeinstallprompt', (e) => {
             // Prevent the mini-infobar from appearing on mobile
             e.preventDefault();
             // Stash the event so it can be triggered later.
             deferredPrompt = e;
-            // Update UI notify the user they can install the PWA
+            // Ensure button is visible (it already is, but this confirms it)
             installBtn.style.display = 'block';
-
-            installBtn.addEventListener('click', async () => {
-                // Show the install prompt
-                deferredPrompt.prompt();
-                // Wait for the user to respond to the prompt
-                const { outcome } = await deferredPrompt.userChoice;
-                // Optionally, send analytics event with outcome of user choice
-                console.log(`User response to the install prompt: ${outcome}`);
-                // We've used the prompt, and can't use it again, throw it away
-                deferredPrompt = null;
-                // Hide the install button
-                installBtn.style.display = 'none';
-            });
         });
 
         window.addEventListener('appinstalled', (event) => {
             console.log('👍', 'appinstalled', event);
-            // Clear the deferredPrompt so it can be garbage collected
             deferredPrompt = null;
-            // Hide the install button
             installBtn.style.display = 'none';
         });
     }
