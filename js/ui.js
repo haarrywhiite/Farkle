@@ -139,6 +139,10 @@ const UI = {
         });
 
         document.getElementById('final-menu-btn')?.addEventListener('click', () => {
+            this.returnToMenu();
+        });
+
+        document.getElementById('final-menu-btn')?.addEventListener('click', () => {
             this.toggleModal('game-over-modal', false);
             this.returnToMenu();
         });
@@ -209,6 +213,38 @@ const UI = {
                 this.showMessage("The Tavern remembers thy last game!", "info");
             }, 500);
         }
+    },
+
+    returnToMenu() {
+        this.toggleModal('confirm-modal', true);
+        
+        const yesBtn = document.getElementById('confirm-yes');
+        const noBtn = document.getElementById('confirm-no');
+        
+        // Remove old listeners by recreating buttons
+        const newYes = yesBtn.cloneNode(true);
+        const newNo = noBtn.cloneNode(true);
+        yesBtn.parentNode.replaceChild(newYes, yesBtn);
+        noBtn.parentNode.replaceChild(newNo, noBtn);
+
+        newYes.addEventListener('click', () => {
+            this.toggleModal('confirm-modal', false);
+            this.toggleModal('game-over-modal', false);
+            this.elements.app.classList.add('hidden');
+            this.elements.bracketOverlay.classList.add('hidden');
+            this.elements.startMenu.classList.remove('hidden');
+            
+            // Clear game state
+            if (this.game) {
+                this.game.clearState();
+                this.game.gameState = 'START';
+                this.game.tournament = { active: false };
+            }
+        });
+
+        newNo.addEventListener('click', () => {
+            this.toggleModal('confirm-modal', false);
+        });
     },
 
     handleScaling() {
