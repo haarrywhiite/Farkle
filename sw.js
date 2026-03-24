@@ -1,4 +1,4 @@
-const CACHE_NAME = 'farkle-v5';
+const CACHE_NAME = 'farkle-v6';
 const ASSETS = [
     '/',
     'index.html',

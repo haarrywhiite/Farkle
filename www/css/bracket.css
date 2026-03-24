@@ -5,6 +5,21 @@
     padding: 20px;
 }
 
+/* Fix Overlay Header Layout constraints */
+.overlay-header .main-scores {
+    display: none !important;
+}
+
+.overlay-header {
+    justify-content: center !important;
+    position: relative;
+}
+
+.overlay-header .header-left {
+    position: absolute;
+    left: 20px; 
+}
+
 .bracket-container {
     display: flex;
     align-items: center;
