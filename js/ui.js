@@ -147,7 +147,11 @@ const UI = {
         document.querySelectorAll('.modal').forEach(modal => {
             modal.addEventListener('click', (e) => {
                 if (e.target === modal) {
-                    this.toggleModal(modal.id, false);
+                    if (modal.id === 'game-over-modal') {
+                        this.returnToMenu();
+                    } else {
+                        this.toggleModal(modal.id, false);
+                    }
                 }
             });
         });

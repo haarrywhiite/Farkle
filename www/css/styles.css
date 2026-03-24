@@ -1319,9 +1319,10 @@ body {
     font-family: 'Cinzel', serif;
     font-weight: 900;
     font-size: 1.2rem;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
     color: #1a0f0a;
-    text-shadow: 0 0 10px #fca311, 0 0 5px #fca311;
+    text-shadow: 0 0 15px #fca311, 0 0 8px #fca311, 1px 1px 0px rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
 }
 
 .final-value {
@@ -1348,11 +1349,12 @@ body {
 #winner-message {
     font-family: 'Cinzel', serif;
     font-weight: 900;
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     color: #1a0f0a;
     text-shadow: 0 0 15px #fca311, 0 0 8px #fca311, 1px 1px 0px rgba(255, 255, 255, 0.5);
-    margin-bottom: 20px;
-    letter-spacing: 1px;
+    margin-bottom: 25px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
 @media (max-width: 600px) {
