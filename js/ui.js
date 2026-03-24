@@ -216,35 +216,14 @@ const UI = {
     },
 
     returnToMenu() {
-        this.toggleModal('confirm-modal', true);
-        
-        const yesBtn = document.getElementById('confirm-yes');
-        const noBtn = document.getElementById('confirm-no');
-        
-        // Remove old listeners by recreating buttons
-        const newYes = yesBtn.cloneNode(true);
-        const newNo = noBtn.cloneNode(true);
-        yesBtn.parentNode.replaceChild(newYes, yesBtn);
-        noBtn.parentNode.replaceChild(newNo, noBtn);
-
-        newYes.addEventListener('click', () => {
-            this.toggleModal('confirm-modal', false);
-            this.toggleModal('game-over-modal', false);
-            this.elements.app.classList.add('hidden');
-            this.elements.bracketOverlay.classList.add('hidden');
-            this.elements.startMenu.classList.remove('hidden');
-            
-            // Clear game state
-            if (this.game) {
-                this.game.clearState();
-                this.game.gameState = 'START';
-                this.game.tournament = { active: false };
+        this.showConfirm(
+            "Retire to Tavern?",
+            "Dost thou wish to abandon this duel and return to the tavern?",
+            () => {
+                if (this.game) this.game.clearState();
+                window.location.reload();
             }
-        });
-
-        newNo.addEventListener('click', () => {
-            this.toggleModal('confirm-modal', false);
-        });
+        );
     },
 
     handleScaling() {
@@ -424,13 +403,7 @@ const UI = {
         };
     },
 
-    returnToMenu() {
-        this.showConfirm(
-            "Retire to Tavern?",
-            "Dost thou wish to abandon this duel and return to the tavern?",
-            () => window.location.reload()
-        );
-    },
+
 
     /**
      * Draws a random dice face and sets it as the browser favicon
