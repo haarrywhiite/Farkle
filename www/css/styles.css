@@ -326,6 +326,7 @@ body {
 }
 
 .score-card .value {
+    font-family: 'Cinzel', serif;
     font-size: 2rem;
     font-weight: 900;
 }
@@ -385,6 +386,7 @@ body {
 }
 
 .turn-score-panel .value {
+    font-family: 'Cinzel', serif;
     font-size: 4.5rem;
     font-weight: 900;
     color: #1a0f0a;
@@ -819,8 +821,6 @@ body {
     flex-direction: column;
     gap: 15px;
     padding-right: 10px;
-    max-height: 400px;
-    /* Force scroll */
 }
 
 /* Custom Brown Scrollbar */
@@ -1317,12 +1317,15 @@ body {
 
 .final-label {
     font-family: 'Cinzel', serif;
-    font-size: 1rem;
+    font-weight: 900;
+    font-size: 1.2rem;
     letter-spacing: 2px;
-    color: var(--accent);
+    color: #1a0f0a;
+    text-shadow: 0 0 10px #fca311, 0 0 5px #fca311;
 }
 
 .final-value {
+    font-family: 'Cinzel', serif;
     font-size: 2.5rem;
     font-weight: 900;
     color: #fef3c7;
@@ -1340,6 +1343,16 @@ body {
     color: #fca311;
     text-shadow: 0 0 20px rgba(250, 163, 17, 0.4);
     margin-bottom: 10px;
+}
+
+#winner-message {
+    font-family: 'Cinzel', serif;
+    font-weight: 900;
+    font-size: 1.3rem;
+    color: #1a0f0a;
+    text-shadow: 0 0 15px #fca311, 0 0 8px #fca311, 1px 1px 0px rgba(255, 255, 255, 0.5);
+    margin-bottom: 20px;
+    letter-spacing: 1px;
 }
 
 @media (max-width: 600px) {

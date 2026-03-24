@@ -153,15 +153,33 @@ const UI = {
         });
 
         // Sound Listeners
+        const music = document.getElementById('tavern-music');
+        let soundOn = false;
+
+        const playlist = [
+            "https://www.chosic.com/wp-content/uploads/2021/07/Medieval-Feast.mp3",
+            "https://www.chosic.com/wp-content/uploads/2021/07/The-Bards-Tale.mp3",
+            "https://www.chosic.com/wp-content/uploads/2021/07/Renaissance.mp3"
+        ];
+        let currentTrack = 0;
+
+        if (music) {
+            music.addEventListener('ended', () => {
+                currentTrack = (currentTrack + 1) % playlist.length;
+                music.src = playlist[currentTrack];
+                if (soundOn) music.play().catch(e => console.log(e));
+            });
+        }
+
         document.querySelectorAll('.toggle-sound-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 soundOn = !soundOn;
                 const allSoundBtns = document.querySelectorAll('.toggle-sound-btn');
                 if (soundOn) {
-                    music.play();
+                    if (music) music.play().catch(e => console.log(e));
                     allSoundBtns.forEach(b => b.textContent = '🔊');
                 } else {
-                    music.pause();
+                    if (music) music.pause();
                     allSoundBtns.forEach(b => b.textContent = '🔇');
                 }
             });
