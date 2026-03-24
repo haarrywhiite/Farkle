@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Farkle</string>
+    <string name="title_activity_main">Farkle</string>
+    <string name="package_name">com.haarrywhiite.farkle</string>
+    <string name="custom_url_scheme">com.haarrywhiite.farkle</string>
+</resources>
