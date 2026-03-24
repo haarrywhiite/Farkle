@@ -196,12 +196,6 @@ const UI = {
         this.handleScaling();
         window.addEventListener('resize', () => this.handleScaling());
 
-        // PWA Setup
-        this.handlePWA();
-
-        // Download Menu
-        this.handleDownloadMenu();
-
         // Load Game State
         if (this.game.loadState()) {
             this.elements.startMenu.classList.add('hidden');
@@ -490,65 +484,6 @@ const UI = {
             // Start tournament with player as participant
             this.game.initTournamentWithPlayer(["Thou", opponents[0], opponents[1], opponents[2]]);
         };
-    },
-
-    /**
-     * Handles Progressive Web App (PWA) installation
-     */
-    handlePWA() {
-        let deferredPrompt;
-        const installBtn = this.elements.installPwaBtn;
-
-        if (!installBtn) return;
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            installBtn.style.display = 'block';
-        });
-
-        installBtn.addEventListener('click', async () => {
-            if (!deferredPrompt) return;
-
-            deferredPrompt.prompt();
-            const { outcome } = await deferredPrompt.userChoice;
-            console.log(`PWA install: ${outcome}`);
-            deferredPrompt = null;
-            installBtn.style.display = 'none';
-        });
-
-        window.addEventListener('appinstalled', () => {
-            console.log('PWA installed successfully');
-            deferredPrompt = null;
-            installBtn.style.display = 'none';
-        });
-    },
-
-    /**
-     * Handles download dropdown menu
-     */
-    handleDownloadMenu() {
-        const menuBtn = this.elements.downloadMenuBtn;
-        const dropdown = this.elements.downloadOptions;
-
-        if (!menuBtn || !dropdown) return;
-
-        menuBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            dropdown.classList.toggle('show');
-        });
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!menuBtn.contains(e.target) && !dropdown.contains(e.target)) {
-                dropdown.classList.remove('show');
-            }
-        });
-
-        // Close dropdown after selecting an option
-        dropdown.addEventListener('click', () => {
-            dropdown.classList.remove('show');
-        });
     }
 };
 
