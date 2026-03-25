@@ -1600,9 +1600,17 @@ body {
         font-size: 1rem !important;
     }
 
-    /* Chronicle panel */
+    /* Chronicle panel - full height */
+    .right-panel {
+        height: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
     .history-panel {
         padding: 15px !important;
+        flex: 1 !important;
+        height: 100% !important;
     }
 
     .history-panel h3 {
