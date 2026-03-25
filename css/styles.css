@@ -66,6 +66,62 @@ body {
     backdrop-filter: blur(10px);
 }
 
+/* Loading Overlay */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading-overlay.fade-out {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+
+.loader-content {
+    width: 80%;
+    max-width: 500px;
+    padding: 40px;
+    text-align: center;
+    border-radius: 12px;
+}
+
+.loader-progress-container {
+    width: 100%;
+    height: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 3px solid #451a03;
+    border-radius: 10px;
+    margin-top: 30px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.loader-progress-fill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #78350f 0%, #b45309 100%);
+    transition: width 0.3s ease;
+    box-shadow: 0 0 10px rgba(180, 83, 9, 0.5);
+}
+
+.loader-percent {
+    margin-top: 10px;
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    color: #451a03;
+    font-size: 1.2rem;
+}
+
 .menu-overlay.hidden {
     display: none;
 }
@@ -196,6 +252,7 @@ body {
     width: 100%;
     max-width: 1400px;
     height: 100vh;
+    height: 100dvh; /* Dynamic Viewport Height */
     display: grid;
     grid-template-areas:
         "header header header"
@@ -1571,6 +1628,7 @@ body {
         left: 50% !important;
         width: 500px !important;
         height: calc((var(--vh, 1vh) * 100) / var(--mobile-scale, 1)) !important;
+        height: calc(100svh / var(--mobile-scale, 1)) !important; /* Prefer SVH on mobile to prevent jumping */
         transform: translateX(-50%) scale(var(--mobile-scale, 1)) !important;
         transform-origin: top center !important;
         display: flex !important;
