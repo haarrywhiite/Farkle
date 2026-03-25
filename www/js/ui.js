@@ -231,11 +231,19 @@ const UI = {
             const scale = window.innerWidth / 500;
             document.documentElement.style.setProperty('--mobile-scale', scale);
 
-            // Fix for iOS Safari height issues and centering
-            const vh = window.innerHeight * 0.01;
-            document.documentElement.style.setProperty('--vh', `${vh}px`);
+            // Use SVH (Small Viewport Height) if possible, or fallback to fixed innerHeight
+            // to prevent the "jumping" effect when the address bar toggles.
+            // We set it once on load and update on orientation change, not every resize.
+            if (!this.viewportHeightLocked || Math.abs(this.lastWidth - window.innerWidth) > 50) {
+                const vh = window.innerHeight * 0.01;
+                document.documentElement.style.setProperty('--vh', `${vh}px`);
+                this.viewportHeightLocked = true;
+                this.lastWidth = window.innerWidth;
+            }
         } else {
             document.documentElement.style.removeProperty('--mobile-scale');
+            document.documentElement.style.removeProperty('--vh');
+            this.viewportHeightLocked = false;
         }
     },
 

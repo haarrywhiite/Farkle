@@ -13,15 +13,27 @@
     <link
         href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;700;900&family=IM+Fell+DW+Pica:ital@0;1&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css?v=5">
-    <link rel="stylesheet" href="css/menu-buttons.css?v=5">
-    <link rel="stylesheet" href="css/bracket.css?v=6">
+    <link rel="stylesheet" href="css/styles.css?v=10">
+    <link rel="stylesheet" href="css/menu-buttons.css?v=10">
+    <link rel="stylesheet" href="css/bracket.css?v=10">
     <link id="favicon" rel="icon" type="image/x-icon" href="favicon.ico">
     <!-- Preload LCP Background -->
     <link rel="preload" as="image" href="img/table.png">
 </head>
 
 <body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-overlay">
+        <div class="loader-content parchment">
+            <h1 class="rustic-title">KINGDOM DICE</h1>
+            <p class="subtitle gold-highlight">Preparing the Tavern...</p>
+            <div class="loader-progress-container">
+                <div id="loader-progress-fill" class="loader-progress-fill"></div>
+            </div>
+            <div id="loader-percent" class="loader-percent">0%</div>
+        </div>
+    </div>
+
     <!-- Start Menu Overlay -->
     <div id="start-menu" class="menu-overlay">
         <div class="menu-content parchment">
@@ -331,11 +343,12 @@
     </audio>
 
     <!-- Scripts -->
-    <script src="js/scoring.js?v=8" defer></script>
-    <script src="js/dice.js?v=8" defer></script>
-    <script src="js/ai.js?v=8" defer></script>
-    <script src="js/game.js?v=8" defer></script>
-    <script src="js/ui.js?v=8" defer></script>
+    <script src="js/loader.js?v=9"></script>
+    <script src="js/scoring.js?v=9" defer></script>
+    <script src="js/dice.js?v=9" defer></script>
+    <script src="js/ai.js?v=9" defer></script>
+    <script src="js/game.js?v=9" defer></script>
+    <script src="js/ui.js?v=9" defer></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {

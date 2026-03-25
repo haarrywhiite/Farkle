@@ -1,4 +1,4 @@
-const CACHE_NAME = 'farkle-v8';
+const CACHE_NAME = 'farkle-v9';
 const ASSETS = [
     '/',
     'index.html',
@@ -10,13 +10,17 @@ const ASSETS = [
     'js/game.js',
     'js/ai.js',
     'js/ui.js',
+    'js/loader.js',
     'manifest.json',
     'img/leather.png',
     'img/parchment.png',
     'img/table.png',
     'img/icon.svg',
     'img/icon-192.png',
-    'img/icon-512.png'
+    'img/icon-512.png',
+    'https://www.chosic.com/wp-content/uploads/2021/07/Medieval-Feast.mp3',
+    'https://www.chosic.com/wp-content/uploads/2021/07/The-Bards-Tale.mp3',
+    'https://www.chosic.com/wp-content/uploads/2021/07/Renaissance.mp3'
 ];
 
 self.addEventListener('install', (event) => {
