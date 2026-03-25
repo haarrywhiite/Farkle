@@ -1538,8 +1538,12 @@ body {
             "board right-side" !important;
         grid-template-columns: 1fr 220px !important;
         grid-template-rows: auto 1fr !important;
-        padding: 10px !important;
+        padding: 0 !important;
+        margin: 0 !important;
         gap: 10px !important;
+        height: 100dvh !important;
+        width: 100vw !important;
+        max-width: none !important;
     }
 
     .left-panel {
@@ -1576,6 +1580,12 @@ body {
     }
 
     /* Board font/spacing scales */
+    .game-board {
+        height: 100% !important;
+        justify-content: space-around !important; /* Distribute content better on tall tablets */
+        padding: 15px !important;
+    }
+
     .turn-indicator {
         font-size: 1.4rem !important;
     }
