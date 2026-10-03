@@ -13,12 +13,13 @@
     <link
         href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;700;900&family=IM+Fell+DW+Pica:ital@0;1&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css?v=11">
-    <link rel="stylesheet" href="css/menu-buttons.css?v=11">
-    <link rel="stylesheet" href="css/bracket.css?v=11">
+    <link rel="stylesheet" href="css/styles.css?v=14">
+    <link rel="stylesheet" href="css/menu-buttons.css?v=14">
+    <link rel="stylesheet" href="css/bracket.css?v=14">
     <link id="favicon" rel="icon" type="image/x-icon" href="favicon.ico">
-    <!-- Preload LCP Background -->
+    <!-- Preload backgrounds -->
     <link rel="preload" as="image" href="img/table.png">
+    <link rel="preload" as="image" href="img/tavern-bg.jpg">
 </head>
 
 <body>
@@ -73,8 +74,8 @@
             <button id="start-game-btn" class="medieval-btn large" data-i18n="enter_tavern" type="button">ENTER THE TAVERN</button>
             <div class="menu-footer">
                 <div class="footer-buttons">
-                    <button id="show-rules-btn" class="medieval-btn small gold-highlight" data-i18n="scroll_rules" type="button">Scroll of Rules</button>
-                    <button id="show-lang-btn" class="medieval-btn small gold-highlight" data-i18n="btn_language" type="button">🌐 Language</button>
+                    <button id="show-rules-btn" class="medieval-btn small" data-i18n="scroll_rules" type="button">Scroll of Rules</button>
+                    <button id="show-lang-btn" class="medieval-btn small" data-i18n="btn_language" type="button">🌐 Language</button>
                 </div>
                 <div class="made-by subtitle gold-highlight" data-i18n="made_by">Made by Harry White 2026</div>
             </div>
@@ -381,13 +382,13 @@
     </audio>
 
     <!-- Scripts -->
-    <script src="js/i18n.js?v=11"></script>
-    <script src="js/loader.js?v=11"></script>
-    <script src="js/scoring.js?v=11" defer></script>
-    <script src="js/dice.js?v=11" defer></script>
-    <script src="js/ai.js?v=11" defer></script>
-    <script src="js/game.js?v=11" defer></script>
-    <script src="js/ui.js?v=11" defer></script>
+    <script src="js/i18n.js?v=14"></script>
+    <script src="js/loader.js?v=14"></script>
+    <script src="js/scoring.js?v=14" defer></script>
+    <script src="js/dice.js?v=14" defer></script>
+    <script src="js/ai.js?v=14" defer></script>
+    <script src="js/game.js?v=14" defer></script>
+    <script src="js/ui.js?v=14" defer></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {

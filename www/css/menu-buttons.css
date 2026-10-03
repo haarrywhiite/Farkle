@@ -2,8 +2,8 @@
 .menu-sections {
     display: flex;
     flex-direction: column;
-    gap: 25px;
-    margin: 25px 0;
+    gap: 15px;
+    margin: 15px 0;
 }
 
 .menu-section h3 {
