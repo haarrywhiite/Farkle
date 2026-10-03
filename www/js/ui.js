@@ -35,10 +35,74 @@ const UI = {
     init(game) {
         this.game = game;
 
-        // Mode Selection - Show goal section after selection
-        document.querySelectorAll('.select-btn').forEach(btn => {
+        // Ensure any previous game is cancelled when entering fresh
+        if (this.game) {
+            this.game.clearState();
+        }
+
+        // Language Modal Button in Home Screen (next to Scroll of Rules)
+        document.getElementById('show-lang-btn')?.addEventListener('click', () => {
+            this.updateLangModalState();
+            this.toggleModal('language-modal', true);
+        });
+
+        // Header Language Toggle Button (opens language pop-up)
+        document.querySelectorAll('.toggle-lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                this.updateLangModalState();
+                this.toggleModal('language-modal', true);
+            });
+        });
+
+        // Language Modal Close Button
+        document.getElementById('close-lang-btn')?.addEventListener('click', () => {
+            this.toggleModal('language-modal', false);
+        });
+
+        // Language Options in Modal
+        document.querySelectorAll('.lang-option-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                document.querySelectorAll('.select-btn').forEach(b => b.classList.remove('active'));
+                const lang = e.currentTarget.dataset.lang;
+                if (typeof I18N !== 'undefined') {
+                    I18N.setLanguage(lang);
+                }
+                this.updateLangModalState();
+                setTimeout(() => {
+                    this.toggleModal('language-modal', false);
+                }, 200);
+            });
+        });
+
+        // Listen for language changes to update dynamic text in-place
+        if (typeof I18N !== 'undefined') {
+            I18N.onLanguageChange((lang) => {
+                this.updateLangModalState();
+                const showLangBtn = document.getElementById('show-lang-btn');
+                if (showLangBtn) showLangBtn.textContent = I18N.t('btn_language');
+
+                if (this.game && this.game.players && this.game.players.length > 0) {
+                    if (this.game.gameType === 'pv-ai') {
+                        this.game.players[0].name = I18N.t('thou');
+                        this.game.players[1].name = I18N.t('the_king');
+                    } else if (this.game.gameType === 'pvp') {
+                        this.game.players[0].name = I18N.t('player_1');
+                        this.game.players[1].name = I18N.t('player_2');
+                    }
+                    this.updateScores(this.game.players, this.game.currentPlayerIndex);
+                }
+                this.elements.globalTarget.forEach(el => {
+                    if (this.game && this.game.maxScore) {
+                        el.textContent = I18N.t('goal_label', { score: this.game.maxScore.toLocaleString() });
+                    }
+                });
+                this.updateControls();
+            });
+        }
+
+        // Mode Selection - Show goal section after selection
+        document.querySelectorAll('.select-btn:not(.lang-btn)').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.select-btn:not(.lang-btn)').forEach(b => b.classList.remove('active'));
                 e.currentTarget.classList.add('active');
 
                 // Show goal section
@@ -55,16 +119,16 @@ const UI = {
 
         // Start Game
         this.elements.startGameBtn.addEventListener('click', () => {
-            const activeTypeBtn = document.querySelector('.select-btn.active');
+            const activeTypeBtn = document.querySelector('.select-btn:not(.lang-btn).active');
             const activeScoreBtn = document.querySelector('.score-btn.active');
 
             // Validate selections
             if (!activeTypeBtn) {
-                UI.showMessage("Select a game mode first!");
+                UI.showMessage(I18N.t('select_mode_first'));
                 return;
             }
             if (!activeScoreBtn) {
-                UI.showMessage("Select a winning goal first!");
+                UI.showMessage(I18N.t('select_goal_first'));
                 return;
             }
 
@@ -77,26 +141,20 @@ const UI = {
             // Setup Players based on mode
             if (activeType === 'pv-ai') {
                 this.game.players = [
-                    { name: "Thou", score: 0, onBoard: false, isAI: false },
-                    { name: "The King", score: 0, onBoard: false, isAI: true }
+                    { name: I18N.t('thou'), score: 0, onBoard: false, isAI: false },
+                    { name: I18N.t('the_king'), score: 0, onBoard: false, isAI: true }
                 ];
             } else if (activeType === 'pvp') {
                 this.game.players = [
-                    { name: "Player 1", score: 0, onBoard: false, isAI: false },
-                    { name: "Player 2", score: 0, onBoard: false, isAI: false }
+                    { name: I18N.t('player_1'), score: 0, onBoard: false, isAI: false },
+                    { name: I18N.t('player_2'), score: 0, onBoard: false, isAI: false }
                 ];
             } else if (activeType === 'tournament') {
-                // Random selection from famous medieval names
-                const medievalNames = [
-                    "King Arthur", "Sir Lancelot", "Sir Galahad", "Sir Gawain",
-                    "Lady Guinevere", "Merlin", "Sir Percival", "Sir Bedivere",
-                    "Lady Morgan", "Sir Tristan", "Lady Isolde", "Sir Kay",
-                    "Robin Hood", "Maid Marian", "Little John", "Friar Tuck",
-                    "William Wallace", "Richard Lionheart", "Joan of Arc", "Charlemagne"
-                ];
+                const opponentsList = (I18N.translations[I18N.currentLang] && I18N.translations[I18N.currentLang].opponents)
+                    ? I18N.translations[I18N.currentLang].opponents
+                    : I18N.translations.en.opponents;
 
-                // Shuffle and pick 4
-                const shuffled = medievalNames.sort(() => Math.random() - 0.5);
+                const shuffled = [...opponentsList].sort(() => Math.random() - 0.5);
                 const selected = shuffled.slice(0, 4);
 
                 this.showBracket(selected, activeScore);
@@ -105,7 +163,7 @@ const UI = {
 
             // Update Target Display across all headers
             this.elements.globalTarget.forEach(el => {
-                el.textContent = `Goal: ${this.game.maxScore.toLocaleString()}`;
+                el.textContent = I18N.t('goal_label', { score: this.game.maxScore.toLocaleString() });
             });
 
             this.elements.startMenu.classList.add('hidden');
@@ -131,15 +189,22 @@ const UI = {
 
         document.getElementById('restart-btn').addEventListener('click', () => {
             this.toggleModal('game-over-modal', false);
-            // Reset players and start over
-            this.game.players.forEach(p => p.score = 0);
-            this.game.currentPlayerIndex = 0;
-            this.game.gameState = 'START';
-            this.game.startTurn();
-        });
-
-        document.getElementById('final-menu-btn')?.addEventListener('click', () => {
-            this.returnToMenu();
+            // Cancel previous game completely and start fresh
+            if (this.game) {
+                this.game.clearState();
+                if (this.elements.history) this.elements.history.innerHTML = '';
+                this.game.players.forEach(p => {
+                    p.score = 0;
+                    p.onBoard = false;
+                });
+                this.game.currentPlayerIndex = 0;
+                this.game.turnTotal = 0;
+                this.game.currentRollScore = 0;
+                this.game.gameState = 'START';
+                this.game.diceManager.resetAll();
+                this.game.updateUI();
+                this.game.startTurn();
+            }
         });
 
         document.getElementById('final-menu-btn')?.addEventListener('click', () => {
@@ -200,25 +265,16 @@ const UI = {
         this.handleScaling();
         window.addEventListener('resize', () => this.handleScaling());
 
-        // Load Game State
-        if (this.game.loadState()) {
-            this.elements.startMenu.classList.add('hidden');
-            this.elements.app.classList.remove('hidden');
-            this.elements.globalTarget.forEach(el => {
-                el.textContent = `Goal: ${this.game.maxScore.toLocaleString()}`;
-            });
-            this.game.updateUI();
-            
-            setTimeout(() => {
-                this.showMessage("The Tavern remembers thy last game!", "info");
-            }, 500);
+        // Clean start: any game from before is cancelled upon exiting and entering again
+        if (this.game) {
+            this.game.clearState();
         }
     },
 
     returnToMenu() {
         this.showConfirm(
-            "Retire to Tavern?",
-            "Dost thou wish to abandon this duel and return to the tavern?",
+            I18N.t('confirm_retire_title'),
+            I18N.t('confirm_retire_msg'),
             () => {
                 if (this.game) this.game.clearState();
                 window.location.reload();
@@ -256,23 +312,40 @@ const UI = {
 
         // Update Labels
         this.elements.playerCards.forEach(card => {
-            card.querySelector('.label').textContent = p1.name.toUpperCase();
+            const labelEl = card.querySelector('.label');
+            if (p1.name === "Thou" || p1.name === "Tú") {
+                labelEl.textContent = I18N.t('you');
+            } else {
+                labelEl.textContent = p1.name.toUpperCase();
+            }
             card.classList.toggle('active', currentPlayerIndex === 0);
         });
 
         this.elements.aiCards.forEach(card => {
-            card.querySelector('.label').textContent = p2.name.toUpperCase();
+            const labelEl = card.querySelector('.label');
+            if (p2.isAI && (p2.name === "The King" || p2.name === "El Rey")) {
+                labelEl.textContent = I18N.t('opponent');
+            } else {
+                labelEl.textContent = p2.name.toUpperCase();
+            }
             card.classList.toggle('active', currentPlayerIndex === 1);
         });
 
         const turnInd = document.getElementById('turn-indicator');
         if (turnInd) {
             const currentPlayer = players[currentPlayerIndex];
-            turnInd.textContent = `${currentPlayer.name.toUpperCase()}'S TURN`;
+            const isHumanUser = !currentPlayer.isAI && (currentPlayer.name === "Thou" || currentPlayer.name === "Tú" || currentPlayer.name === I18N.t('thou'));
+            if (isHumanUser) {
+                turnInd.textContent = I18N.t('thy_turn');
+            } else {
+                turnInd.textContent = I18N.t('player_turn', { player: currentPlayer.name.toUpperCase() });
+            }
             turnInd.style.color = currentPlayer.isAI ? "var(--primary)" : "var(--accent)";
             
             const notice = document.getElementById('threshold-notice');
             if (notice) {
+                notice.textContent = I18N.t('purse_locked');
+                notice.title = I18N.t('purse_locked_tip');
                 if (!currentPlayer.onBoard) {
                     notice.classList.remove('hidden');
                 } else {
@@ -329,9 +402,10 @@ const UI = {
         item.className = 'history-item';
 
         if (isFarkle) {
-            item.innerHTML = `<span>${playerName}</span>: <span style="color:var(--primary)">FARKLE!</span>`;
+            item.innerHTML = `<span>${playerName}</span>: <span style="color:var(--primary)">${I18N.t('farkle_banner')}</span>`;
         } else {
-            item.innerHTML = `<span>${playerName}</span>: +${score} Gold`;
+            const goldWord = I18N.currentLang === 'es' ? 'Oro' : 'Gold';
+            item.innerHTML = `<span>${playerName}</span>: +${score.toLocaleString()} ${goldWord}`;
         }
 
         this.elements.history.prepend(item);
@@ -339,7 +413,7 @@ const UI = {
 
     showFarkle(playerName, onClosed) {
         // Clear message area and show FARKLE
-        this.elements.message.textContent = "!!! FARKLE !!!";
+        this.elements.message.textContent = I18N.t('farkle_banner');
         this.elements.message.classList.add('error');
 
         // Visual flash (handled by CSS class on body)
@@ -364,10 +438,11 @@ const UI = {
 
     showWinner(players) {
         const winner = players.find(p => p.score >= this.game.maxScore);
-        const titleLabel = "VICTORY!";
+        const isHumanWinner = winner && !winner.isAI;
+        const titleLabel = isHumanWinner ? I18N.t('victory_title') : I18N.t('defeat_title');
         const msg = winner.isAI ?
-            `${winner.name} has outwitted thee. Thy purse is empty.` :
-            `${winner.name} hast bested the opponent and claimed the gold!`;
+            I18N.t('winner_ai_msg', { winner: winner.name }) :
+            I18N.t('winner_human_msg', { winner: winner.name });
 
         document.getElementById('winner-title').textContent = titleLabel;
         document.getElementById('winner-message').textContent = msg;
@@ -375,7 +450,7 @@ const UI = {
         document.getElementById('final-ai-score').textContent = players[1].score.toLocaleString();
 
         const trophy = document.querySelector('.winner-trophy');
-        if (!winner.isAI) {
+        if (isHumanWinner) {
             trophy.textContent = '🏆';
             trophy.style.filter = 'drop-shadow(0 0 20px rgba(245, 158, 11, 0.6))';
         } else {
@@ -392,6 +467,9 @@ const UI = {
 
         const yesBtn = document.getElementById('confirm-yes');
         const noBtn = document.getElementById('confirm-no');
+
+        yesBtn.textContent = I18N.t('confirm_yes');
+        noBtn.textContent = I18N.t('confirm_no');
 
         // Clone buttons to clear existing listeners
         const newYes = yesBtn.cloneNode(true);
@@ -410,8 +488,6 @@ const UI = {
             this.toggleModal('confirm-modal', false);
         };
     },
-
-
 
     /**
      * Draws a random dice face and sets it as the browser favicon
@@ -476,9 +552,10 @@ const UI = {
             };
         }
 
-        // Put "Thou" (the player) as p1, others are AI opponents
+        // Put "Thou" / "Tú" (the player) as p1, others are AI opponents
+        const humanName = I18N.t('thou');
         const opponents = playerNames;
-        document.getElementById('bracket-p1').textContent = "Thou";
+        document.getElementById('bracket-p1').textContent = humanName;
         document.getElementById('bracket-p2').textContent = opponents[0];
         document.getElementById('bracket-p3').textContent = opponents[1];
         document.getElementById('bracket-p4').textContent = opponents[2];
@@ -491,7 +568,7 @@ const UI = {
         document.getElementById('start-tournament-btn').onclick = () => {
             this.game.maxScore = goalScore;
             this.elements.globalTarget.forEach(el => {
-                el.textContent = `Goal: ${goalScore.toLocaleString()}`;
+                el.textContent = I18N.t('goal_label', { score: goalScore.toLocaleString() });
             });
 
             // Hide bracket, show game
@@ -499,8 +576,16 @@ const UI = {
             this.elements.app.classList.remove('hidden');
 
             // Start tournament with player as participant
-            this.game.initTournamentWithPlayer(["Thou", opponents[0], opponents[1], opponents[2]]);
+            this.game.initTournamentWithPlayer([humanName, opponents[0], opponents[1], opponents[2]]);
         };
+    },
+
+    updateLangModalState() {
+        if (typeof I18N === 'undefined') return;
+        const current = I18N.getLanguage();
+        document.querySelectorAll('.lang-option-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.lang === current);
+        });
     }
 };
 

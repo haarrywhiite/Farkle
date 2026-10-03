@@ -65,6 +65,9 @@ class AssetLoader {
 
 // Initialize loader
 window.addEventListener('DOMContentLoaded', () => {
+    if (typeof I18N !== 'undefined') {
+        I18N.updateDOM();
+    }
     const assetsToLoad = [
         'img/table.png',
         'img/parchment.png',

@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Kingdom Dice - Medieval Farkle</title>
-    <meta name="description" content="A rustic medieval Farkle experience. Risk your gold and outsmart the bot.">
+    <title data-i18n="meta_title">Kingdom Dice - Medieval Farkle</title>
+    <meta name="description" content="A rustic medieval Farkle experience. Risk your gold and outsmart the bot." data-i18n="meta_description">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#2c1810">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,9 +13,9 @@
     <link
         href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;700;900&family=IM+Fell+DW+Pica:ital@0;1&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css?v=10">
-    <link rel="stylesheet" href="css/menu-buttons.css?v=10">
-    <link rel="stylesheet" href="css/bracket.css?v=10">
+    <link rel="stylesheet" href="css/styles.css?v=11">
+    <link rel="stylesheet" href="css/menu-buttons.css?v=11">
+    <link rel="stylesheet" href="css/bracket.css?v=11">
     <link id="favicon" rel="icon" type="image/x-icon" href="favicon.ico">
     <!-- Preload LCP Background -->
     <link rel="preload" as="image" href="img/table.png">
@@ -25,8 +25,8 @@
     <!-- Loading Screen -->
     <div id="loading-screen" class="loading-overlay">
         <div class="loader-content parchment">
-            <h1 class="rustic-title">KINGDOM DICE</h1>
-            <p class="subtitle gold-highlight">Preparing the Tavern...</p>
+            <h1 class="rustic-title" data-i18n="app_title">KINGDOM DICE</h1>
+            <p id="loader-subtitle" class="subtitle gold-highlight" data-i18n="loader_subtitle">Preparing the Tavern...</p>
             <div class="loader-progress-container">
                 <div id="loader-progress-fill" class="loader-progress-fill"></div>
             </div>
@@ -37,56 +37,61 @@
     <!-- Start Menu Overlay -->
     <div id="start-menu" class="menu-overlay">
         <div class="menu-content parchment">
-            <h1 class="rustic-title">KINGDOM DICE</h1>
-            <p class="subtitle gold-highlight">A High-Stakes Duel of Luck & Wit</p>
+            <h1 class="rustic-title" data-i18n="app_title">KINGDOM DICE</h1>
+            <p class="subtitle gold-highlight" data-i18n="start_subtitle">A High-Stakes Duel of Luck & Wit</p>
 
             <div class="menu-sections">
+                <!-- Mode Selection -->
                 <div class="menu-section">
-                    <h3>Select Mode</h3>
+                    <h3 data-i18n="select_mode">Select Mode</h3>
                     <div class="selection-grid mode-grid">
-                        <button class="select-btn" data-type="pv-ai">
-                            <span class="btn-label">VERSUS KING</span>
+                        <button class="select-btn" data-type="pv-ai" type="button">
+                            <span class="btn-label" data-i18n="mode_pv_ai">VERSUS KING</span>
                         </button>
-                        <button class="select-btn" data-type="pvp">
-                            <span class="btn-label">LOCAL DUEL</span>
+                        <button class="select-btn" data-type="pvp" type="button">
+                            <span class="btn-label" data-i18n="mode_pvp">LOCAL DUEL</span>
                         </button>
-                        <button class="select-btn" data-type="tournament">
-                            <span class="btn-label">TOURNAMENT</span>
+                        <button class="select-btn" data-type="tournament" type="button">
+                            <span class="btn-label" data-i18n="mode_tournament">TOURNAMENT</span>
                         </button>
                     </div>
                 </div>
 
+                <!-- Winning Goal -->
                 <div id="goal-section" class="menu-section">
-                    <h3 class="gold-highlight">Winning Goal</h3>
+                    <h3 class="gold-highlight" data-i18n="winning_goal">Winning Goal</h3>
                     <div class="selection-grid score-grid">
-                        <button class="score-btn" data-score="2500">2,500</button>
-                        <button class="score-btn" data-score="5000">5,000</button>
-                        <button class="score-btn" data-score="7500">7,500</button>
-                        <button class="score-btn" data-score="10000">10,000</button>
-                        <button class="score-btn" data-score="15000">15,000</button>
+                        <button class="score-btn" data-score="2500" type="button">2,500</button>
+                        <button class="score-btn" data-score="5000" type="button">5,000</button>
+                        <button class="score-btn" data-score="7500" type="button">7,500</button>
+                        <button class="score-btn" data-score="10000" type="button">10,000</button>
+                        <button class="score-btn" data-score="15000" type="button">15,000</button>
                     </div>
                 </div>
             </div>
 
-            <button id="start-game-btn" class="medieval-btn large">ENTER THE TAVERN</button>
+            <button id="start-game-btn" class="medieval-btn large" data-i18n="enter_tavern" type="button">ENTER THE TAVERN</button>
             <div class="menu-footer">
                 <div class="footer-buttons">
-                    <button id="show-rules-btn" class="medieval-btn small gold-highlight">Scroll of Rules</button>
+                    <button id="show-rules-btn" class="medieval-btn small gold-highlight" data-i18n="scroll_rules" type="button">Scroll of Rules</button>
+                    <button id="show-lang-btn" class="medieval-btn small gold-highlight" data-i18n="btn_language" type="button">🌐 Language</button>
                 </div>
-                <div class="made-by">Made by Harry White 2026</div>
+                <div class="made-by subtitle gold-highlight" data-i18n="made_by">Made by Harry White 2026</div>
             </div>
         </div>
     </div>
 
+    <!-- Tournament Bracket Overlay -->
     <div id="bracket-overlay" class="menu-overlay hidden">
         <div class="menu-content parchment bracket-view">
             <!-- Game Header inside Bracket -->
             <header class="game-header overlay-header">
                 <div class="header-left">
-                    <button class="icon-btn back-to-menu-btn" title="Back to Menu">🏰</button>
+                    <button class="icon-btn back-to-menu-btn" title="Back to Menu" data-i18n-title="btn_menu_title" type="button">🏰</button>
                     <div class="header-actions">
-                        <button class="icon-btn toggle-rules-btn" title="Rules">📜</button>
-                        <button class="icon-btn toggle-sound-btn" title="Toggle Sound">🔊</button>
+                        <button class="icon-btn toggle-rules-btn" title="Rules" data-i18n-title="btn_rules_title" type="button">📜</button>
+                        <button class="icon-btn toggle-sound-btn" title="Toggle Sound" data-i18n-title="btn_sound_title" type="button">🔊</button>
+                        <button class="icon-btn toggle-lang-btn" title="Switch Language" data-i18n-title="btn_lang_title" type="button">🌐 <span class="lang-tag">EN</span></button>
                     </div>
                 </div>
                 <div class="logo">
@@ -95,52 +100,54 @@
                 <div class="main-scores">
                     <div class="global-target header-goal-display">Goal: 2,500</div>
                     <div class="score-card player-card active">
-                        <span class="label">YOU</span>
+                        <span class="label" data-i18n="you">YOU</span>
                         <span class="value">0</span>
                     </div>
                     <div class="score-card ai-card">
-                        <span class="label">OPPONENT</span>
+                        <span class="label" data-i18n="opponent">OPPONENT</span>
                         <span class="value">0</span>
                     </div>
                 </div>
             </header>
 
-            <h1 class="rustic-title">TOURNAMENT BRACKET</h1>
+            <h1 class="rustic-title" data-i18n="tournament_bracket_title">TOURNAMENT BRACKET</h1>
             <div class="bracket-container">
                 <div class="bracket-round">
-                    <h3>Semi-Finals</h3>
+                    <h3 data-i18n="semi_finals">Semi-Finals</h3>
                     <div class="bracket-match">
-                        <div class="bracket-player" id="bracket-p1">Player 1</div>
-                        <div class="vs-text">VS</div>
+                        <div class="bracket-player" id="bracket-p1" data-i18n="thou">Thou</div>
+                        <div class="vs-text" data-i18n="vs">VS</div>
                         <div class="bracket-player" id="bracket-p2">Player 2</div>
                     </div>
                     <div class="bracket-match">
                         <div class="bracket-player" id="bracket-p3">Player 3</div>
-                        <div class="vs-text">VS</div>
+                        <div class="vs-text" data-i18n="vs">VS</div>
                         <div class="bracket-player" id="bracket-p4">Player 4</div>
                     </div>
                 </div>
                 <div class="bracket-arrow">→</div>
                 <div class="bracket-round">
-                    <h3>Grand Final</h3>
+                    <h3 data-i18n="grand_final">Grand Final</h3>
                     <div class="bracket-match final">
-                        <div class="bracket-player placeholder">Winner 1</div>
-                        <div class="vs-text">VS</div>
-                        <div class="bracket-player placeholder">Winner 2</div>
+                        <div class="bracket-player placeholder" data-i18n="winner_1">Winner 1</div>
+                        <div class="vs-text" data-i18n="vs">VS</div>
+                        <div class="bracket-player placeholder" data-i18n="winner_2">Winner 2</div>
                     </div>
                 </div>
             </div>
-            <button id="start-tournament-btn" class="medieval-btn large">BEGIN TOURNAMENT</button>
+            <button id="start-tournament-btn" class="medieval-btn large" data-i18n="begin_tournament" type="button">BEGIN TOURNAMENT</button>
         </div>
     </div>
 
+    <!-- Main Game App -->
     <div id="app" class="app-container hidden">
         <header class="game-header">
             <div class="header-left">
-                <button id="back-to-menu-btn" class="icon-btn back-to-menu-btn" title="Return to Menu">🏰</button>
+                <button id="back-to-menu-btn" class="icon-btn back-to-menu-btn" title="Return to Menu" data-i18n-title="btn_menu_title" type="button">🏰</button>
                 <div class="header-actions">
-                    <button class="icon-btn toggle-rules-btn" id="rules-btn" title="Rules">📜</button>
-                    <button class="icon-btn toggle-sound-btn" id="sound-btn" title="Toggle Sound">🔊</button>
+                    <button class="icon-btn toggle-rules-btn" id="rules-btn" title="Rules" data-i18n-title="btn_rules_title" type="button">📜</button>
+                    <button class="icon-btn toggle-sound-btn" id="sound-btn" title="Toggle Sound" data-i18n-title="btn_sound_title" type="button">🔊</button>
+                    <button class="icon-btn toggle-lang-btn" id="lang-btn" title="Switch Language" data-i18n-title="btn_lang_title" type="button">🌐 <span class="lang-tag">EN</span></button>
                 </div>
             </div>
             <div class="logo">
@@ -149,99 +156,101 @@
             <div class="main-scores">
                 <div class="global-target" id="global-target-display">Goal: 10,000</div>
                 <div class="score-card player-card active" id="player-score-card">
-                    <span class="label">YOU</span>
+                    <span class="label" data-i18n="you">YOU</span>
                     <span class="value" id="player-grand-total">0</span>
                 </div>
                 <div class="score-card ai-card" id="ai-score-card">
-                    <span class="label">OPPONENT</span>
+                    <span class="label" data-i18n="opponent">OPPONENT</span>
                     <span class="value" id="ai-grand-total">0</span>
                 </div>
             </div>
         </header>
 
-
         <main class="game-board">
             <div class="status-panel">
-                <div class="turn-indicator" id="turn-indicator">THY TURN</div>
-                <div id="threshold-notice" class="threshold-notice hidden" title="Thou must score 500+ in one turn to begin hoarding gold!">🔒 Purse Locked (Need 500+)</div>
+                <div class="turn-indicator" id="turn-indicator" data-i18n="thy_turn">THY TURN</div>
+                <div id="threshold-notice" class="threshold-notice hidden" data-i18n="purse_locked" data-i18n-title="purse_locked_tip" title="Thou must score 500+ in one turn to begin hoarding gold!">🔒 Purse Locked (Need 500+)</div>
                 <div class="turn-score-panel parchment-small">
-                    <span class="label">GOLD AT RISK</span>
+                    <span class="label" data-i18n="gold_at_risk">GOLD AT RISK</span>
                     <span class="value" id="turn-total">0</span>
                 </div>
             </div>
 
             <div class="dice-container" id="dice-container">
-                <!-- Dice will be injected here by JS -->
+                <!-- Dice injected here by JS -->
             </div>
 
             <div class="game-controls">
-                <button id="roll-btn" class="medieval-btn primary">
-                    <span class="icon">🎲</span> ROLL
+                <button id="roll-btn" class="medieval-btn primary" type="button">
+                    <span class="icon">🎲</span> <span class="btn-text" data-i18n="btn_roll">ROLL</span>
                 </button>
-                <button id="bank-btn" class="medieval-btn secondary" disabled>
-                    <span class="icon">💰</span> BANK
+                <button id="bank-btn" class="medieval-btn secondary" disabled type="button">
+                    <span class="icon">💰</span> <span class="btn-text" data-i18n="btn_bank">BANK</span>
                 </button>
             </div>
 
-            <div class="message-area" id="game-message">
+            <div class="message-area" id="game-message" data-i18n="prepare_dice">
                 Prepare thy dice...
             </div>
         </main>
 
         <aside class="right-panel">
             <div class="history-panel iron-bound">
-                <h3>CHRONICLE</h3>
+                <h3 data-i18n="chronicle_title">CHRONICLE</h3>
                 <div id="game-history" class="history-list">
                     <!-- History items injected here -->
                 </div>
             </div>
         </aside>
-
-
     </div>
 
-    <!-- Information Modal (Rules) -->
+    <!-- Sacred Rules Modal -->
     <div id="rules-modal" class="modal hidden">
         <div class="modal-content parchment rules-compact">
-            <button id="close-rules-btn" class="close-btn" title="Close Scroll">📜</button>
+            <button id="close-rules-btn" class="close-btn" title="Close Scroll" data-i18n-title="close_scroll" type="button">📜</button>
             <div class="royal-header-compact">
-                <h2>THE KING'S SACRED RULES</h2>
+                <h2 data-i18n="rules_title">THE KING'S SACRED RULES</h2>
             </div>
 
             <div class="rules-flex-container">
                 <section class="scoring-section-compact">
-                    <h3>SCORING</h3>
+                    <h3 data-i18n="rules_scoring">SCORING</h3>
                     <div class="rules-grid">
-                        <div class="rule-row"><span class="rule-name">Single 1:</span> <span class="rule-value">100
-                                Gold</span>
+                        <div class="rule-row">
+                            <span class="rule-name" data-i18n="rule_single_1">Single 1:</span>
+                            <span class="rule-value" data-i18n="val_100_gold">100 Gold</span>
                             <div class="mini-dice-row">
                                 <div class="mini-die">⚀</div>
                             </div>
                         </div>
-                        <div class="rule-row"><span class="rule-name">Single 5:</span> <span class="rule-value">50
-                                Gold</span>
+                        <div class="rule-row">
+                            <span class="rule-name" data-i18n="rule_single_5">Single 5:</span>
+                            <span class="rule-value" data-i18n="val_50_gold">50 Gold</span>
                             <div class="mini-dice-row">
                                 <div class="mini-die">⚄</div>
                             </div>
                         </div>
-                        <div class="rule-row"><span class="rule-name">Three 1s:</span> <span class="rule-value">1,000
-                                Gold</span>
+                        <div class="rule-row">
+                            <span class="rule-name" data-i18n="rule_three_1s">Three 1s:</span>
+                            <span class="rule-value" data-i18n="val_1000_gold">1,000 Gold</span>
                             <div class="mini-dice-row">
                                 <div class="mini-die">⚀</div>
                                 <div class="mini-die">⚀</div>
                                 <div class="mini-die">⚀</div>
                             </div>
                         </div>
-                        <div class="rule-row"><span class="rule-name">Three of a Kind:</span> <span
-                                class="rule-value">Face x 100</span>
+                        <div class="rule-row">
+                            <span class="rule-name" data-i18n="rule_three_kind">Three of a Kind:</span>
+                            <span class="rule-value" data-i18n="val_face_100">Face x 100</span>
                             <div class="mini-dice-row">
                                 <div class="mini-die face-x">?</div>
                                 <div class="mini-die face-x">?</div>
                                 <div class="mini-die face-x">?</div>
                             </div>
                         </div>
-                        <div class="rule-row"><span class="rule-name">Four of a Kind:</span> <span class="rule-value">2x
-                                Triple</span>
+                        <div class="rule-row">
+                            <span class="rule-name" data-i18n="rule_four_kind">Four of a Kind:</span>
+                            <span class="rule-value" data-i18n="val_2x_triple">2x Triple</span>
                             <div class="mini-dice-row">
                                 <div class="mini-die face-x">?</div>
                                 <div class="mini-die face-x">?</div>
@@ -249,8 +258,9 @@
                                 <div class="mini-die face-x">?</div>
                             </div>
                         </div>
-                        <div class="rule-row"><span class="rule-name">Five of a Kind:</span> <span class="rule-value">3x
-                                Triple</span>
+                        <div class="rule-row">
+                            <span class="rule-name" data-i18n="rule_five_kind">Five of a Kind:</span>
+                            <span class="rule-value" data-i18n="val_3x_triple">3x Triple</span>
                             <div class="mini-dice-row">
                                 <div class="mini-die face-x">?</div>
                                 <div class="mini-die face-x">?</div>
@@ -259,19 +269,21 @@
                                 <div class="mini-die face-x">?</div>
                             </div>
                         </div>
-                        <div class="rule-row"><span class="rule-name">Six of a Kind:</span> <span class="rule-value">4x
-                                Triple</span>
+                        <div class="rule-row">
+                            <span class="rule-name" data-i18n="rule_six_kind">Six of a Kind:</span>
+                            <span class="rule-value" data-i18n="val_4x_triple">4x Triple</span>
                             <div class="mini-dice-row">
                                 <div class="mini-die face-x">?</div>
                                 <div class="mini-die face-x">?</div>
                                 <div class="mini-die face-x">?</div>
                                 <div class="mini-die face-x">?</div>
-                                <div class="mini-die_x">?</div>
+                                <div class="mini-die face-x">?</div>
                                 <div class="mini-die face-x">?</div>
                             </div>
                         </div>
-                        <div class="rule-row"><span class="rule-name">Straight (1-6):</span> <span
-                                class="rule-value">1,500 Gold</span>
+                        <div class="rule-row">
+                            <span class="rule-name" data-i18n="rule_straight">Straight (1-6):</span>
+                            <span class="rule-value" data-i18n="val_1500_gold">1,500 Gold</span>
                             <div class="mini-dice-row">
                                 <div class="mini-die">⚀</div>
                                 <div class="mini-die">⚁</div>
@@ -281,58 +293,84 @@
                                 <div class="mini-die">⚅</div>
                             </div>
                         </div>
-                        <div class="rule-row"><span class="rule-name">Three Pairs:</span> <span class="rule-value">1,500
-                                Gold</span></div>
-                        <div class="rule-row"><span class="rule-name">Two Triplets:</span> <span
-                                class="rule-value">2,500 Gold</span></div>
+                        <div class="rule-row">
+                            <span class="rule-name" data-i18n="rule_three_pairs">Three Pairs:</span>
+                            <span class="rule-value" data-i18n="val_1500_gold">1,500 Gold</span>
+                        </div>
+                        <div class="rule-row">
+                            <span class="rule-name" data-i18n="rule_two_triplets">Two Triplets:</span>
+                            <span class="rule-value" data-i18n="val_2500_gold">2,500 Gold</span>
+                        </div>
                     </div>
                 </section>
                 <section class="engagement-section-compact">
-                    <h3>RULES OF ENGAGEMENT</h3>
+                    <h3 data-i18n="rules_engagement">RULES OF ENGAGEMENT</h3>
                     <div class="engagement-list">
-                        <p>1. Roll all 6 dice to start. Keep scoring dice.</p>
-                        <p>2. Set aside at least one scoring die per roll to continue.</p>
-                        <p>3. Roll remaining dice or <strong>Bank thy points</strong>.</p>
-                        <p>4. <strong>Farkle!</strong> A score-less roll forfeits all points this turn.</p>
-                        <p>5. <strong>Hot Dice!</strong> Use all 6 dice to earn another full roll!</p>
+                        <p data-i18n="rule_eng_1">1. Roll all 6 dice to start. Keep scoring dice.</p>
+                        <p data-i18n="rule_eng_2">2. Set aside at least one scoring die per roll to continue.</p>
+                        <p data-i18n="rule_eng_3">3. Roll remaining dice or <strong>Bank thy points</strong>.</p>
+                        <p data-i18n="rule_eng_4">4. <strong>Farkle!</strong> A score-less roll forfeits all points this turn.</p>
+                        <p data-i18n="rule_eng_5">5. <strong>Hot Dice!</strong> Use all 6 dice to earn another full roll!</p>
                     </div>
                 </section>
             </div>
         </div>
     </div>
 
-
+    <!-- Victory / Game Over Modal -->
     <div id="game-over-modal" class="modal hidden">
         <div class="modal-content parchment winner-content">
             <div class="royal-seal"></div>
-            <h2 id="winner-title">VICTORY!</h2>
+            <h2 id="winner-title" data-i18n="victory_title">VICTORY!</h2>
             <div class="winner-trophy">🏆</div>
-            <p id="winner-message">Thou hast reached the objective!</p>
+            <p id="winner-message" data-i18n="winner_objective">Thou hast reached the objective!</p>
             <div class="final-scores-banner parchment-dark-translucent">
                 <div class="final-score-item">
-                    <span class="final-label">THY GOLD</span>
+                    <span class="final-label" data-i18n="final_thy_gold">THY GOLD</span>
                     <span id="final-player-score" class="final-value">0</span>
                 </div>
                 <div class="final-score-divider"></div>
                 <div class="final-score-item">
-                    <span class="final-label">OPPONENT</span>
+                    <span class="final-label" data-i18n="final_opponent">OPPONENT</span>
                     <span id="final-ai-score" class="final-value">0</span>
                 </div>
             </div>
             <div class="game-over-actions">
-                <button id="restart-btn" class="medieval-btn primary">CLAIM THY REWARD & REMATCH</button>
-                <button id="final-menu-btn" class="medieval-btn secondary">RETURN TO TAVERN</button>
+                <button id="restart-btn" class="medieval-btn primary" data-i18n="btn_claim_rematch" type="button">CLAIM THY REWARD & REMATCH</button>
+                <button id="final-menu-btn" class="medieval-btn secondary" data-i18n="btn_return_tavern" type="button">RETURN TO TAVERN</button>
             </div>
         </div>
     </div>
 
+    <!-- Confirm Modal -->
     <div id="confirm-modal" class="modal hidden">
         <div class="modal-content parchment small-modal">
-            <h2 id="confirm-title">Dost Thou Agree?</h2>
-            <p id="confirm-message">Proceed with thy chosen action?</p>
+            <h2 id="confirm-title" data-i18n="confirm_retire_title">Dost Thou Agree?</h2>
+            <p id="confirm-message" data-i18n="confirm_retire_msg">Proceed with thy chosen action?</p>
             <div class="confirm-actions">
-                <button id="confirm-yes" class="medieval-btn primary">YES, TO THE TAVERN</button>
-                <button id="confirm-no" class="medieval-btn secondary">NO, REMAIN HERE</button>
+                <button id="confirm-yes" class="medieval-btn primary" data-i18n="confirm_yes" type="button">YES, TO THE TAVERN</button>
+                <button id="confirm-no" class="medieval-btn secondary" data-i18n="confirm_no" type="button">NO, REMAIN HERE</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Language Selection Modal (Pop-up) -->
+    <div id="language-modal" class="modal hidden">
+        <div class="modal-content parchment small-modal language-modal-content">
+            <button id="close-lang-btn" class="close-btn" title="Close" data-i18n-title="close_scroll" type="button">📜</button>
+            <div class="royal-header-compact">
+                <h2 data-i18n="select_language">Select Language</h2>
+            </div>
+            <p class="subtitle gold-highlight lang-modal-subtitle" data-i18n="choose_tongue">Choose thy tongue:</p>
+            <div class="lang-modal-grid">
+                <button class="select-btn lang-option-btn" data-lang="en" type="button">
+                    <span class="lang-flag">🇬🇧</span>
+                    <span class="btn-label" data-i18n="lang_en">ENGLISH</span>
+                </button>
+                <button class="select-btn lang-option-btn" data-lang="es" type="button">
+                    <span class="lang-flag">🇪🇸</span>
+                    <span class="btn-label" data-i18n="lang_es">ESPAÑOL</span>
+                </button>
             </div>
         </div>
     </div>
@@ -343,12 +381,13 @@
     </audio>
 
     <!-- Scripts -->
-    <script src="js/loader.js?v=9"></script>
-    <script src="js/scoring.js?v=9" defer></script>
-    <script src="js/dice.js?v=9" defer></script>
-    <script src="js/ai.js?v=9" defer></script>
-    <script src="js/game.js?v=9" defer></script>
-    <script src="js/ui.js?v=9" defer></script>
+    <script src="js/i18n.js?v=11"></script>
+    <script src="js/loader.js?v=11"></script>
+    <script src="js/scoring.js?v=11" defer></script>
+    <script src="js/dice.js?v=11" defer></script>
+    <script src="js/ai.js?v=11" defer></script>
+    <script src="js/game.js?v=11" defer></script>
+    <script src="js/ui.js?v=11" defer></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {

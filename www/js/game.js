@@ -85,7 +85,7 @@ class Game {
             AI.playTurn(this);
         } else {
             // Auto-roll for human player
-            UI.showMessage(`${player.name.toUpperCase()}'S TURN`);
+            UI.showMessage(I18N.t('player_turn', { player: player.name.toUpperCase() }));
             setTimeout(() => this.roll(), 1000);
         }
     }
@@ -104,7 +104,7 @@ class Game {
 
         // Before rolling again, we must have selected some scoring dice from previous roll
         if (this.gameState === 'SELECTING' && this.currentRollScore === 0) {
-            UI.showMessage("Select at least one scoring die!");
+            UI.showMessage(I18N.t('select_at_least_one'));
             this.isRolling = false;
             return;
         }
@@ -118,7 +118,7 @@ class Game {
 
         // Handle Hot Dice (all dice used)
         if (this.diceManager.allLocked()) {
-            UI.showMessage("HOT DICE! Roll all 6 again!");
+            UI.showMessage(I18N.t('hot_dice'));
             this.diceManager.resetAll();
         }
 
@@ -134,7 +134,7 @@ class Game {
             this.handleFarkle();
         } else {
             this.gameState = 'SELECTING';
-            UI.showMessage("Select scoring dice to keep.");
+            UI.showMessage(I18N.t('select_scoring'));
             this.updateUI();
         }
         this.isRolling = false;
@@ -185,9 +185,9 @@ class Game {
         if (!player.onBoard) {
             if (this.turnTotal >= 500) {
                 player.onBoard = true;
-                UI.showMessage(`${player.name.toUpperCase()} OPENS THEIR PURSE!`);
+                UI.showMessage(I18N.t('purse_opened', { player: player.name.toUpperCase() }));
             } else {
-                UI.showMessage("Must score 500+ to get on the board!", "error");
+                UI.showMessage(I18N.t('need_500_to_board'), "error");
                 // Undo the turnTotal addition so they can continue rolling
                 this.turnTotal -= this.currentRollScore;
                 return;
@@ -230,7 +230,8 @@ class Game {
     /* Tournament Logic with AI Auto-Sim */
     initTournamentWithPlayer(playerNames) {
         this.tournament.active = true;
-        this.tournament.playerName = "Thou"; // The human player
+        const humanName = I18N.t('thou');
+        this.tournament.playerName = humanName;
         this.tournament.round = 1;
         this.tournament.bracket = [
             { p1: playerNames[0], p2: playerNames[1], winner: null }, // Match 1: Thou vs AI
@@ -244,7 +245,7 @@ class Game {
         match2.winner = aiWinner;
         this.tournament.bracket[2].p2 = aiWinner;
 
-        UI.showMessage(`${aiWinner} wins the other Semi-Final!`);
+        UI.showMessage(I18N.t('tournament_other_win', { winner: aiWinner }));
 
         // Start player's match after a delay
         setTimeout(() => {
@@ -255,16 +256,15 @@ class Game {
     startMatch(matchIndex) {
         const match = this.tournament.bracket[matchIndex];
         this.tournament.currentMatchIndex = matchIndex;
-
-        const playerInMatch = match.p1 === "Thou" || match.p2 === "Thou";
+        const humanName = I18N.t('thou');
 
         this.players = [
-            { name: match.p1, score: 0, isAI: match.p1 !== "Thou" },
-            { name: match.p2, score: 0, isAI: match.p2 !== "Thou" }
+            { name: match.p1, score: 0, isAI: match.p1 !== humanName },
+            { name: match.p2, score: 0, isAI: match.p2 !== humanName }
         ];
 
         this.currentPlayerIndex = 0;
-        UI.showMessage(`MATCH: ${match.p1} VS ${match.p2}`);
+        UI.showMessage(I18N.t('match_announcement', { p1: match.p1, p2: match.p2 }));
         this.saveState();
         setTimeout(() => this.startTurn(), 2000);
     }
@@ -273,14 +273,15 @@ class Game {
         const winner = this.players[this.currentPlayerIndex];
         const match = this.tournament.bracket[this.tournament.currentMatchIndex];
         match.winner = winner.name;
+        const humanName = I18N.t('thou');
 
         if (this.tournament.currentMatchIndex === 2) {
             // Tournament complete
             this.tournament.winner = winner.name;
-            if (winner.name === "Thou") {
-                UI.showMessage(`THOU ART THE KINGDOM CHAMPION!`);
+            if (winner.name === humanName) {
+                UI.showMessage(I18N.t('champion_msg'));
             } else {
-                UI.showMessage(`${winner.name} HAS DEFEATED THEE!`);
+                UI.showMessage(I18N.t('champion_defeat_msg', { winner: winner.name }));
             }
             UI.showWinner(this.players);
         } else {
@@ -290,10 +291,10 @@ class Game {
                 finalMatch.p1 = winner.name;
             }
 
-            if (winner.name === "Thou") {
-                UI.showMessage(`THOU ADVANCES TO THE FINAL!`);
+            if (winner.name === humanName) {
+                UI.showMessage(I18N.t('champion_advance_msg'));
             } else {
-                UI.showMessage(`${winner.name} ADVANCES! Thou hast been eliminated!`);
+                UI.showMessage(I18N.t('champion_eliminated_msg', { winner: winner.name }));
                 setTimeout(() => UI.showWinner(this.players), 3000);
                 return;
             }

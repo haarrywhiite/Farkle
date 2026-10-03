@@ -14,7 +14,7 @@ const AI = {
 
         try {
             console.log("AI: Thinking started...");
-            UI.showMessage("Opponent is thinking...");
+            UI.showMessage(I18N.t('ai_thinking'));
             await this.delay(1200);
 
             let keepGoing = true;
@@ -44,11 +44,11 @@ const AI = {
 
                 if (keepGoing) {
                     console.log("AI: Decided to roll again.");
-                    UI.showMessage("Opponent decides to roll again!");
+                    UI.showMessage(I18N.t('ai_rolls_again'));
                     await this.delay(1200);
                 } else {
                     console.log("AI: Decided to bank.");
-                    UI.showMessage("Opponent decides to bank.");
+                    UI.showMessage(I18N.t('ai_banks'));
                     await this.delay(1000);
                     game.bank();
                     break;
@@ -56,7 +56,7 @@ const AI = {
             }
         } catch (error) {
             console.error("AI Error:", error);
-            UI.showMessage("The Oracle is confused! Opponent banks to safety.", "error");
+            UI.showMessage(I18N.t('ai_confused'), "error");
             // Safety measure: Try to bank if possible to avoid turn deadlock
             if (game.gameState === 'SELECTING' && game.currentRollScore > 0) {
                 game.bank();
@@ -79,7 +79,7 @@ const AI = {
         const scoringIndices = Scoring.getScoringIndices(diceValues);
 
         if (scoringIndices.length > 0) {
-            UI.showMessage("Opponent is choosing dice...");
+            UI.showMessage(I18N.t('ai_choosing'));
             for (const idx of scoringIndices) {
                 await this.delay(800); // Deeper delay for realism
                 availableDice[idx].toggleSelection(false);
@@ -133,11 +133,11 @@ const AI = {
     },
 
     getAdvice(game) {
-        if (game.gameState === 'ROLLING') return "Wait for the dice to settle, child.";
-        if (game.gameState === 'START') return "Cast the bones and let fate decide!";
+        if (game.gameState === 'ROLLING') return I18N.t('advice_wait_dice');
+        if (game.gameState === 'START') return I18N.t('advice_cast_bones');
 
         const isSelecting = game.gameState === 'SELECTING';
-        if (!isSelecting) return "The Oracle sleeps. Play thy turn.";
+        if (!isSelecting) return I18N.t('advice_oracle_sleeps');
 
         const currentScore = game.currentRollScore;
         const turnTotal = game.turnTotal + currentScore;
@@ -145,19 +145,19 @@ const AI = {
         const availableDice = game.diceManager.getAvailableDice().length - diceValues.length;
 
         if (currentScore === 0) {
-            return "Thou must select scoring dice before the Oracle can see.";
+            return I18N.t('advice_select_first');
         }
 
         const shouldBank = !this.shouldContinue(game);
 
         if (availableDice === 0) {
-            return "Hot Dice! The fire is with thee. Roll all six again!";
+            return I18N.t('advice_hot_dice');
         }
 
         if (shouldBank) {
-            return `Bank thy ${turnTotal} Gold. A wise merchant knows when to fold and keep the coin.`;
+            return I18N.t('advice_bank', { score: turnTotal });
         } else {
-            return `The winds of the tavern favor thee. Risk the remaining ${availableDice} dice for more!`;
+            return I18N.t('advice_risk', { dice: availableDice });
         }
     }
 };

@@ -342,6 +342,23 @@ body {
     transform: scale(0.95);
 }
 
+.icon-btn.toggle-lang-btn {
+    width: auto;
+    min-width: 48px;
+    padding: 0 10px;
+    border-radius: 24px;
+    font-size: 1.1rem;
+    gap: 4px;
+}
+
+.icon-btn.toggle-lang-btn .lang-tag {
+    font-size: 0.75rem;
+    font-weight: 900;
+    font-family: 'Cinzel', serif;
+    color: #fca311;
+    letter-spacing: 1px;
+}
+
 .logo h1 {
     font-family: 'Cinzel', serif;
     font-weight: 700;
@@ -590,16 +607,20 @@ body {
 /* Buttons */
 .medieval-btn {
     font-family: 'Cinzel', serif;
-    padding: 18px 45px;
+    padding: 18px 40px;
     border: none;
     font-weight: 900;
-    font-size: 1.2rem;
+    font-size: 1.15rem;
     cursor: pointer;
     transition: all 0.2s ease;
     text-transform: uppercase;
     letter-spacing: 2px;
     position: relative;
     overflow: hidden;
+    white-space: normal;
+    word-break: break-word;
+    text-align: center;
+    line-height: 1.25;
 }
 
 .medieval-btn::before {
@@ -727,31 +748,98 @@ body {
 
 .footer-buttons {
     display: flex;
-    gap: 20px;
+    gap: 15px;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
 }
 
 #show-rules-btn,
+#show-lang-btn,
 #download-menu-btn {
-    min-width: 200px;
-    height: 64px;
+    min-width: 180px;
+    height: 58px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    padding: 0 30px;
+    padding: 0 25px;
     margin: 0;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    letter-spacing: 1px;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(180deg, #451a03 0%, #2c1810 100%);
+    border: 3px solid var(--accent);
+    color: #fef3c7;
+    transition: all 0.2s ease;
+}
+
+#show-rules-btn:hover,
+#show-lang-btn:hover {
+    transform: translateY(-2px);
+    border-color: #fbbf24;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6), 0 0 15px rgba(251, 191, 36, 0.4);
 }
 
 .made-by {
-    font-family: 'IM Fell DW Pica', serif;
-    font-style: italic;
-    font-size: 0.9rem;
-    color: var(--text-ink);
-    opacity: 0.6;
-    margin-top: 10px;
+    font-family: 'Cinzel', serif;
+    font-size: 1.25rem;
+    color: #451a03 !important;
+    text-shadow: 0 0 15px #fca311, 0 0 8px #fca311;
+    font-weight: 700;
+    letter-spacing: 1px;
+    opacity: 1 !important;
+    margin-top: 15px;
+    text-align: center;
+}
+
+/* Language Selection Modal */
+.language-modal-content {
+    max-width: 420px;
+    text-align: center;
+    padding: 35px 25px;
+}
+
+.lang-modal-subtitle {
+    margin: 10px 0 20px 0;
+    font-size: 1.15rem;
+}
+
+.lang-modal-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+.lang-option-btn {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 16px 25px !important;
+    font-size: 1.15rem !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    cursor: pointer;
+    border-radius: 8px;
+    border-width: 3px !important;
+}
+
+.lang-option-btn .lang-flag {
+    font-size: 1.6rem;
+}
+
+.lang-option-btn.active {
+    background: #78350f !important;
+    border-color: #fbbf24 !important;
+    box-shadow: 0 0 25px rgba(251, 191, 36, 0.6), 0 4px 15px rgba(0, 0, 0, 0.5) !important;
+    transform: scale(1.03);
 }
 
 /* Download Dropdown */
@@ -1466,14 +1554,20 @@ body {
 
 .confirm-actions {
     display: flex;
-    gap: 20px;
+    gap: 15px;
     justify-content: center;
-    margin-top: 30px;
+    margin-top: 25px;
+    flex-wrap: wrap;
 }
 
 .confirm-actions .medieval-btn {
-    padding: 12px 25px;
-    font-size: 1rem;
+    padding: 12px 20px;
+    font-size: 0.95rem;
+    flex: 1 1 160px;
+    min-width: 130px;
+    white-space: normal;
+    word-break: break-word;
+    line-height: 1.2;
 }
 
 #confirm-title {
@@ -1897,12 +1991,37 @@ body {
         font-size: 1rem !important;
     }
 
+    .icon-btn.toggle-lang-btn {
+        width: auto !important;
+        min-width: 32px !important;
+        height: 32px !important;
+        padding: 0 6px !important;
+        font-size: 0.85rem !important;
+    }
+
+    .icon-btn.toggle-lang-btn .lang-tag {
+        font-size: 0.65rem !important;
+    }
+
     .header-left {
         gap: 5px !important;
     }
 
     .header-actions {
         padding-left: 5px !important;
+    }
+
+    #show-rules-btn,
+    #show-lang-btn {
+        min-width: 130px !important;
+        height: 48px !important;
+        font-size: 0.85rem !important;
+        padding: 0 12px !important;
+    }
+
+    .made-by {
+        font-size: 1.05rem !important;
+        margin-top: 10px !important;
     }
 
     /* The grid areas must be preserved */
