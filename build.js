@@ -5,7 +5,7 @@ async function build() {
     await fs.ensureDir('www');
     await fs.emptyDir('www');
     
-    const dirs = ['app', 'assets', 'css', 'img', 'js'];
+    const dirs = ['css', 'img', 'js'];
     const files = ['index.html', 'manifest.json', 'sw.js'];
     
     for (const dir of dirs) {
