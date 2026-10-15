@@ -1,6 +1,6 @@
 {
   "name": "farkle-game",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A desktop and web version of Farkle.",
   "main": "electron/main.js",
   "scripts": {
@@ -52,6 +52,7 @@
     ],
     "win": {
       "icon": "electron/icon.ico",
+      "artifactName": "${productName}-Setup-${version}.${ext}",
       "target": [
         "nsis"
       ]
