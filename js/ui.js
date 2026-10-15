@@ -209,7 +209,10 @@ const UI = {
 
         document.getElementById('final-menu-btn')?.addEventListener('click', () => {
             this.toggleModal('game-over-modal', false);
-            this.returnToMenu();
+            // A completed game needs no retirement confirmation: return straight
+            // to the tavern when the player selects the final menu button.
+            if (this.game) this.game.clearState();
+            window.location.reload();
         });
 
         // Click outside to close modals
