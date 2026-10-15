@@ -1,0 +1,63 @@
+const { app, BrowserWindow, dialog } = require('electron');
+const { autoUpdater } = require('electron-updater');
+const path = require('path');
+
+function createWindow() {
+    const window = new BrowserWindow({
+        width: 1280,
+        height: 800,
+        minWidth: 900,
+        minHeight: 600,
+        autoHideMenuBar: true,
+        icon: path.join(__dirname, 'icon.ico'),
+        webPreferences: {
+            contextIsolation: true,
+            nodeIntegration: false,
+            sandbox: true
+        }
+    });
+
+    window.loadFile(path.join(__dirname, '..', 'www', 'index.html'));
+}
+
+function configureAutoUpdates() {
+    // Development builds have no published update feed. Installed builds check
+    // the GitHub Release configured by electron-builder instead.
+    if (!app.isPackaged) return;
+
+    autoUpdater.on('error', (error) => {
+        console.error('Unable to check for Farkle updates:', error);
+    });
+
+    autoUpdater.on('update-downloaded', async () => {
+        const { response } = await dialog.showMessageBox({
+            type: 'info',
+            title: 'Update ready',
+            message: 'A new version of Farkle has been downloaded.',
+            detail: 'Restart now to install it, or choose Later to install it when the app next closes.',
+            buttons: ['Restart now', 'Later'],
+            defaultId: 0,
+            cancelId: 1,
+            noLink: true
+        });
+
+        if (response === 0) autoUpdater.quitAndInstall();
+    });
+
+    autoUpdater.checkForUpdatesAndNotify().catch((error) => {
+        console.error('Unable to start the Farkle update check:', error);
+    });
+}
+
+app.whenReady().then(() => {
+    createWindow();
+    configureAutoUpdates();
+
+    app.on('activate', () => {
+        if (BrowserWindow.getAllWindows().length === 0) createWindow();
+    });
+});
+
+app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') app.quit();
+});

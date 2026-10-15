@@ -1,15 +1,20 @@
 {
   "name": "farkle-game",
   "version": "1.0.0",
-  "description": "",
-  "main": "sw.js",
+  "description": "A desktop and web version of Farkle.",
+  "main": "electron/main.js",
   "scripts": {
     "start": "node server.js --open",
     "dev": "node server.js",
     "serve": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "node build.js",
-    "android": "npm run build && npx cap sync android && npx cap open android"
+    "android": "npm run build && npx cap sync android && npx cap open android",
+    "desktop:start": "npm run build && npm run desktop:prepare && electron .",
+    "desktop:prepare": "node electron/create-icon.js",
+    "desktop:build": "npm run build && npm run desktop:prepare && electron-builder --win nsis",
+    "desktop:release": "npm run build && npm run desktop:prepare && electron-builder --win nsis --publish always",
+    "desktop:portable": "npm run build && npm run desktop:prepare && electron-builder --win portable"
   },
   "repository": {
     "type": "git",
@@ -25,10 +30,42 @@
   "homepage": "https://github.com/haarrywhiite/Farkle#readme",
   "dependencies": {
     "@capacitor/android": "^8.2.0",
-    "@capacitor/core": "^8.2.0"
+    "@capacitor/core": "^8.2.0",
+    "electron-updater": "^6.8.9"
   },
   "devDependencies": {
     "@capacitor/cli": "^8.2.0",
+    "electron": "^44.7.2",
+    "electron-builder": "^26.15.3",
     "fs-extra": "^11.3.4"
+  },
+  "build": {
+    "appId": "com.haarrywhiite.farkle",
+    "productName": "Farkle",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "www/**/*",
+      "electron/**/*",
+      "package.json"
+    ],
+    "win": {
+      "icon": "electron/icon.ico",
+      "target": [
+        "nsis"
+      ]
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "haarrywhiite",
+      "repo": "Farkle",
+      "releaseType": "release"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": false
+    }
   }
 }
