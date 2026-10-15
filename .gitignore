@@ -1,15 +1,21 @@
+# Dependencies
 node_modules/
+
+# Build and distribution
 www/
 release/
 electron/icon.ico
 
+# Packages and mobile builds
 *.zip
 *.apk
 *.aab
 
+# Android
 android/.gradle/
 android/app/build/
 android/build/
 
+# Operating System files
 .DS_Store
 Thumbs.db
