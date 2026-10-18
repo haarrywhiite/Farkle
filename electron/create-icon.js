@@ -2,8 +2,8 @@ const fs = require('fs');
 const path = require('path');
 
 // ICO files can contain PNG data directly. Embedding the existing 512px icon
-// preserves the same artwork as img/icon.svg for the Windows app and installer.
-const source = path.join(__dirname, '..', 'img', 'icon-512.png');
+// preserves the same artwork as src/img/icon.svg for the Windows app and installer.
+const source = path.join(__dirname, '..', 'src', 'img', 'icon-512.png');
 const destination = path.join(__dirname, 'icon.ico');
 const png = fs.readFileSync(source);
 
