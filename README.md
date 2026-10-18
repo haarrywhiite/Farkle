@@ -143,6 +143,12 @@ Tavern soundtrack tracks are from [FreePD.com](https://freepd.com) — all **CC0
 - **Android**: on launch the app compares its bundled version against the latest GitHub release. If a newer `Farkle-x.y.z.apk` asset is attached, an in-game banner offers a one-tap download + install.
 - When bumping versions, always **increment `versionCode`** in `android/app/build.gradle` (never reuse) — Android refuses an update whose versionCode is not newer than the installed one.
 
+### 🔐 Signing & key rotation
+- Android APKs are signed by the release workflow using GitHub Secrets: `APK_KEYSTORE` (a base64 PKCS12 file), `APK_KEYSTORE_PASSWORD` and `APK_KEY_ALIAS`. The keystore never lives in the repository.
+- The original PWABuilder keystore spent months inside git history (`app/signing.keystore` + password) and is therefore considered compromised: it was **retired on 2026-10-18** and replaced with a fresh key. Do not reuse it.
+- `app/assetlinks.json` retains **both** certificate fingerprints (old + new) so previously established Digital Asset Links trust keeps resolving.
+- Windows installers are **unsigned** until a code-signing certificate is configured — that is why Microsoft Defender SmartScreen shows the "unrecognized app" warning. The only real fix is an **OV or EV code-signing certificate** (e.g. Certum's open-source developer program at roughly €69/year, or EV for instant SmartScreen removal). Once you have the `.pfx`, add `WINDOWS_CERTIFICATE` (base64) + `WINDOWS_CERTIFICATE_PASSWORD` secrets and the workflow signs all builds automatically.
+
 ---
 
 ## 📄 License

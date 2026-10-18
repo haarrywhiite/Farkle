@@ -33,6 +33,20 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Prepare optional code signing (SmartScreen trust)
+        shell: pwsh
+        env:
+          WIN_CERT: ${{ secrets.WINDOWS_CERTIFICATE }}
+          WIN_CERT_PASSWORD: ${{ secrets.WINDOWS_CERTIFICATE_PASSWORD }}
+        run: |
+          if ($env:WIN_CERT -and $env:WIN_CERT.Trim()) {
+            "CSC_LINK=$env:WIN_CERT" >> "$GITHUB_ENV"
+            "CSC_KEY_PASSWORD=$env:WIN_CERT_PASSWORD" >> "$GITHUB_ENV"
+            Write-Host "Code signing enabled (CSC_LINK set)."
+          } else {
+            Write-Host "No WINDOWS_CERTIFICATE secret set - installer stays unsigned until a code-signing cert is configured."
+          }
+
       - name: Build the Windows installer
         run: npm run desktop:build
 
@@ -79,17 +93,26 @@ jobs:
       - name: Resolve the version without the leading v
         run: echo "VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_ENV"
 
+      - name: Restore the signing keystore
+        env:
+          APK_KEYSTORE: ${{ secrets.APK_KEYSTORE }}
+        run: |
+          echo "$APK_KEYSTORE" | base64 -d > farkle-release.jks
+
       - name: Zipalign and sign the APK
+        env:
+          APK_KEYSTORE_PASSWORD: ${{ secrets.APK_KEYSTORE_PASSWORD }}
+          APK_KEY_ALIAS: ${{ secrets.APK_KEY_ALIAS }}
         run: |
           BT=$(ls "$ANDROID_HOME/build-tools" | tail -n1)
           "$BT/zipalign" -f -p 4 \
             android/app/build/outputs/apk/release/app-release-unsigned.apk \
             Farkle-Setup.apk-aligned
           "$BT/apksigner" sign \
-            --ks app/signing.keystore \
-            --ks-key-alias my-key-alias \
-            --ks-pass pass:hindRJE8Ic3r \
-            --key-pass pass:hindRJE8Ic3r \
+            --ks farkle-release.jks \
+            --ks-key-alias "$APK_KEY_ALIAS" \
+            --ks-pass "pass:$APK_KEYSTORE_PASSWORD" \
+            --key-pass "pass:$APK_KEYSTORE_PASSWORD" \
             --out Farkle-${VERSION}.apk \
             Farkle-Setup.apk-aligned
 

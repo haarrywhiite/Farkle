@@ -1,6 +1,6 @@
 {
   "name": "farkle-game",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A desktop and web version of Farkle.",
   "main": "electron/main.js",
   "scripts": {
