@@ -124,6 +124,16 @@ Contributions, issues, and feature requests are welcome! Feel free to check the 
 
 ---
 
+## 🎵 Music
+
+Tavern soundtrack tracks are from [FreePD.com](https://freepd.com) — all **CC0 public domain**, so **no attribution or license credit is required**. Music plays locally from `audio/` (works fully offline).
+
+- *Bar Brawl* — Bryan Teoh — `audio/bar-brawl.mp3`
+- *Village Tarantella* — Kevin MacLeod — `audio/village-tarantella.mp3`
+- *Still Pickin'* — Kevin MacLeod — `audio/still-pickin.mp3`
+
+---
+
 ## 📄 License
 
 This project is licensed under the [ISC License](LICENSE).

@@ -13,9 +13,9 @@
     <link
         href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;700;900&family=IM+Fell+DW+Pica:ital@0;1&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css?v=14">
-    <link rel="stylesheet" href="css/menu-buttons.css?v=14">
-    <link rel="stylesheet" href="css/bracket.css?v=14">
+    <link rel="stylesheet" href="css/styles.css?v=18">
+    <link rel="stylesheet" href="css/menu-buttons.css?v=18">
+    <link rel="stylesheet" href="css/bracket.css?v=18">
     <link id="favicon" rel="icon" type="image/x-icon" href="favicon.ico">
     <!-- Preload backgrounds -->
     <link rel="preload" as="image" href="img/table.png">
@@ -75,7 +75,7 @@
             <div class="menu-footer">
                 <div class="footer-buttons">
                     <button id="show-rules-btn" class="medieval-btn small" data-i18n="scroll_rules" type="button">Scroll of Rules</button>
-                    <button id="show-lang-btn" class="medieval-btn small" data-i18n="btn_language" type="button">🌐 Language</button>
+                    <button id="show-settings-btn" class="medieval-btn small" data-i18n="btn_settings" type="button">⚙️ Settings</button>
                 </div>
                 <div class="made-by subtitle gold-highlight" data-i18n="made_by">Made by Harry White 2026</div>
             </div>
@@ -92,6 +92,7 @@
                     <div class="header-actions">
                         <button class="icon-btn toggle-rules-btn" title="Rules" data-i18n-title="btn_rules_title" type="button">📜</button>
                         <button class="icon-btn toggle-sound-btn" title="Toggle Sound" data-i18n-title="btn_sound_title" type="button">🔊</button>
+                        <button class="icon-btn toggle-settings-btn" title="Settings" data-i18n-title="btn_settings_title" type="button">⚙️</button>
                         <button class="icon-btn toggle-lang-btn" title="Switch Language" data-i18n-title="btn_lang_title" type="button">🌐 <span class="lang-tag">EN</span></button>
                     </div>
                 </div>
@@ -148,6 +149,7 @@
                 <div class="header-actions">
                     <button class="icon-btn toggle-rules-btn" id="rules-btn" title="Rules" data-i18n-title="btn_rules_title" type="button">📜</button>
                     <button class="icon-btn toggle-sound-btn" id="sound-btn" title="Toggle Sound" data-i18n-title="btn_sound_title" type="button">🔊</button>
+                    <button class="icon-btn toggle-settings-btn" id="settings-btn" title="Settings" data-i18n-title="btn_settings_title" type="button">⚙️</button>
                     <button class="icon-btn toggle-lang-btn" id="lang-btn" title="Switch Language" data-i18n-title="btn_lang_title" type="button">🌐 <span class="lang-tag">EN</span></button>
                 </div>
             </div>
@@ -337,7 +339,7 @@
                 </div>
             </div>
             <div class="game-over-actions">
-                <button id="restart-btn" class="medieval-btn primary" data-i18n="btn_claim_rematch" type="button">CLAIM THY REWARD & REMATCH</button>
+                <button id="restart-btn" class="medieval-btn primary" type="button">CLAIM THY REWARD & REMATCH</button>
                 <button id="final-menu-btn" class="medieval-btn secondary" data-i18n="btn_return_tavern" type="button">RETURN TO TAVERN</button>
             </div>
         </div>
@@ -376,19 +378,102 @@
         </div>
     </div>
 
+    <!-- Settings Modal (Pop-up) -->
+    <div id="settings-modal" class="modal hidden">
+        <div class="modal-content parchment settings-modal-content">
+            <button id="close-settings-btn" class="close-btn" title="Close" data-i18n-title="close_scroll" type="button">📜</button>
+            <div class="royal-header-compact">
+                <h2 data-i18n="settings_title">TAVERN SETTINGS</h2>
+            </div>
+
+            <div class="settings-list">
+                <!-- Display Mode -->
+                <div class="settings-row">
+                    <span class="settings-label" data-i18n="set_display">Display</span>
+                    <div class="settings-options">
+                        <button class="settings-option-btn" data-setting="displayMode" data-value="windowed" type="button">
+                            <span class="btn-label" data-i18n="set_windowed">🪟 WINDOWED</span>
+                        </button>
+                        <button class="settings-option-btn" data-setting="displayMode" data-value="fullscreen" type="button">
+                            <span class="btn-label" data-i18n="set_fullscreen">🖥️ FULL SCREEN</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tavern Music -->
+                <div class="settings-row">
+                    <span class="settings-label" data-i18n="set_music">Tavern Music</span>
+                    <div class="settings-options">
+                        <button class="settings-option-btn" data-setting="musicOn" data-value="true" type="button">
+                            <span class="btn-label" data-i18n="set_on">ON</span>
+                        </button>
+                        <button class="settings-option-btn" data-setting="musicOn" data-value="false" type="button">
+                            <span class="btn-label" data-i18n="set_off">OFF</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Music Volume -->
+                <div class="settings-row settings-volume-row">
+                    <label class="settings-label" for="settings-volume" data-i18n="set_volume">Music Volume</label>
+                    <div class="settings-options volume-options">
+                        <span class="volume-icon">🔉</span>
+                        <input id="settings-volume" class="settings-volume-slider" type="range" min="0" max="100" step="5" value="60">
+                        <span class="volume-icon">🔊</span>
+                    </div>
+                </div>
+
+                <!-- Animations -->
+                <div class="settings-row">
+                    <span class="settings-label" data-i18n="set_animations">Animations</span>
+                    <div class="settings-options">
+                        <button class="settings-option-btn" data-setting="animations" data-value="true" type="button">
+                            <span class="btn-label" data-i18n="set_anim_full">FULL</span>
+                        </button>
+                        <button class="settings-option-btn" data-setting="animations" data-value="false" type="button">
+                            <span class="btn-label" data-i18n="set_anim_reduced">REDUCED</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Confirm Before Banking -->
+                <div class="settings-row">
+                    <span class="settings-label" data-i18n="set_confirm_bank">Confirm Before Banking</span>
+                    <div class="settings-options">
+                        <button class="settings-option-btn" data-setting="confirmBank" data-value="true" type="button">
+                            <span class="btn-label" data-i18n="set_on">ON</span>
+                        </button>
+                        <button class="settings-option-btn" data-setting="confirmBank" data-value="false" type="button">
+                            <span class="btn-label" data-i18n="set_off">OFF</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Language Shortcut -->
+                <div class="settings-row">
+                    <span class="settings-label" data-i18n="set_language">Language</span>
+                    <div class="settings-options">
+                        <button id="settings-lang-btn" class="medieval-btn small" type="button">🌐 <span data-i18n="set_change_language">CHANGE TONGUE</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Background Audio -->
-    <audio id="tavern-music" loop>
-        <source src="https://www.chosic.com/wp-content/uploads/2021/07/Medieval-Feast.mp3" type="audio/mpeg">
+    <audio id="tavern-music">
+        <source src="audio/bar-brawl.mp3" type="audio/mpeg">
     </audio>
 
     <!-- Scripts -->
-    <script src="js/i18n.js?v=14"></script>
-    <script src="js/loader.js?v=14"></script>
-    <script src="js/scoring.js?v=14" defer></script>
-    <script src="js/dice.js?v=14" defer></script>
-    <script src="js/ai.js?v=14" defer></script>
-    <script src="js/game.js?v=14" defer></script>
-    <script src="js/ui.js?v=14" defer></script>
+    <script src="js/i18n.js?v=18"></script>
+    <script src="js/loader.js?v=18"></script>
+    <script src="js/scoring.js?v=18" defer></script>
+    <script src="js/dice.js?v=18" defer></script>
+    <script src="js/ai.js?v=18" defer></script>
+    <script src="js/settings.js?v=18" defer></script>
+    <script src="js/game.js?v=18" defer></script>
+    <script src="js/ui.js?v=18" defer></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {

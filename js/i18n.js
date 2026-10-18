@@ -44,6 +44,26 @@ const I18N = {
             btn_menu_title: "Return to Menu",
             btn_lang_title: "Switch Language / Cambiar Idioma",
 
+            // Settings Modal
+            settings_title: "TAVERN SETTINGS",
+            btn_settings: "⚙️ Settings",
+            btn_settings_title: "Settings",
+            set_display: "Display",
+            set_windowed: "🪟 WINDOWED",
+            set_fullscreen: "🖥️ FULL SCREEN",
+            set_music: "Tavern Music",
+            set_on: "ON",
+            set_off: "OFF",
+            set_volume: "Music Volume",
+            set_animations: "Animations",
+            set_anim_full: "FULL",
+            set_anim_reduced: "REDUCED",
+            set_confirm_bank: "Confirm Before Banking",
+            set_language: "Language",
+            set_change_language: "CHANGE TONGUE",
+            confirm_bank_title: "Bank Thy Gold?",
+            confirm_bank_msg: "Dost thou wish to stash thy points and end the turn?",
+
             // Tournament Overlay
             tournament_bracket_title: "TOURNAMENT BRACKET",
             semi_finals: "Semi-Finals",
@@ -136,6 +156,7 @@ const I18N = {
             final_thy_gold: "THY GOLD",
             final_opponent: "OPPONENT",
             btn_claim_rematch: "CLAIM THY REWARD & REMATCH",
+            btn_rematch: "RISE AGAIN & REMATCH",
             btn_return_tavern: "RETURN TO TAVERN",
 
             // Confirm Modal
@@ -189,6 +210,26 @@ const I18N = {
             btn_sound_title: "Activar/Desactivar Sonido",
             btn_menu_title: "Volver al Menú",
             btn_lang_title: "Cambiar Idioma / Switch Language",
+
+            // Settings Modal
+            settings_title: "AJUSTES DE LA TABERNA",
+            btn_settings: "⚙️ Ajustes",
+            btn_settings_title: "Ajustes",
+            set_display: "Pantalla",
+            set_windowed: "🪟 VENTANA",
+            set_fullscreen: "🖥️ PANTALLA COMPLETA",
+            set_music: "Música de Taberna",
+            set_on: "SÍ",
+            set_off: "NO",
+            set_volume: "Volumen de Música",
+            set_animations: "Animaciones",
+            set_anim_full: "COMPLETAS",
+            set_anim_reduced: "REDUCIDAS",
+            set_confirm_bank: "Confirmar antes de guardar",
+            set_language: "Idioma",
+            set_change_language: "CAMBIAR LENGUAJA",
+            confirm_bank_title: "¿Guardar tu oro?",
+            confirm_bank_msg: "¿Deseas guardar tus puntos y terminar el turno?",
 
             // Tournament Overlay
             tournament_bracket_title: "TABLA DEL TORNEO",
@@ -282,6 +323,7 @@ const I18N = {
             final_thy_gold: "TU ORO",
             final_opponent: "RIVAL",
             btn_claim_rematch: "RECLAMAR RECOMPENSA Y REVANCHA",
+            btn_rematch: "LEVÁNTATE Y REVANCHA",
             btn_return_tavern: "VOLVER A LA TABERNA",
 
             // Confirm Modal

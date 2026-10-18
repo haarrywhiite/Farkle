@@ -40,12 +40,6 @@ const UI = {
             this.game.clearState();
         }
 
-        // Language Modal Button in Home Screen (next to Scroll of Rules)
-        document.getElementById('show-lang-btn')?.addEventListener('click', () => {
-            this.updateLangModalState();
-            this.toggleModal('language-modal', true);
-        });
-
         // Header Language Toggle Button (opens language pop-up)
         document.querySelectorAll('.toggle-lang-btn').forEach(btn => {
             btn.addEventListener('click', () => {
@@ -77,8 +71,6 @@ const UI = {
         if (typeof I18N !== 'undefined') {
             I18N.onLanguageChange((lang) => {
                 this.updateLangModalState();
-                const showLangBtn = document.getElementById('show-lang-btn');
-                if (showLangBtn) showLangBtn.textContent = I18N.t('btn_language');
 
                 if (this.game && this.game.players && this.game.players.length > 0) {
                     if (this.game.gameType === 'pv-ai') {
@@ -100,9 +92,10 @@ const UI = {
         }
 
         // Mode Selection - Show goal section after selection
-        document.querySelectorAll('.select-btn:not(.lang-btn)').forEach(btn => {
+        // (exclude language and settings option buttons, which share the look)
+        document.querySelectorAll('.select-btn:not(.lang-btn):not(.lang-option-btn):not(.settings-option-btn)').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                document.querySelectorAll('.select-btn:not(.lang-btn)').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.select-btn:not(.lang-btn):not(.lang-option-btn):not(.settings-option-btn)').forEach(b => b.classList.remove('active'));
                 e.currentTarget.classList.add('active');
 
                 // Show goal section
@@ -119,7 +112,7 @@ const UI = {
 
         // Start Game
         this.elements.startGameBtn.addEventListener('click', () => {
-            const activeTypeBtn = document.querySelector('.select-btn:not(.lang-btn).active');
+            const activeTypeBtn = document.querySelector('.select-btn:not(.lang-btn):not(.lang-option-btn):not(.settings-option-btn).active');
             const activeScoreBtn = document.querySelector('.score-btn.active');
 
             // Validate selections
@@ -173,7 +166,13 @@ const UI = {
 
         // Event Listeners
         this.elements.rollBtn.addEventListener('click', () => game.roll());
-        this.elements.bankBtn.addEventListener('click', () => game.bank());
+        this.elements.bankBtn.addEventListener('click', () => {
+            if (Settings.get('confirmBank')) {
+                this.showConfirm(I18N.t('confirm_bank_title'), I18N.t('confirm_bank_msg'), () => game.bank());
+            } else {
+                game.bank();
+            }
+        });
 
         // Universal Listeners (Class-based)
         document.querySelectorAll('.toggle-rules-btn').forEach(btn => {
@@ -228,14 +227,13 @@ const UI = {
             });
         });
 
-        // Sound Listeners
+        // Sound Listeners (persisted via the Settings module)
         const music = document.getElementById('tavern-music');
-        let soundOn = false;
 
         const playlist = [
-            "https://www.chosic.com/wp-content/uploads/2021/07/Medieval-Feast.mp3",
-            "https://www.chosic.com/wp-content/uploads/2021/07/The-Bards-Tale.mp3",
-            "https://www.chosic.com/wp-content/uploads/2021/07/Renaissance.mp3"
+            "audio/bar-brawl.mp3",
+            "audio/village-tarantella.mp3",
+            "audio/still-pickin.mp3"
         ];
         let currentTrack = 0;
 
@@ -243,23 +241,56 @@ const UI = {
             music.addEventListener('ended', () => {
                 currentTrack = (currentTrack + 1) % playlist.length;
                 music.src = playlist[currentTrack];
-                if (soundOn) music.play().catch(e => console.log(e));
+                if (Settings.get('musicOn')) music.play().catch(e => console.log(e));
             });
+            // Apply the saved volume / playback state
+            Settings.applyMusic();
         }
 
         document.querySelectorAll('.toggle-sound-btn').forEach(btn => {
             btn.addEventListener('click', () => {
-                soundOn = !soundOn;
-                const allSoundBtns = document.querySelectorAll('.toggle-sound-btn');
-                if (soundOn) {
-                    if (music) music.play().catch(e => console.log(e));
-                    allSoundBtns.forEach(b => b.textContent = '🔊');
-                } else {
-                    if (music) music.pause();
-                    allSoundBtns.forEach(b => b.textContent = '🔇');
-                }
+                Settings.set('musicOn', !Settings.get('musicOn'));
             });
         });
+
+        // Settings Modal
+        document.querySelectorAll('.toggle-settings-btn').forEach(btn => {
+            btn.addEventListener('click', () => this.openSettings());
+        });
+        document.getElementById('show-settings-btn')?.addEventListener('click', () => this.openSettings());
+        document.getElementById('close-settings-btn')?.addEventListener('click', () => this.toggleModal('settings-modal', false));
+
+        // Toggle options inside the settings modal (display mode, music, ...)
+        document.querySelectorAll('.settings-option-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                let value = e.currentTarget.dataset.value;
+                if (value === 'true') value = true;
+                else if (value === 'false') value = false;
+                Settings.set(e.currentTarget.dataset.setting, value);
+            });
+        });
+
+        const volumeSlider = document.getElementById('settings-volume');
+        if (volumeSlider) {
+            volumeSlider.value = Settings.get('musicVolume');
+            volumeSlider.addEventListener('input', (e) => {
+                Settings.set('musicVolume', parseInt(e.target.value, 10));
+            });
+        }
+
+        // Language shortcut inside the settings modal
+        document.getElementById('settings-lang-btn')?.addEventListener('click', () => {
+            this.toggleModal('settings-modal', false);
+            this.updateLangModalState();
+            this.toggleModal('language-modal', true);
+        });
+
+        // Keep the settings modal and the header icons in sync
+        Settings.onChange(() => {
+            this.updateSettingsModalState();
+            this.updateSoundButtons();
+        });
+        this.updateSoundButtons();
 
 
         // Set initial random favicon
@@ -461,6 +492,12 @@ const UI = {
             trophy.style.filter = 'drop-shadow(0 0 20px rgba(153, 27, 27, 0.6))';
         }
 
+        // Only promise a reward when the player actually won
+        const rematchBtn = document.getElementById('restart-btn');
+        if (rematchBtn) {
+            rematchBtn.textContent = isHumanWinner ? I18N.t('btn_claim_rematch') : I18N.t('btn_rematch');
+        }
+
         this.toggleModal('game-over-modal', true);
     },
 
@@ -588,6 +625,29 @@ const UI = {
         const current = I18N.getLanguage();
         document.querySelectorAll('.lang-option-btn').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.lang === current);
+        });
+    },
+
+    openSettings() {
+        this.updateSettingsModalState();
+        this.toggleModal('settings-modal', true);
+    },
+
+    updateSettingsModalState() {
+        if (typeof Settings === 'undefined') return;
+        document.querySelectorAll('.settings-option-btn').forEach(btn => {
+            const current = String(Settings.get(btn.dataset.setting));
+            btn.classList.toggle('active', current === btn.dataset.value);
+        });
+        const slider = document.getElementById('settings-volume');
+        if (slider) slider.value = Settings.get('musicVolume');
+    },
+
+    updateSoundButtons() {
+        if (typeof Settings === 'undefined') return;
+        const on = Settings.get('musicOn');
+        document.querySelectorAll('.toggle-sound-btn').forEach(btn => {
+            btn.textContent = on ? '🔊' : '🔇';
         });
     }
 };

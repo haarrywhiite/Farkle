@@ -1,4 +1,4 @@
-const { app, BrowserWindow, dialog } = require('electron');
+const { app, BrowserWindow, dialog, ipcMain } = require('electron');
 const { autoUpdater } = require('electron-updater');
 const path = require('path');
 
@@ -13,11 +13,34 @@ function createWindow() {
         webPreferences: {
             contextIsolation: true,
             nodeIntegration: false,
-            sandbox: true
+            sandbox: true,
+            preload: path.join(__dirname, 'preload.js')
         }
     });
 
+    // Let the renderer know when full screen is toggled by other means
+    // (F11, window manager, Esc, ...) so the saved setting stays in sync.
+    const notifyFullScreenState = () => {
+        if (!window.isDestroyed()) {
+            window.webContents.send('window:fullscreen-changed', window.isFullScreen());
+        }
+    };
+    window.on('enter-full-screen', notifyFullScreenState);
+    window.on('leave-full-screen', notifyFullScreenState);
+
     window.loadFile(path.join(__dirname, '..', 'www', 'index.html'));
+}
+
+function registerWindowIpc() {
+    ipcMain.on('window:set-fullscreen', (event, enabled) => {
+        const window = BrowserWindow.fromWebContents(event.sender);
+        if (window && !window.isDestroyed()) window.setFullScreen(!!enabled);
+    });
+
+    ipcMain.handle('window:is-fullscreen', (event) => {
+        const window = BrowserWindow.fromWebContents(event.sender);
+        return window && !window.isDestroyed() ? window.isFullScreen() : false;
+    });
 }
 
 function configureAutoUpdates() {
@@ -50,6 +73,7 @@ function configureAutoUpdates() {
 }
 
 app.whenReady().then(() => {
+    registerWindowIpc();
     createWindow();
     configureAutoUpdates();
 

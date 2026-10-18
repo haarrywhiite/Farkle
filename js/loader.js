@@ -73,7 +73,7 @@ window.addEventListener('DOMContentLoaded', () => {
         'img/parchment.png',
         'img/leather.png',
         'img/icon-192.png',
-        'https://www.chosic.com/wp-content/uploads/2021/07/Medieval-Feast.mp3'
+        'audio/bar-brawl.mp3'
     ];
 
     const loader = new AssetLoader(

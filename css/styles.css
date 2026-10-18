@@ -720,7 +720,7 @@ body {
     opacity: 0.6;
 }
 
-/* Footer buttons (show-rules-btn / show-lang-btn) styled in the block below */
+/* Footer buttons (show-rules-btn / show-settings-btn) styled in the block below */
 
 .gold-highlight {
     color: #451a03 !important;
@@ -748,7 +748,7 @@ body {
 }
 
 #show-rules-btn,
-#show-lang-btn,
+#show-settings-btn,
 #download-menu-btn {
     min-width: 180px;
     height: 58px;
@@ -773,7 +773,7 @@ body {
 }
 
 #show-rules-btn:hover,
-#show-lang-btn:hover {
+#show-settings-btn:hover {
     transform: translateY(-2px);
     border-color: #fbbf24;
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6), 0 0 15px rgba(251, 191, 36, 0.4);
@@ -2005,7 +2005,7 @@ body {
     }
 
     #show-rules-btn,
-    #show-lang-btn {
+    #show-settings-btn {
         min-width: 130px !important;
         height: 48px !important;
         font-size: 0.85rem !important;
@@ -2097,5 +2097,168 @@ body {
     .made-by {
         margin-top: 8px !important;
         font-size: 1rem !important;
+    }
+}
+
+/* =========================================================
+   Settings Modal
+   ========================================================= */
+.settings-modal-content {
+    max-width: 580px;
+    text-align: left;
+    padding: 35px 30px;
+}
+
+#close-settings-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 3px solid #451a03;
+    background: #991b1b;
+    color: #fde68a;
+    font-size: 1.6rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+    padding: 0;
+    line-height: 0;
+    z-index: 10;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+#close-settings-btn:hover {
+    transform: scale(1.1) rotate(5deg);
+    background: #7f1d1d;
+}
+
+.settings-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.settings-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 10px 14px;
+    background: rgba(69, 26, 3, 0.08);
+    border: 2px solid rgba(120, 53, 15, 0.3);
+    border-radius: 8px;
+}
+
+.settings-label {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #451a03;
+    letter-spacing: 1px;
+    /* Golden aura to match the Scroll of Rules headers */
+    text-shadow: 0 0 5px #fca311;
+}
+
+.settings-options {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.settings-option-btn {
+    background: linear-gradient(180deg, #451a03 0%, #2c1810 100%);
+    border: 2px solid #b45309;
+    padding: 8px 14px;
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    color: #fef3c7;
+    cursor: pointer;
+    border-radius: 6px;
+    min-width: 70px;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.settings-option-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.settings-option-btn.active {
+    background: #78350f;
+    color: #fef3c7;
+    border-color: #fbbf24;
+    box-shadow: 0 0 12px rgba(251, 191, 36, 0.5);
+}
+
+.settings-volume-row {
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.volume-options {
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.volume-icon {
+    font-size: 1rem;
+}
+
+.settings-volume-slider {
+    flex: 1;
+    min-width: 150px;
+    accent-color: #b45309;
+    cursor: pointer;
+}
+
+#settings-lang-btn {
+    background: linear-gradient(180deg, #451a03 0%, #2c1810 100%) !important;
+    border: 2px solid #b45309;
+    border-radius: 6px;
+    color: #fef3c7 !important;
+    font-family: 'Cinzel', serif;
+    padding: 8px 16px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    transition: all 0.2s ease;
+}
+
+#settings-lang-btn:hover {
+    transform: translateY(-1px);
+    border-color: #fbbf24;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5), 0 0 12px rgba(251, 191, 36, 0.4);
+}
+
+/* Reduced motion accessibility option (Settings > Animations) */
+body.reduce-motion *,
+body.reduce-motion *::before,
+body.reduce-motion *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+}
+
+@media (max-width: 600px) {
+    .settings-modal-content {
+        padding: 25px 15px;
+    }
+
+    .settings-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .settings-options {
+        width: 100%;
     }
 }
