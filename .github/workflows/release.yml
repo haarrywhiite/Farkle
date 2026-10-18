@@ -1,4 +1,4 @@
-name: Publish desktop release
+name: Publish desktop + Android release
 
 on:
   push:
@@ -44,3 +44,57 @@ jobs:
             release/*.exe
             release/*.exe.blockmap
             release/latest.yml
+
+  publish-android:
+    needs: publish-windows
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the release tag
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Set up JDK 17 for the Android build
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Install dependencies and stamp the version
+        run: |
+          npm ci
+          npm run build
+          npx cap sync android
+
+      - name: Assemble the release APK
+        run: |
+          chmod +x android/gradlew
+          (cd android && ./gradlew assembleRelease --console=plain)
+
+      - name: Resolve the version without the leading v
+        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_ENV"
+
+      - name: Zipalign and sign the APK
+        run: |
+          BT=$(ls "$ANDROID_HOME/build-tools" | tail -n1)
+          "$BT/zipalign" -f -p 4 \
+            android/app/build/outputs/apk/release/app-release-unsigned.apk \
+            Farkle-Setup.apk-aligned
+          "$BT/apksigner" sign \
+            --ks app/signing.keystore \
+            --ks-key-alias my-key-alias \
+            --ks-pass pass:hindRJE8Ic3r \
+            --key-pass pass:hindRJE8Ic3r \
+            --out Farkle-${VERSION}.apk \
+            Farkle-Setup.apk-aligned
+
+      - name: Attach the APK to the release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            Farkle-*.apk
