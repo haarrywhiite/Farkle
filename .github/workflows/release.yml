@@ -104,7 +104,7 @@ jobs:
           APK_KEYSTORE_PASSWORD: ${{ secrets.APK_KEYSTORE_PASSWORD }}
           APK_KEY_ALIAS: ${{ secrets.APK_KEY_ALIAS }}
         run: |
-          BT=$(ls "$ANDROID_HOME/build-tools" | tail -n1)
+          BT="$(ls -d "$ANDROID_HOME"/build-tools/* | tail -n1)"
           "$BT/zipalign" -f -p 4 \
             android/app/build/outputs/apk/release/app-release-unsigned.apk \
             Farkle-Setup.apk-aligned
