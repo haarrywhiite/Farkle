@@ -52,17 +52,22 @@
 ```text
 ├── .github/
 │   └── workflows/
-│       └── release.yml     # Automated desktop release builder & publisher
-├── app/                    # Web application assets and shared logic
-├── css/                    # Modular stylesheets (bracket, buttons, styles)
-├── electron/               # Desktop wrapper (main process & auto-updates)
-├── img/                    # Artwork, tavern backgrounds, dice & icons
-├── js/                     # Game engine (AI, scoring, dice physics, UI)
-├── android/                # Android Capacitor project
-├── index.html              # Main game entry point
-├── build.js                # Build script for packaging to www/
-├── capacitor.config.json   # Mobile app configuration
-└── package.json            # Scripts & project dependencies
+│       ├── release.yml       # Automated desktop release builder & publisher
+│       └── pages.yml         # Deploys the built web app to GitHub Pages
+├── android/                  # Android Capacitor project (APK builds)
+├── app/                      # PWA signing package (keystore & asset links)
+├── electron/                 # Desktop wrapper (main process & auto-updates)
+├── scripts/                  # Dev tooling (build, dev server, icon generator)
+├── src/                      # Web application source
+│   ├── css/                  #   Modular stylesheets (bracket, buttons, styles)
+│   ├── js/                   #   Game engine (AI, scoring, dice physics, UI)
+│   ├── img/                  #   Artwork, tavern backgrounds, dice & icons
+│   ├── audio/                #   Tavern soundtrack (CC0, public domain)
+│   ├── index.html            #   Main game entry point
+│   ├── manifest.json         #   PWA manifest
+│   └── sw.js                 #   Service worker (offline caching)
+├── capacitor.config.json     # Mobile app configuration
+└── package.json              # Scripts & project dependencies
 ```
 
 ---

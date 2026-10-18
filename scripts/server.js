@@ -32,7 +32,7 @@ function createServer() {
         if (safeUrl === '/') safeUrl = '/index.html';
 
         const safePath = path.normalize(decodeURIComponent(safeUrl)).replace(/^(\.\.[\/\\])+/, '');
-        const filePath = path.join(__dirname, safePath);
+        const filePath = path.join(__dirname, '..', 'src', safePath);
 
         fs.stat(filePath, (err, stats) => {
             if (err || !stats.isFile()) {
