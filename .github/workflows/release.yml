@@ -73,11 +73,11 @@ jobs:
           node-version: 22
           cache: npm
 
-      - name: Set up JDK 17 for the Android build
+      - name: Set up JDK 21 for the Android build
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 17
+          java-version: 21
 
       - name: Install dependencies and stamp the version
         run: |
