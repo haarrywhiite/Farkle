@@ -13,9 +13,9 @@
     <link
         href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;700;900&family=IM+Fell+DW+Pica:ital@0;1&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css?v=18">
-    <link rel="stylesheet" href="css/menu-buttons.css?v=18">
-    <link rel="stylesheet" href="css/bracket.css?v=18">
+    <link rel="stylesheet" href="css/styles.css?v=19">
+    <link rel="stylesheet" href="css/menu-buttons.css?v=19">
+    <link rel="stylesheet" href="css/bracket.css?v=19">
     <link id="favicon" rel="icon" type="image/x-icon" href="favicon.ico">
     <!-- Preload backgrounds -->
     <link rel="preload" as="image" href="img/table.png">
@@ -357,6 +357,18 @@
         </div>
     </div>
 
+    <!-- APK Self-Update Modal (only shown inside the Android build) -->
+    <div id="update-modal" class="modal hidden">
+        <div class="modal-content parchment small-modal">
+            <h2 data-i18n="update_title">A NEW BANNER ARRIVETH!</h2>
+            <p id="update-message">Farkle has been proclaimed across the realm!</p>
+            <div class="confirm-actions">
+                <button id="update-now-btn" class="medieval-btn primary" data-i18n="update_now" type="button">FETCH THE UPDATE</button>
+                <button id="update-later-btn" class="medieval-btn secondary" data-i18n="update_later" type="button">NOT TODAY</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Language Selection Modal (Pop-up) -->
     <div id="language-modal" class="modal hidden">
         <div class="modal-content parchment small-modal language-modal-content">
@@ -466,14 +478,15 @@
     </audio>
 
     <!-- Scripts -->
-    <script src="js/i18n.js?v=18"></script>
-    <script src="js/loader.js?v=18"></script>
-    <script src="js/scoring.js?v=18" defer></script>
-    <script src="js/dice.js?v=18" defer></script>
-    <script src="js/ai.js?v=18" defer></script>
-    <script src="js/settings.js?v=18" defer></script>
-    <script src="js/game.js?v=18" defer></script>
-    <script src="js/ui.js?v=18" defer></script>
+    <script src="js/i18n.js?v=19"></script>
+    <script src="js/loader.js?v=19"></script>
+    <script src="js/scoring.js?v=19" defer></script>
+    <script src="js/dice.js?v=19" defer></script>
+    <script src="js/ai.js?v=19" defer></script>
+    <script src="js/settings.js?v=19" defer></script>
+    <script src="js/game.js?v=19" defer></script>
+    <script src="js/ui.js?v=19" defer></script>
+    <script src="js/updater.js?v=19" defer></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {

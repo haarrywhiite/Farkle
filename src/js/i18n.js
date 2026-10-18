@@ -157,6 +157,14 @@ const I18N = {
             final_opponent: "OPPONENT",
             btn_claim_rematch: "CLAIM THY REWARD & REMATCH",
             btn_rematch: "RISE AGAIN & REMATCH",
+
+            // APK self-updater
+            update_title: "A NEW BANNER ARRIVETH!",
+            update_msg: "Farkle v{version} has been proclaimed across the realm!",
+            update_now: "FETCH THE UPDATE",
+            update_later: "NOT TODAY",
+            update_fetching: "Steady thy hands... fetching...",
+            update_installing: "Nearly there... installing...",
             btn_return_tavern: "RETURN TO TAVERN",
 
             // Confirm Modal
@@ -324,6 +332,14 @@ const I18N = {
             final_opponent: "RIVAL",
             btn_claim_rematch: "RECLAMAR RECOMPENSA Y REVANCHA",
             btn_rematch: "LEVÁNTATE Y REVANCHA",
+
+            // APK self-updater
+            update_title: "¡UN NUEVO ESTANDARTE LLEGA!",
+            update_msg: "¡Farkle v{version} ha sido proclamado por todo el reino!",
+            update_now: "TRAER LA ACTUALIZACIÓN",
+            update_later: "HOY NO",
+            update_fetching: "Manos firmes... descargando...",
+            update_installing: "Ya casi está... instalando...",
             btn_return_tavern: "VOLVER A LA TABERNA",
 
             // Confirm Modal

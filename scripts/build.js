@@ -26,6 +26,11 @@ async function build() {
     }
     
     console.log('Build complete.');
+
+    // Stamp the current app version for the APK self-updater
+    const pkg = JSON.parse(await fs.readFile('./package.json', 'utf8'));
+    await fs.writeFile('www/version.json', JSON.stringify({ version: pkg.version }, null, 2) + '\n');
+    console.log(`Stamped www/version.json (v${pkg.version})`);
 }
 
 build().catch(console.error);

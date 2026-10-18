@@ -137,6 +137,12 @@ Tavern soundtrack tracks are from [FreePD.com](https://freepd.com) — all **CC0
 - *Village Tarantella* — Kevin MacLeod — `audio/village-tarantella.mp3`
 - *Still Pickin'* — Kevin MacLeod — `audio/still-pickin.mp3`
 
+## 🔄 Auto-Updates
+
+- **Windows**: installed apps check GitHub Releases on launch (electron-updater). A new release downloads itself in the background and offers "Restart now". Nothing to do manually.
+- **Android**: on launch the app compares its bundled version against the latest GitHub release. If a newer `Farkle-x.y.z.apk` asset is attached, an in-game banner offers a one-tap download + install.
+- When bumping versions, always **increment `versionCode`** in `android/app/build.gradle` (never reuse) — Android refuses an update whose versionCode is not newer than the installed one.
+
 ---
 
 ## 📄 License

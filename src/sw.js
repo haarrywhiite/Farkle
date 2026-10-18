@@ -1,4 +1,4 @@
-const CACHE_NAME = 'farkle-v12';
+const CACHE_NAME = 'farkle-v13';
 const ASSETS = [
     '/',
     'index.html',
@@ -20,6 +20,7 @@ const ASSETS = [
     'img/icon.svg',
     'img/icon-192.png',
     'img/icon-512.png',
+    'js/updater.js',
     'audio/bar-brawl.mp3',
     'audio/village-tarantella.mp3',
     'audio/still-pickin.mp3'
@@ -48,6 +49,12 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+    // The self-updater version stamp and the release check must always be fresh
+    const url = event.request.url;
+    if (url.includes('version.json') || url.includes('api.github.com')) {
+        event.respondWith(fetch(event.request));
+        return;
+    }
     event.respondWith(
         caches.match(event.request)
             .then((response) => response || fetch(event.request))
