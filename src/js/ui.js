@@ -40,6 +40,10 @@ const UI = {
             this.game.clearState();
         }
 
+        // Stamp the footer with the release version (version.json is written
+        // by the build script; the dev server serves it dynamically).
+        this.initVersionBadge();
+
         // Header Language Toggle Button (opens language pop-up)
         document.querySelectorAll('.toggle-lang-btn').forEach(btn => {
             btn.addEventListener('click', () => {
@@ -461,8 +465,18 @@ const UI = {
         }, 1200);
     },
 
-    toggleModal(id, show) {
-        const modal = document.getElementById(id);
+    initVersionBadge() {
+        const badge = document.getElementById('app-version');
+        if (!badge) return;
+        fetch('version.json', { cache: 'no-store' })
+            .then(res => (res.ok ? res.json() : null))
+            .then(data => {
+                if (data && data.version) badge.textContent = `· v${data.version}`;
+            })
+            .catch(() => { /* dev build without a stamped version: stay hidden */ });
+    },
+
+    toggleModal(id, show) {        const modal = document.getElementById(id);
         if (show) {
             modal.classList.remove('hidden');
         } else {

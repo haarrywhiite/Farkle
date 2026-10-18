@@ -791,6 +791,16 @@ body {
     text-align: center;
 }
 
+/* Version chip beside the maker credit */
+.app-version {
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    color: inherit;
+    letter-spacing: 1px;
+    padding-left: 6px;
+    opacity: 0.8;
+}
+
 /* Language Selection Modal */
 .language-modal-content {
     max-width: 420px;
@@ -2015,6 +2025,11 @@ body {
     .made-by {
         font-size: 1.05rem !important;
         margin-top: 10px !important;
+    }
+
+    .app-version {
+        font-size: 0.75rem;
+        padding-left: 6px;
     }
 
     /* The grid areas must be preserved */

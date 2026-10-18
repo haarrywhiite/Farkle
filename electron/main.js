@@ -29,6 +29,15 @@ function createWindow() {
     window.on('leave-full-screen', notifyFullScreenState);
 
     window.loadFile(path.join(__dirname, '..', 'www', 'index.html'));
+
+    // The footer version chip fetches version.json, which is blocked over the
+    // file:// scheme used here — inject it natively instead.
+    window.webContents.on('did-finish-load', () => {
+        const version = app.getVersion();
+        window.webContents.executeJavaScript(
+            `const b = document.getElementById('app-version'); if (b) b.textContent = '· v' + ${JSON.stringify(version)};`
+        ).catch(() => { /* page may be navigating */ });
+    });
 }
 
 function registerWindowIpc() {

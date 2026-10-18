@@ -31,6 +31,19 @@ function createServer() {
         let safeUrl = req.url.split('?')[0].split('#')[0];
         if (safeUrl === '/') safeUrl = '/index.html';
 
+        // Serve the package version live in dev (the build stamps www/version.json)
+        if (safeUrl === '/version.json') {
+            try {
+                const pkg = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'package.json'), 'utf8'));
+                res.writeHead(200, { 'Content-Type': 'application/json; charset=UTF-8', 'Cache-Control': 'no-cache' });
+                res.end(JSON.stringify({ version: pkg.version }));
+            } catch (err) {
+                res.writeHead(500, { 'Content-Type': 'text/plain; charset=UTF-8' });
+                res.end('500 Internal Server Error');
+            }
+            return;
+        }
+
         const safePath = path.normalize(decodeURIComponent(safeUrl)).replace(/^(\.\.[\/\\])+/, '');
         const filePath = path.join(__dirname, '..', 'src', safePath);
 
