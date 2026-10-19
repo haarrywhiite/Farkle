@@ -300,9 +300,6 @@ const UI = {
         // Set initial random favicon
         this.setRandomFavicon();
 
-        this.handleScaling();
-        window.addEventListener('resize', () => this.handleScaling());
-
         // Clean start: any game from before is cancelled upon exiting and entering again
         if (this.game) {
             this.game.clearState();
@@ -321,24 +318,8 @@ const UI = {
     },
 
     handleScaling() {
-        if (window.innerWidth <= 600) {
-            const scale = window.innerWidth / 500;
-            document.documentElement.style.setProperty('--mobile-scale', scale);
-
-            // Use SVH (Small Viewport Height) if possible, or fallback to fixed innerHeight
-            // to prevent the "jumping" effect when the address bar toggles.
-            // We set it once on load and update on orientation change, not every resize.
-            if (!this.viewportHeightLocked || Math.abs(this.lastWidth - window.innerWidth) > 50) {
-                const vh = window.innerHeight * 0.01;
-                document.documentElement.style.setProperty('--vh', `${vh}px`);
-                this.viewportHeightLocked = true;
-                this.lastWidth = window.innerWidth;
-            }
-        } else {
-            document.documentElement.style.removeProperty('--mobile-scale');
-            document.documentElement.style.removeProperty('--vh');
-            this.viewportHeightLocked = false;
-        }
+        // Responsive layouts are handled purely in CSS now; the old
+        // "render at 500px and scale down" phone hack is retired.
     },
 
     updateScores(players, currentPlayerIndex) {

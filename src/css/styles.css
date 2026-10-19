@@ -1864,187 +1864,585 @@ body {
     }
 }
 
+/* ============================================
+   PHONES (≤600px) — true responsive layout
+   Single column: compact header / board / chronicle strip.
+   (Replaces the old "render at 500px and scale down" hack.)
+   ============================================ */
 @media (max-width: 600px) {
-    /* PHASE 6: PC CLONE SCALING */
-    /* Instead of reformatting, we render at 1400px width and scale down */
 
     html,
     body {
-        overflow: hidden !important;
-        width: 100vw !important;
-        height: 100vh !important;
+        overflow-x: hidden;
+        width: 100%;
+        height: 100%;
     }
 
-    #start-menu:not(.hidden),
-    #bracket-overlay:not(.hidden),
-    #app:not(.hidden) {
-        position: fixed !important;
-        top: 0 !important;
-        left: 50% !important;
-        width: 500px !important;
-        height: calc((var(--vh, 1vh) * 100) / var(--mobile-scale, 1)) !important;
-        height: calc(100svh / var(--mobile-scale, 1)) !important; /* Prefer SVH on mobile to prevent jumping */
-        transform: translateX(-50%) scale(var(--mobile-scale, 1)) !important;
-        transform-origin: top center !important;
-        display: flex !important;
-    }
-
-    #app:not(.hidden) {
-        display: grid !important;
-        grid-template-columns: 1fr 180px !important;
+    /* --- App shell: stack header, board, chronicle --- */
+    .app-container {
         grid-template-areas:
-            "header header"
-            "board right-side" !important;
-        gap: 0 !important;
-        padding: 0 !important;
+            "header"
+            "board"
+            "right-side" !important;
+        grid-template-columns: 1fr !important;
+        grid-template-rows: auto 1fr auto !important;
+        height: 100dvh !important;
+        width: 100% !important;
+        max-width: none !important;
+        padding: 8px !important;
+        padding-top: calc(8px + env(safe-area-inset-top, 0px)) !important;
+        padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px)) !important;
+        gap: 8px !important;
+        overflow: hidden !important;
+    }
+
+    /* Header: two tight centered rows, logo hidden */
+    .game-header {
+        flex-direction: column !important;
+        align-items: center !important;
+        padding: 6px 8px !important;
+        gap: 6px !important;
+    }
+
+    .header-left {
+        justify-content: center !important;
+    }
+
+    .main-scores {
+        justify-content: center !important;
+        width: 100% !important;
+    }
+
+    .logo {
+        display: none !important;
+    }
+
+    .header-left {
+        gap: 6px !important;
+    }
+
+    .header-actions {
+        padding-left: 6px !important;
+        gap: 5px !important;
+    }
+
+    .icon-btn {
+        width: 38px !important;
+        height: 38px !important;
+        font-size: 1.05rem !important;
+    }
+
+    .icon-btn.toggle-lang-btn {
+        min-width: 38px !important;
+        height: 38px !important;
+        padding: 0 8px !important;
+        font-size: 0.9rem !important;
+    }
+
+    .icon-btn.toggle-lang-btn .lang-tag {
+        font-size: 0.7rem !important;
+    }
+
+    .main-scores {
+        gap: 6px !important;
+        justify-content: flex-end;
+    }
+
+    .global-target {
+        font-size: 0.65rem !important;
+        padding: 4px 7px !important;
+        margin-right: 2px !important;
+        letter-spacing: 0.5px !important;
+    }
+
+    .score-card {
+        min-width: 66px !important;
+        padding: 4px 8px !important;
+    }
+
+    .score-card .value {
+        font-size: 1.25rem !important;
+    }
+
+    .score-card .label {
+        font-size: 0.55rem !important;
+        letter-spacing: 1px !important;
+    }
+
+    /* Board fills the middle, content distributed evenly */
+    .game-board {
+        min-height: 0 !important;
+        overflow-y: auto !important;
+        padding: 10px 8px !important;
+        justify-content: space-evenly !important;
+    }
+
+    .status-panel {
+        margin-bottom: 0 !important;
+    }
+
+    .turn-indicator {
+        font-size: 1.35rem !important;
+        margin-bottom: 8px !important;
+        letter-spacing: 3px !important;
+    }
+
+    .parchment-small {
+        padding: 10px 34px !important;
+    }
+
+    .turn-score-panel .label {
+        font-size: 0.8rem !important;
+    }
+
+    .turn-score-panel .value {
+        font-size: 2.8rem !important;
+    }
+
+    .threshold-notice {
+        font-size: 0.7rem !important;
+        margin-top: 6px !important;
+    }
+
+    :root {
+        --dice-size: 46px;
+    }
+
+    .dice-container {
+        gap: 10px !important;
+        margin-bottom: 0 !important;
+        max-width: none !important;
+    }
+
+    .die-inner {
+        border-radius: 9px;
+        padding: 7px;
+    }
+
+    .die.selected .die-inner {
+        transform: translateY(-8px) rotate(5deg);
     }
 
     .game-controls {
-        display: flex !important;
-        flex-direction: row !important;
-        flex-wrap: wrap !important;
-        justify-content: center !important;
-        gap: 12px !important;
-        width: 100% !important;
-        margin-top: 15px !important;
+        gap: 10px !important;
+        margin-top: 12px !important;
     }
 
     .game-controls .medieval-btn {
-        width: auto !important;
-        min-width: 100px !important;
-        padding: 10px 15px !important;
+        flex: 1 1 40% !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        padding: 13px 10px !important;
         font-size: 1rem !important;
-        flex: 1 1 auto !important;
-        max-width: 160px !important;
     }
 
+    .message-area {
+        font-size: 1.05rem !important;
+        min-height: 26px !important;
+        margin-top: 8px !important;
+        padding: 4px 10px !important;
+    }
+
+    /* Chronicle becomes a short strip under the board */
+    .right-panel {
+        display: block !important;
+        height: auto !important;
+    }
+
+    .history-panel {
+        height: auto !important;
+        padding: 8px 12px 10px !important;
+    }
+
+    .history-panel h3 {
+        font-size: 0.85rem !important;
+        margin-bottom: 6px !important;
+        padding-bottom: 4px !important;
+    }
+
+    .history-list {
+        max-height: 15dvh !important;
+        gap: 8px !important;
+        padding-right: 4px !important;
+    }
+
+    .history-item {
+        padding: 7px 9px !important;
+        font-size: 0.78rem !important;
+    }
+
+    /* --- Start menu: natural flow, no transform --- */
     .menu-content {
-        margin: 0 auto !important;
-        padding: 15px 10px !important;
         width: 100% !important;
+        max-height: calc(100dvh - 20px) !important;
+        padding: 22px 12px !important;
         border-width: 5px !important;
-        min-height: 100% !important;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
     }
 
     .rustic-title {
-        font-size: 3rem !important;
-        margin: 5px 0 !important;
-        letter-spacing: 2px !important;
+        font-size: 2.6rem !important;
+        letter-spacing: 3px !important;
+        margin: 4px 0 6px !important;
     }
 
-    /* Reset font sizes to PC defaults */
-    html {
-        font-size: 16px !important;
+    .subtitle {
+        font-size: 1rem !important;
     }
 
-    /* Ensure modals are also scaled or handled */
+    .menu-sections {
+        gap: 12px !important;
+        margin: 12px 0 !important;
+    }
+
+    .menu-section h3 {
+        font-size: 1.05rem !important;
+        margin-bottom: 8px !important;
+    }
+
+    .selection-grid {
+        gap: 8px !important;
+    }
+
+    .select-btn,
+    .score-btn {
+        padding: 12px 4px !important;
+        min-width: 0 !important;
+        flex: 1 1 30% !important;
+        font-size: 0.78rem !important;
+        letter-spacing: 0.5px !important;
+    }
+
+    .medieval-btn.large {
+        font-size: 1.4rem !important;
+        padding: 14px 20px !important;
+        width: 100% !important;
+        margin-top: 14px !important;
+    }
+
+    .menu-footer {
+        margin-top: 14px !important;
+        gap: 10px !important;
+    }
+
+    .footer-buttons {
+        gap: 10px !important;
+    }
+
+    #show-rules-btn,
+    #show-settings-btn,
+    #download-menu-btn {
+        flex: 1 1 45% !important;
+        min-width: 0 !important;
+        height: 48px !important;
+        font-size: 0.9rem !important;
+        padding: 0 10px !important;
+    }
+
+    .made-by {
+        font-size: 1rem !important;
+        margin-top: 8px !important;
+    }
+
+    .app-version {
+        font-size: 0.8rem !important;
+        padding-left: 5px !important;
+    }
+
+    /* --- Modals: fill the phone nicely --- */
     .modal-content {
-        transform: scale(0.8);
-        /* Slight adjustment for modals if needed */
-        transform-origin: center;
+        width: 94% !important;
+        max-height: 88dvh !important;
+        padding: 24px 14px !important;
     }
 
-    /* Remove previous mobile-specific height/padding hacks */
-    .history-panel,
-    .advisor-panel {
-        height: 100% !important;
-        /* Back to PC filling the column */
+    .modal-content.small-modal {
+        padding: 28px 18px !important;
+    }
+
+    .confirm-actions {
+        gap: 10px;
+    }
+
+    .confirm-actions .medieval-btn {
+        flex: 1 1 130px;
+    }
+
+    .rules-compact {
+        width: 96vw !important;
+        max-height: 92dvh !important;
+        padding: 14px 12px !important;
+    }
+
+    .royal-header-compact {
+        padding: 0 44px !important;
+    }
+
+    .royal-header-compact h2 {
+        font-size: 1.05rem !important;
+    }
+
+    .rules-scrollable p,
+    .rules-scrollable ul li {
+        font-size: 1rem !important;
+    }
+
+    .rule-name,
+    .rule-value {
+        font-size: 0.85rem !important;
+    }
+
+    .mini-die {
+        width: 18px !important;
+        height: 18px !important;
+        font-size: 13px !important;
+    }
+
+    .mini-dice-row {
+        gap: 2px !important;
+    }
+
+    #close-rules-btn {
+        width: 40px !important;
+        height: 40px !important;
+        font-size: 1.8rem !important;
+        top: 10px !important;
+        right: 10px !important;
+    }
+
+    .settings-modal-content {
+        padding: 26px 14px !important;
+    }
+
+    .settings-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .settings-options {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .settings-option-btn {
+        flex: 1 1 30%;
+        min-width: 0 !important;
+        padding: 10px 8px !important;
+    }
+
+    #close-settings-btn {
+        width: 36px !important;
+        height: 36px !important;
+        font-size: 1.3rem !important;
+        top: 10px !important;
+        right: 10px !important;
+    }
+
+    .language-modal-content {
+        padding: 26px 16px !important;
+    }
+
+    .lang-option-btn {
+        font-size: 1rem !important;
+        padding: 14px 16px !important;
+    }
+
+    /* --- Tournament bracket --- */
+    .bracket-view {
+        width: 96vw !important;
+        max-height: 92dvh !important;
+    }
+
+    .bracket-container {
+        flex-direction: column !important;
+        gap: 14px !important;
+        overflow-y: auto;
+    }
+
+    .bracket-match {
+        min-width: 0 !important;
+        width: 100%;
+    }
+}
+
+/* Small phones (≤380px): a touch tighter still */
+@media (max-width: 380px) {
+    .rustic-title {
+        font-size: 2.2rem !important;
+    }
+
+    .select-btn,
+    .score-btn {
+        font-size: 0.72rem !important;
+    }
+
+    .score-card {
+        min-width: 58px !important;
+    }
+
+    .score-card .value {
+        font-size: 1.1rem !important;
+    }
+
+    .game-controls .medieval-btn {
+        font-size: 0.9rem !important;
+    }
+
+    .turn-score-panel .value {
+        font-size: 2.4rem !important;
+    }
+
+    :root {
+        --dice-size: 42px;
+    }
+}
+
+/* ============================================
+   PHONES in LANDSCAPE — two columns, board + chronicle
+   ============================================ */
+@media (max-width: 950px) and (max-height: 520px) and (orientation: landscape) {
+    .app-container {
+        grid-template-areas:
+            "header header"
+            "board right-side" !important;
+        grid-template-columns: 1fr 190px !important;
+        grid-template-rows: auto 1fr !important;
+        height: 100dvh !important;
+        padding: 6px 8px !important;
+        padding-left: calc(8px + env(safe-area-inset-left, 0px)) !important;
+        padding-right: calc(8px + env(safe-area-inset-right, 0px)) !important;
+        gap: 8px !important;
+        overflow: hidden !important;
     }
 
     .game-header {
         flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        justify-content: space-between !important;
+        align-items: center !important;
         padding: 5px 10px !important;
-        gap: 5px !important;
+        gap: 6px !important;
     }
 
-    .logo h1 {
-        font-size: 1.2rem !important;
-        letter-spacing: 1px !important;
+    .logo {
+        display: none !important;
+    }
+
+    .icon-btn {
+        width: 34px !important;
+        height: 34px !important;
+        font-size: 0.95rem !important;
+    }
+
+    .icon-btn.toggle-lang-btn {
+        min-width: 34px !important;
+        height: 34px !important;
+        padding: 0 7px !important;
     }
 
     .main-scores {
         gap: 5px !important;
     }
 
+    .global-target {
+        font-size: 0.6rem !important;
+        padding: 3px 6px !important;
+        margin-right: 0 !important;
+    }
+
     .score-card {
-        min-width: 70px !important;
-        padding: 5px !important;
+        min-width: 58px !important;
+        padding: 3px 7px !important;
     }
 
     .score-card .value {
-        font-size: 1.2rem !important;
+        font-size: 1.1rem !important;
     }
 
     .score-card .label {
-        font-size: 0.6rem !important;
-    }
-
-    .global-target {
-        font-size: 0.7rem !important;
-        padding: 4px 8px !important;
-        margin-right: 5px !important;
-    }
-
-    .icon-btn {
-        width: 32px !important;
-        height: 32px !important;
-        font-size: 1rem !important;
-    }
-
-    .icon-btn.toggle-lang-btn {
-        width: auto !important;
-        min-width: 32px !important;
-        height: 32px !important;
-        padding: 0 6px !important;
-        font-size: 0.85rem !important;
-    }
-
-    .icon-btn.toggle-lang-btn .lang-tag {
-        font-size: 0.65rem !important;
-    }
-
-    .header-left {
-        gap: 5px !important;
-    }
-
-    .header-actions {
-        padding-left: 5px !important;
-    }
-
-    #show-rules-btn,
-    #show-settings-btn {
-        min-width: 130px !important;
-        height: 48px !important;
-        font-size: 0.85rem !important;
-        padding: 0 12px !important;
-    }
-
-    .made-by {
-        font-size: 1.05rem !important;
-        margin-top: 10px !important;
-    }
-
-    .app-version {
-        font-size: 0.75rem;
-        padding-left: 6px;
-    }
-
-    /* The grid areas must be preserved */
-    .left-panel {
-        grid-area: left-side !important;
-        display: block !important;
-    }
-
-    .right-panel {
-        grid-area: right-side !important;
-        display: block !important;
+        font-size: 0.5rem !important;
     }
 
     .game-board {
-        grid-area: board !important;
+        min-height: 0 !important;
+        overflow-y: auto !important;
+        padding: 6px !important;
+        justify-content: flex-start !important;
+        gap: 4px !important;
+    }
+
+    .status-panel {
+        margin-bottom: 0 !important;
+    }
+
+    .turn-indicator {
+        font-size: 1.05rem !important;
+        margin-bottom: 2px !important;
+    }
+
+    .parchment-small {
+        padding: 5px 24px !important;
+    }
+
+    .turn-score-panel .label {
+        font-size: 0.65rem !important;
+    }
+
+    .turn-score-panel .value {
+        font-size: 1.8rem !important;
+    }
+
+    .threshold-notice {
+        font-size: 0.55rem !important;
+        margin-top: 2px !important;
+    }
+
+    :root {
+        --dice-size: 38px;
+    }
+
+    .dice-container {
+        gap: 7px !important;
+        margin-bottom: 0 !important;
+    }
+
+    .die-inner {
+        border-radius: 8px;
+        padding: 5px;
+    }
+
+    .die.selected .die-inner {
+        transform: translateY(-6px) rotate(5deg);
+    }
+
+    .game-controls {
+        margin-top: 5px !important;
+        gap: 8px !important;
+    }
+
+    .game-controls .medieval-btn {
+        padding: 7px 14px !important;
+        font-size: 0.85rem !important;
+    }
+
+    .message-area {
+        font-size: 0.8rem !important;
+        min-height: 16px !important;
+        margin-top: 2px !important;
+        padding: 1px 6px !important;
+    }
+
+    .history-panel {
+        padding: 10px !important;
+        height: 100% !important;
+    }
+
+    .history-panel h3 {
+        font-size: 0.85rem !important;
+    }
+
+    .history-item {
+        padding: 6px 8px !important;
+        font-size: 0.75rem !important;
     }
 }
 
